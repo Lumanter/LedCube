@@ -1,0 +1,8 @@
+Procedure turnOnLed(x, y, z) {
+	Cubo[x][y][z] = true;	
+}
+
+Procedure Main() {
+	call turnOnLed(0,0,0);
+	delay(5, "Seg")
+}

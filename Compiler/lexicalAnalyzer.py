@@ -58,7 +58,7 @@ tokens = tokens + list(keywords.values())
 
 # Regular expressions for simple tokens
 t_POWER = r'\*\*'
-t_ignore = '\t ' #ignore spaces and tabs
+t_ignore = ' \t\r' #ignore spaces and tabs
 t_ASSIGN = r'\='
 t_PLUS = r'\+'
 t_MINUS = r'\-'
@@ -102,11 +102,12 @@ def t_INTEGER(t):
 def t_newline(t):
 	r'\n+'
 	t.lexer.lineno += len(t.value)
+
 def t_error(t):
 	print "Lexical error: Illegal character '" + t.value[0] + "' at line number " + str(t.lexer.lineno)
 	t.lexer.skip(1)
 
-lexicalAnalayzer = lex.lex()
+lexicalAnalyzer = lex.lex()
 
 # Tester
 # data = '''
