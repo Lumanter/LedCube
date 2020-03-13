@@ -19,15 +19,16 @@ class SymbolTable:
         return self.symbols[id]
 
 class Symbol:
-  def __init__(self, id, type, scope):
+  def __init__(self, id, value, type, scope):
     self.id = id
+    self.value = value
     self.type = type
     self.scope = scope
 
 # Example
 symbolTable = SymbolTable()
-symbolTable.add(Symbol("x", Types.Boolean, Scopes.Global))
-symbolTable.add(Symbol("y", Types.Integer, Scopes.Global))
+symbolTable.add(Symbol("x", True, Types.Boolean, Scopes.Global))
+symbolTable.add(Symbol("y", 5, Types.Integer, Scopes.Global))
 
 # say we are trying to set a Integer to x, that type is newVariableType
 newVariableType = Types.Integer
