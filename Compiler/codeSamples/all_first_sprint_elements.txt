@@ -8,6 +8,8 @@ Procedure turnOnLed(x, y, z) {
 	Cubo[x][y][z] = true;	
 }
 
+u = 5; (procedures + vars)*
+
 Procedure Main {
 	myBoolean = true;
 	x = 6 / 2 + 3 ** 8 - 1;
