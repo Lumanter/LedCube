@@ -44,7 +44,7 @@ tokens = [
 	
 	# Punctuation Marks
 	'COMMA',
-	'SEMMICOLON',
+	'SEMICOLON',
 	'DOT'
 	]
 
@@ -67,7 +67,7 @@ t_RSQUAREBRACKET = r'\]'
 t_LBRACE = r'\{' 
 t_RBRACE = r'\}' 
 t_COMMA = r','
-t_SEMMICOLON = r';'
+t_SEMICOLON = r';'
 t_DOT = r'\.'
 
 # Regular expressions for not so simple tokens
