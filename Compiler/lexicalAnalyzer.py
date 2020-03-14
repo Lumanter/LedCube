@@ -1,9 +1,4 @@
 import ply.lex as lex
-# imports for testing purposes
-import re
-import codecs
-import os
-import sys
 
 keywords = {
 	'main': 'MAIN',
@@ -108,29 +103,3 @@ def t_error(t):
 	t.lexer.skip(1)
 
 lexicalAnalyzer = lex.lex()
-
-# Tester
-# data = '''
-# 	Timer = 1;
-# 	Rango_timer = \"Seg\";
-# 	Dim_Filas = 8;
-# 	Dim_Columnas = 8;
-# 	Cubo = [];
-
-# 	Procedure turnOnLed(x, y, z) {
-# 		Cubo[x][y][z] = true;	
-# 	}
-# '''
-
-# '''
-# 	Procedure Main() {
-# 		myBoolean = true;
-# 		x = 6 / 2 + 3 ** 8 - 1;
-# 		y = 10 % 2;
-# 		call turnOnLed(0, 0, 0);
-# 		Delay() 
-# 	}
-# '''
-# lexicalAnalayzer.input(data)
-# for token in lexicalAnalayzer:
-#     print(token.type, token.value)
