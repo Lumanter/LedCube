@@ -21,6 +21,13 @@ tokens = [
 	# open to discussion
 	'TIMEUNIT',
 
+	#Reserve Tokens
+	'TIMER',
+	'RANGO_TIMER',
+	'DIM_FILAS',
+	'DIM_COLUMNAS',
+	'CUBO',
+
 	# Numerical Operators 
 	'PLUS',
 	'MINUS',
@@ -91,6 +98,26 @@ def t_ID(t):
 def t_INTEGER(t):
 	r'\d+'
 	t.value = int(t.value)
+	return t
+
+def t_TIMER(t):
+	r'Timer'
+	return t
+
+def t_RANGO_TIMER(t):
+	r'Rango_Timer'
+	return t
+
+def t_DIM_FILAS(t):
+	r'Dim_filas'
+	return t
+
+def t_DIM_COLUMNAS(t):
+	r'Dim_columnas'
+	return t
+
+def t__CUBO(t):
+	r'Cubo'
 	return t
 
 # Tracking the line number, for error messaging 
