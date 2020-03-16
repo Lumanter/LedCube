@@ -13,7 +13,11 @@ precedence = (
 #name of the first production
 #start = 'statementList'
 
-def p_statementList(p):
+def p_statementList_single(p):
+    'statementList : statement '
+    p[0] = p[1]
+
+def p_statementList_multiple(p):
     'statementList : statement statementList'
     p[0] = (p[1], p[2])
     # avoiding adding a Null nested node 
@@ -27,7 +31,8 @@ def p_statementList_empty(p):
     p[0] = p[1]
 
 def p_statement(p):
-    'statement : varAssignment'
+    '''statement : varAssignment 
+                 | procedureDeclaration'''
     p[0] = p[1]
 
 def p_varAssignment(p):
@@ -76,13 +81,16 @@ def p_listElements_single(p):
     p[0] = p[1]
 
 def p_listElements_multiple(p):
-    'listElements : listElement COMMA listElements '
+    'listElements : listElement COMMA listElements'
     p[0] = (p[1], p[2], p[3])
+
+def p_listElements_empty(p):
+    'listElements : empty'
+    p[0] = p[1]
 
 def p_listElement(p):
     '''listElement : BOOLEAN
-                   | list
-                   | empty'''
+                   | list'''
     p[0] = p[1]
 
 # Numerical Operations
@@ -126,6 +134,27 @@ def p_factor(p):
     'factor : INTEGER'
     p[0] = p[1]
 
+# Procedures Syntax
+def p_procedureDeclaration(p):
+    'procedureDeclaration : PROCEDURE ID LPARENTHESES parameters RPARENTHESES LBRACE statementList RBRACE SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
+
+def p_parameters_single(p):
+    'parameters : parameter'
+    p[0] = p[1]
+
+def p_parameters_multiple(p):
+    'parameters : parameter COMMA parameters '
+    p[0] = (p[1], p[2], p[3])
+
+def p_parameter(p):
+    'parameter : ID'
+    p[0] = p[1]
+
+def p_parameters_empty(p):
+    'parameters : empty'
+    p[0] = p[1]
+
 def p_empty(p):
 	'empty :'
 	p[0] = None
@@ -134,7 +163,11 @@ def p_error(p):
 	print "Syntaxis Error "# +str(p.lineno)
 
 data= ''' 
-    x[0][0][0] = [true, true, true];
+    procedure sum(a,b){
+        x = 5;
+        y = 10;
+    };
+    list = [true, false];
 '''
 
 # to supress unused tokens warnings
