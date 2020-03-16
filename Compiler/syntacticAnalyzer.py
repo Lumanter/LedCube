@@ -12,19 +12,30 @@ precedence = (
 )
 
 #name of the first production
-#start = 'program'
+#start = 'statementList'
 
-# def p_varDeclares1(p):
-#     'program : varDeclare '
-#     p[0] = p[1]
+def p_statementList1(p):
+    'statementList : statement statementList'
+    p[0] = (p[1], p[2])
+    #print "statementList1!!!!!!!!!!!!!!"
 
-# def p_varDeclares1(p):
-#     'program : varDeclares varDeclare'
-#     p[0] = str(p[1]) + str(p[2])
+# def p_statementList2(p):
+#     'statementList : statement'
+#     p[0] = (p[0], p[1])
+#     print "statementList1!!!!!!!!!!!!!!"
 
-def p_varDeclare(p):
-    'var : ID ASSIGN expression SEMICOLON'
-    p[0] = p[1] + " = " + str(p[3]) + p[4]
+def p_statementListEmpty(p):
+    'statementList : empty'
+    p[0] = p[1]
+
+def p_statement(p):
+    'statement : varAssignment'
+    p[0] = p[1]
+    #print "varAssignment!!!!!!!!!!!!!!"
+
+def p_varAssignment(p):
+    'varAssignment : ID ASSIGN expression SEMICOLON'
+    p[0] = (p[1], p[2], p[3])#, p[4])
 
 # Numerical Operations
 def p_expression_plus(p):
@@ -67,15 +78,17 @@ def p_factor_integer(p):
     'factor : INTEGER'
     p[0] = p[1]
 
-# def p_empty(p):
-# 	'empty :'
-# 	pass
+def p_empty(p):
+	'empty :'
+	p[0] = "void"
 
 def p_error(p):
-	print "Syntaxis Error at line " +str(p.lineno)
+	print "Syntaxis Error "# +str(p.lineno)
 
 data= ''' 
-    x = -11 - 3 + 4 ** 2 /2;
+    x = 5;
+    y = 3;
+    z = 7;
 '''
 
 parser = yacc.yacc()
