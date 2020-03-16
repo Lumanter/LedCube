@@ -4,7 +4,6 @@ from lexicalAnalyzer import tokens
 
 # Ordered from lowest to highest priority
 precedence = (
-    #('nonassoc', 'LESSTHAN', 'GREATERTHAN'),
 	('left', 'PLUS', 'MINUS'),
 	('left', 'MULTIPLY', 'DIVIDE', 'MODULO'),
     ('left', 'POWER'),
@@ -14,40 +13,89 @@ precedence = (
 #name of the first production
 #start = 'statementList'
 
-def p_statementList1(p):
+def p_statementList(p):
     'statementList : statement statementList'
     p[0] = (p[1], p[2])
-    #print "statementList1!!!!!!!!!!!!!!"
+    # avoiding adding a Null nested node 
+    # if(p[2] == "empty"):
+    #     p[0] = (p[1])
+    # else:
+    #     p[0] = (p[1], p[2])
 
-# def p_statementList2(p):
-#     'statementList : statement'
-#     p[0] = (p[0], p[1])
-#     print "statementList1!!!!!!!!!!!!!!"
-
-def p_statementListEmpty(p):
+def p_statementList_empty(p):
     'statementList : empty'
     p[0] = p[1]
 
 def p_statement(p):
     'statement : varAssignment'
     p[0] = p[1]
-    #print "varAssignment!!!!!!!!!!!!!!"
 
 def p_varAssignment(p):
-    'varAssignment : ID ASSIGN expression SEMICOLON'
-    p[0] = (p[1], p[2], p[3])#, p[4])
+    '''varAssignment : simpleAssignment
+                     | indexAssignment'''
+    p[0] = p[1]
+
+def p_simpleAssignment(p):
+    'simpleAssignment : ID ASSIGN varValue SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4])
+def p_indexAssignment(p):
+    'indexAssignment : ID index ASSIGN varValue SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4], p[5])
+
+def p_index_single(p):
+    'index : LSQUAREBRACKET INTEGER RSQUAREBRACKET'
+    p[0] = (p[1], p[2], p[3])
+
+def p_index_multiple(p):
+    'index : index index'
+    p[0] = (p[1], p[2])
+
+# def p_index_1D(p):
+#     'index : LSQUAREBRACKET INTEGER RSQUAREBRACKET'
+#     p[0] = (p[1], p[2], p[3])
+# def p_index_2D(p):
+#     'index : LSQUAREBRACKET INTEGER RSQUAREBRACKET LSQUAREBRACKET INTEGER RSQUAREBRACKET'
+#     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6])
+# def p_index_3D(p):
+#     'index : LSQUAREBRACKET INTEGER RSQUAREBRACKET LSQUAREBRACKET INTEGER RSQUAREBRACKET LSQUAREBRACKET INTEGER RSQUAREBRACKET'
+#     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+
+def p_varValue(p):
+    '''varValue : numExpression 
+                | BOOLEAN
+                | list'''
+    p[0] = p[1]
+
+# Lists Syntax
+def p_list(p):
+    'list : LSQUAREBRACKET listElements RSQUAREBRACKET'
+    p[0] = (p[1], p[2], p[3])
+
+def p_listElements_single(p):
+    'listElements : listElement'
+    p[0] = p[1]
+
+def p_listElements_multiple(p):
+    'listElements : listElement COMMA listElements '
+    p[0] = (p[1], p[2], p[3])
+
+def p_listElement(p):
+    '''listElement : BOOLEAN
+                   | list
+                   | empty'''
+    p[0] = p[1]
 
 # Numerical Operations
-def p_expression_plus(p):
-    'expression : expression PLUS term'
+def p_numExpression_plus(p):
+    'numExpression : numExpression PLUS term'
     p[0] = p[1] + p[3]
 
-def p_expression_minus(p):
-    'expression : expression MINUS term'
+def p_numExpression_minus(p):
+    'numExpression : numExpression MINUS term'
     p[0] = p[1] - p[3]
 
-def p_expression_uminus(p):
-    'expression : MINUS term'
+def p_numExpression_uminus(p):
+    'numExpression : MINUS term'
     p[0] = - p[2]
 
 def p_term_multiply(p):
@@ -67,29 +115,33 @@ def p_term_power(p):
     p[0] = p[1] ** p[3]
 
 def p_expression_term(p):
-    'expression : term'
+    'numExpression : term'
     p[0] = p[1]
 
-def p_term_factor(p):
+def p_term(p):
     'term : factor'
     p[0] = p[1]
 
-def p_factor_integer(p):
+def p_factor(p):
     'factor : INTEGER'
     p[0] = p[1]
 
 def p_empty(p):
 	'empty :'
-	p[0] = "void"
+	p[0] = None
 
 def p_error(p):
 	print "Syntaxis Error "# +str(p.lineno)
 
 data= ''' 
-    x = 5;
-    y = 3;
-    z = 7;
+    x[0][0][0] = [true, true, true];
 '''
+
+# to supress unused tokens warnings
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    warnings.warn("deprecated", DeprecationWarning)
 
 parser = yacc.yacc()
 result = parser.parse(data)
