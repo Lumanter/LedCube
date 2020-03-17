@@ -29,6 +29,7 @@ def p_statementList_empty(p):
 def p_statement(p):
     '''statement : varAssignment 
                  | procedureDeclaration
+                 | procedureCall
                  | builtInFunction'''
     p[0] = p[1]
 
@@ -66,7 +67,8 @@ def p_index_many(p):
 #     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
 
 def p_varValue(p):
-    '''varValue : numExpression 
+    '''varValue : ID
+                | numExpression 
                 | BOOLEAN
                 | list'''
     p[0] = p[1]
@@ -76,6 +78,7 @@ def p_builtInFunction(p):
     'builtInFunction : delay'
     p[0] = p[1]
 
+    # Delay Productions
 def p_delay_default(p):
     'delay : DELAY LPARENTHESES RPARENTHESES SEMICOLON'
     p[0] = (p[1], p[2], p[3], p[4])
@@ -85,6 +88,10 @@ def p_delay_custom(p):
     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7])
 
 # Lists Syntax Productions
+def p_list_empty(p):
+    'list : LSQUAREBRACKET RSQUAREBRACKET'
+    p[0] = (p[1], p[2])
+
 def p_list(p):
     'list : LSQUAREBRACKET listElements RSQUAREBRACKET'
     p[0] = (p[1], p[2], p[3])
@@ -96,10 +103,6 @@ def p_listElements_one(p):
 def p_listElements_many(p):
     'listElements : listElement COMMA listElements'
     p[0] = (p[1], p[2], p[3])
-
-def p_listElements_empty(p):
-    'listElements : empty'
-    p[0] = p[1]
 
 def p_listElement(p):
     '''listElement : BOOLEAN
@@ -149,8 +152,13 @@ def p_factor_integer(p):
     'factor : INTEGER'
     p[0] = p[1]
 
-# Procedures Syntax
-def p_procedureDeclaration(p):
+# Procedure Declaration Syntax
+def p_procedureDeclaration_noParameters(p):
+    'procedureDeclaration : PROCEDURE ID LPARENTHESES RPARENTHESES LBRACE statementList RBRACE SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+
+
+def p_procedureDeclaration_parameters(p):
     'procedureDeclaration : PROCEDURE ID LPARENTHESES parameters RPARENTHESES LBRACE statementList RBRACE SEMICOLON'
     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 
@@ -162,16 +170,32 @@ def p_parameters_many(p):
     'parameters : parameter COMMA parameters '
     p[0] = (p[1], p[2], p[3])
 
-def p_parameters_empty(p):
-    'parameters : empty'
-    p[0] = p[1]
-
 def p_parameter(p):
     'parameter : ID'
     p[0] = p[1]
 
-# Special productions 
+# Procedure Call Syntax Productions
+def p_procedureCall_noParameters(p):
+	'procedureCall : CALL ID LPARENTHESES RPARENTHESES SEMICOLON'
+	p[0] = (p[1], p[2], p[3], p[4], p[5])
 
+def p_procedureCall_parameters(p):
+	'procedureCall : CALL ID LPARENTHESES arguments RPARENTHESES SEMICOLON'
+	p[0] = (p[1], p[2], p[3], p[4], p[5], p[6])
+
+def p_arguments_one(p):
+    'arguments : argument'
+    p[0] = p[1]
+
+def p_arguments_many(p):
+    'arguments : argument COMMA arguments'
+    p[0] = (p[1], p[2], p[3])
+
+def p_argument(p):
+    'argument : varValue'
+    p[0] = p[1]
+
+# Special productions 
 def p_empty(p):
 	'empty :'
 	p[0] = None
@@ -185,6 +209,7 @@ data= '''
         delay(5,"Mil");
     };
     list = [true, false];
+    call sum(5,5);
 '''
 
 # to supress unused tokens warnings
