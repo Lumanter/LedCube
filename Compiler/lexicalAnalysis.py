@@ -4,9 +4,6 @@ keywords = {
 	'main': 'MAIN',
     'procedure': 'PROCEDURE',
     'call': 'CALL',
-	#'if': 'IF',
-	#'else': 'ELSE',
-	#'for': 'FOR'
 	'delay': 'DELAY'
 }
 
@@ -29,11 +26,6 @@ tokens = [
 	'POWER',
 	'MODULO',
 
-	# Logical Comparators
-	#'EQUALS',
-	#'LESSTHAN',
-	#'GREATERTHAN',
-
 	# Enclosing Characters
 	'LPARENTHESES', 
 	'RPARENTHESES',
@@ -53,7 +45,7 @@ tokens = tokens + list(keywords.values())
 
 # Regular expressions for simple tokens
 t_POWER = r'\*\*'
-t_ignore = ' \t\r' #ignore spaces and tabs
+t_ignore = ' \t\r' #ignore spaces, tabs and windows' carry 
 t_ASSIGN = r'\='
 t_PLUS = r'\+'
 t_MINUS = r'\-'

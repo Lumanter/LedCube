@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 
-from lexicalAnalyzer import tokens
+from lexicalAnalysis import tokens
 
 # Ordered from lowest to highest priority
 precedence = (
@@ -218,6 +218,6 @@ with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     warnings.warn("deprecated", DeprecationWarning)
 
-parser = yacc.yacc()
-result = parser.parse(data)
+syntacticAnalyzer = yacc.yacc()
+result = syntacticAnalyzer.parse(data)
 print result
