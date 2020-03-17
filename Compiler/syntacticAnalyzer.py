@@ -13,18 +13,14 @@ precedence = (
 #name of the first production
 #start = 'statementList'
 
-def p_statementList_single(p):
+# Statement Productions
+def p_statementList_one(p):
     'statementList : statement '
     p[0] = p[1]
 
-def p_statementList_multiple(p):
+def p_statementList_many(p):
     'statementList : statement statementList'
     p[0] = (p[1], p[2])
-    # avoiding adding a Null nested node 
-    # if(p[2] == "empty"):
-    #     p[0] = (p[1])
-    # else:
-    #     p[0] = (p[1], p[2])
 
 def p_statementList_empty(p):
     'statementList : empty'
@@ -32,9 +28,11 @@ def p_statementList_empty(p):
 
 def p_statement(p):
     '''statement : varAssignment 
-                 | procedureDeclaration'''
+                 | procedureDeclaration
+                 | builtInFunction'''
     p[0] = p[1]
 
+# Variable Assignment Productions
 def p_varAssignment(p):
     '''varAssignment : simpleAssignment
                      | indexAssignment'''
@@ -43,18 +41,20 @@ def p_varAssignment(p):
 def p_simpleAssignment(p):
     'simpleAssignment : ID ASSIGN varValue SEMICOLON'
     p[0] = (p[1], p[2], p[3], p[4])
+
 def p_indexAssignment(p):
     'indexAssignment : ID index ASSIGN varValue SEMICOLON'
     p[0] = (p[1], p[2], p[3], p[4], p[5])
 
-def p_index_single(p):
+def p_index_one(p):
     'index : LSQUAREBRACKET INTEGER RSQUAREBRACKET'
     p[0] = (p[1], p[2], p[3])
 
-def p_index_multiple(p):
+def p_index_many(p):
     'index : index index'
     p[0] = (p[1], p[2])
 
+# productions to restrain index to 3 indexes
 # def p_index_1D(p):
 #     'index : LSQUAREBRACKET INTEGER RSQUAREBRACKET'
 #     p[0] = (p[1], p[2], p[3])
@@ -71,16 +71,29 @@ def p_varValue(p):
                 | list'''
     p[0] = p[1]
 
-# Lists Syntax
+# Built In Functions Syntax Productions
+def p_builtInFunction(p):
+    'builtInFunction : delay'
+    p[0] = p[1]
+
+def p_delay_default(p):
+    'delay : DELAY LPARENTHESES RPARENTHESES SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4])
+
+def p_delay_custom(p):
+    'delay : DELAY LPARENTHESES INTEGER COMMA TIMEUNIT RPARENTHESES SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+
+# Lists Syntax Productions
 def p_list(p):
     'list : LSQUAREBRACKET listElements RSQUAREBRACKET'
     p[0] = (p[1], p[2], p[3])
 
-def p_listElements_single(p):
+def p_listElements_one(p):
     'listElements : listElement'
     p[0] = p[1]
 
-def p_listElements_multiple(p):
+def p_listElements_many(p):
     'listElements : listElement COMMA listElements'
     p[0] = (p[1], p[2], p[3])
 
@@ -93,7 +106,9 @@ def p_listElement(p):
                    | list'''
     p[0] = p[1]
 
-# Numerical Operations
+# Numerical Operations Productions
+# don't support ids yet
+# they return the number itself so the tupple (aka tree) isn't propagated
 def p_numExpression_plus(p):
     'numExpression : numExpression PLUS term'
     p[0] = p[1] + p[3]
@@ -122,15 +137,15 @@ def p_term_power(p):
     'term : term POWER factor'
     p[0] = p[1] ** p[3]
 
-def p_expression_term(p):
+def p_numExpression_term(p):
     'numExpression : term'
     p[0] = p[1]
 
-def p_term(p):
+def p_term_factor(p):
     'term : factor'
     p[0] = p[1]
 
-def p_factor(p):
+def p_factor_integer(p):
     'factor : INTEGER'
     p[0] = p[1]
 
@@ -139,33 +154,35 @@ def p_procedureDeclaration(p):
     'procedureDeclaration : PROCEDURE ID LPARENTHESES parameters RPARENTHESES LBRACE statementList RBRACE SEMICOLON'
     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 
-def p_parameters_single(p):
+def p_parameters_one(p):
     'parameters : parameter'
     p[0] = p[1]
 
-def p_parameters_multiple(p):
+def p_parameters_many(p):
     'parameters : parameter COMMA parameters '
     p[0] = (p[1], p[2], p[3])
+
+def p_parameters_empty(p):
+    'parameters : empty'
+    p[0] = p[1]
 
 def p_parameter(p):
     'parameter : ID'
     p[0] = p[1]
 
-def p_parameters_empty(p):
-    'parameters : empty'
-    p[0] = p[1]
+# Special productions 
 
 def p_empty(p):
 	'empty :'
 	p[0] = None
 
 def p_error(p):
-	print "Syntaxis Error "# +str(p.lineno)
+	print "Syntaxis Error at character "+str(p.value)+", in line "+str(p.lineno)
 
 data= ''' 
     procedure sum(a,b){
         x = 5;
-        y = 10;
+        delay(5,"Mil");
     };
     list = [true, false];
 '''
