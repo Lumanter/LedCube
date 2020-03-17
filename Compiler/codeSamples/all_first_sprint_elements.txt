@@ -1,19 +1,19 @@
 Timer = 1;
 Rango_timer = "Seg";
-Dim_Filas = 6;
-Dim_Columnas = 6;
-Cubo = []
+Dim_filas = 6;
+Dim_columnas = 6;
+Cubo = [];
 
 Procedure turnOnLed(x, y, z) {
 	Cubo[x][y][z] = true;	
-}
+};
 
-u = 5; (procedures + vars)*
+u = 5;
 
-Procedure Main {
+Procedure Main() {
 	myBoolean = true;
 	x = 6 / 2 + 3 ** 8 - 1;
 	y = 10 % 2;
-	call turnOnLed(0, 0, 0);
-	delay() 
-}
+	CALL turnOnLed(0, 0, 0);
+	Delay();
+};

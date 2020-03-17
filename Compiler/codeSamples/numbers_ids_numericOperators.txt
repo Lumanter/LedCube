@@ -1,3 +1,9 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = [];
+
 myNumber = 6;
 myBoolean = true;
 largeOperation = 1 + 2 * 3 ** 4 / 5 % 6;

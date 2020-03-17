@@ -1,10 +1,14 @@
 import ply.lex as lex
 
 keywords = {
-	'main': 'MAIN',
-    'procedure': 'PROCEDURE',
-    'call': 'CALL',
-	'delay': 'DELAY'
+    'Procedure': 'PROCEDURE',
+    'CALL': 'CALL',
+	'Delay': 'DELAY',
+	'Timer': 'TIMER',
+	'Rango_timer': 'RANGO_TIMER',
+	'Dim_filas': 'DIM_FILAS',
+	'Dim_columnas': 'DIM_COLUMNAS',
+	'Cubo': 'CUBO'
 }
 
 tokens = [
@@ -75,9 +79,11 @@ def t_BOOLEAN(t):
 
 def t_ID(t):
 	r'[a-zA-Z_][a-zA-Z0-9@_&]*'
-	if t.value.lower() in keywords:
-		t.value = t.value.upper()
-		t.type = t.value
+	if t.value in keywords:
+		if t.value != "Cubo":
+			t.value = t.value.upper()
+			t.type = t.value
+	#print t.value, t.type
 	return t
 
 def t_INTEGER(t):

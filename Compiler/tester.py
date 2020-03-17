@@ -46,7 +46,8 @@ def lexicTest(data):
     print "------------------------------------"
 
 def syntaxTest(data):
-	print "si si"
+	abstractSyntaxTree = syntacticAnalyzer.parse(data)
+	print abstractSyntaxTree
 
 testName = askTestName(testDirectory)
 testPath = testDirectory + testName

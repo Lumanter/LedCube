@@ -1,5 +1,4 @@
 import ply.yacc as yacc
-
 from lexicalAnalysis import tokens
 
 # Ordered from lowest to highest priority
@@ -12,6 +11,40 @@ precedence = (
 
 #name of the first production
 #start = 'statementList'
+
+def p_program(p):
+    'program : configurationConstants statementList'
+    p[0] = (p[1], p[2])
+
+# TEMPORTAL FOR TESTING REASONS
+# def p_configurationConstants_empty(p):
+#     'configurationConstants : empty'
+#     p[0] = p[1]
+
+# Configuration Constants
+def p_configurationConstants(p):
+    'configurationConstants : timer timeUnit rows columns cube'
+    p[0] = (p[1], p[2], p[3], p[4], p[5])
+
+def p_timer(p):
+    'timer : TIMER ASSIGN INTEGER SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4])
+
+def p_timeUnit(p):
+    'timeUnit : RANGO_TIMER ASSIGN TIMEUNIT SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4])
+
+def p_rows(p):
+    'rows : DIM_FILAS ASSIGN INTEGER SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4])
+
+def p_columns(p):
+    'columns : DIM_COLUMNAS ASSIGN INTEGER SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4])
+
+def p_cube(p):
+    'cube : ID ASSIGN list SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4])
 
 # Statement Productions
 def p_statementList_one(p):
@@ -48,12 +81,17 @@ def p_indexAssignment(p):
     p[0] = (p[1], p[2], p[3], p[4], p[5])
 
 def p_index_one(p):
-    'index : LSQUAREBRACKET INTEGER RSQUAREBRACKET'
+    'index : LSQUAREBRACKET indexValue RSQUAREBRACKET'
     p[0] = (p[1], p[2], p[3])
 
 def p_index_many(p):
     'index : index index'
     p[0] = (p[1], p[2])
+
+def p_indexValue(p):
+    '''indexValue : INTEGER 
+                  | ID'''
+    p[0] = p[1]
 
 # productions to restrain index to 3 indexes
 # def p_index_1D(p):
@@ -203,21 +241,34 @@ def p_empty(p):
 def p_error(p):
 	print "Syntaxis Error at character "+str(p.value)+", in line "+str(p.lineno)
 
-data= ''' 
-    procedure sum(a,b){
+syntacticAnalyzer = yacc.yacc()
+
+# extra stuff for temporal tests
+data= '''
+    Timer = 500;
+    Rango_timer = "Mil";
+    Dim_filas = 8;
+    Dim_columnas = 8;
+    Cubo = [];
+
+    Procedure sum(a,b) {
         x = 5;
-        delay(5,"Mil");
+        Delay(5,"Mil");
     };
     list = [true, false];
-    call sum(5,5);
+    CALL sum(5,5);
+    y = 7;
+
+    Procedure main() {
+        x[0][0][0] = true; 
+    };
 '''
 
-# to supress unused tokens warnings
+# supressing unused tokens warnings for cleaner console logging
 import warnings
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     warnings.warn("deprecated", DeprecationWarning)
 
-syntacticAnalyzer = yacc.yacc()
-result = syntacticAnalyzer.parse(data)
-print result
+# result = syntacticAnalyzer.parse(data)
+# print result
