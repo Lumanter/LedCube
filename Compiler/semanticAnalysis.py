@@ -21,6 +21,8 @@ class Null(Node):
 		id = increaseCount()
 		tree += id+"[label= "+"nodo_nulo"+"]"+"\n\t"
 
+
+		print tree
 		return id
 
 
@@ -83,6 +85,8 @@ class configurationConstants(Node):
 
         tree += id + "->" + son5 + "\n\t"
 
+
+        print tree
         return id
 
 class timer(Node):
@@ -113,6 +117,8 @@ class timer(Node):
 
         tree += id + "->" + son4 + "\n\t"
 
+
+        print tree
         return id
 
 class timeUnit(Node):
@@ -142,6 +148,8 @@ class timeUnit(Node):
 
         tree += id + "->" + son4 + "\n\t"
 
+
+        print tree
         return id
 
 class rows(Node):
@@ -171,6 +179,8 @@ class rows(Node):
 
         tree += id + "->" + son4 + "\n\t"
 
+
+        print tree
         return id
 
 class columns(Node):
@@ -200,6 +210,8 @@ class columns(Node):
 
         tree += id + "->" + son4 + "\n\t"
 
+
+        print tree
         return id
 
 class cube(Node):
@@ -229,6 +241,8 @@ class cube(Node):
 
         tree += id + "->" + son4 + "\n\t"
 
+
+        print tree
         return id
 
 class statementList_one(Node):
@@ -246,6 +260,8 @@ class statementList_one(Node):
 
         tree += id + "->" + son1 + "\n\t"
 
+
+        print tree
         return id
 
 class statementList_many(Node):
@@ -267,6 +283,8 @@ class statementList_many(Node):
 
         tree += id + "->" + son2 + "\n\t"
 
+
+        print tree
         return id
 
 class statementList_empty(Node):
@@ -284,6 +302,8 @@ class statementList_empty(Node):
 
         tree += id + "->" + son1 + "\n\t"
 
+
+        print tree
         return id
 
 class statement(Node):
@@ -301,6 +321,8 @@ class statement(Node):
 
         tree += id + "->" + son1 + "\n\t"
 
+
+        print tree
         return id
 
 class varAssignment(Node):
@@ -318,6 +340,8 @@ class varAssignment(Node):
 
         tree += id + "->" + son1 + "\n\t"
 
+
+        print tree
         return id
 
 class simpleAssignment(Node):
@@ -347,6 +371,8 @@ class simpleAssignment(Node):
 
         tree += id + "->" + son4 + "\n\t"
 
+
+        print tree
         return id
 
 class indexAssignment(Node):
@@ -380,6 +406,8 @@ class indexAssignment(Node):
 
         tree += id + "->" + son5 + "\n\t"
 
+
+        print tree
         return id
 
 class index_one(Node):
@@ -405,6 +433,8 @@ class index_one(Node):
 
         tree += id + "->" + son3 + "\n\t"
 
+
+        print tree
         return id
 
 class index_many(Node):
@@ -426,6 +456,8 @@ class index_many(Node):
 
         tree += id + "->" + son2 + "\n\t"
 
+
+        print tree
         return id
 
 class indexValue(Node):
@@ -443,64 +475,45 @@ class indexValue(Node):
 
         tree += id + "->" + son1 + "\n\t"
 
+
+        print tree
         return id
 
 class varValue(Node):
-    def __init__(self, name, son1, son2, son3, son4):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
-        self.son3 = son3
-        self.son4 = son4
-
     def translate(self):
         global tree
         id = increaseCount()
 
         son1 = self.son1.translate()
-        son2 = self.son2[0].translate()
-        son3 = self.son3.translate()
-        son4 = self.son4[0].translate()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         tree += id + "->" + son1 + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
-
-        tree += id + "->" + son4 + "\n\t"
-
+        print tree
         return id
 
 class builtInFunction(Node):
-    def __init__(self, name, son1, son2, son3, son4):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
-        self.son3 = son3
-        self.son4 = son4
 
     def translate(self):
         global tree
         id = increaseCount()
 
         son1 = self.son1.translate()
-        son2 = self.son2.translate()
-        son3 = self.son3.translate()
-        son4 = self.son4.translate()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         tree += id + "->" + son1 + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
-
-        tree += id + "->" + son4 + "\n\t"
-
+        print tree
         return id
 
 class delay_default(Node):
@@ -524,6 +537,8 @@ class delay_default(Node):
         tree += id + "->" + son2 + "\n\t"
         tree += id + "->" + son3 + "\n\t"
         tree += id + "->" + son4 + "\n\t"
+
+        print tree
         return id
 
 class delay_custom(Node):
@@ -556,6 +571,8 @@ class delay_custom(Node):
         tree += id + "->" + son5 + "\n\t"
         tree += id + "->" + son6 + "\n\t"
         tree += id + "->" + son7 + "\n\t"
+
+        print tree
         return id
 
 class list_empty(Node):
@@ -573,6 +590,8 @@ class list_empty(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
         tree += id + "->" + son2 + "\n\t"
+
+        print tree
         return id
 
 class list(Node):
@@ -593,6 +612,8 @@ class list(Node):
         tree += id + "->" + son1 + "\n\t"
         tree += id + "->" + son2 + "\n\t"
         tree += id + "->" + son3 + "\n\t"
+
+        print tree
         return id
 
 class listElements_one(Node):
@@ -607,6 +628,8 @@ class listElements_one(Node):
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class listElements_many(Node):
@@ -627,6 +650,8 @@ class listElements_many(Node):
         tree += id + "->" + son1 + "\n\t"
         tree += id + "->" + son2 + "\n\t"
         tree += id + "->" + son3 + "\n\t"
+
+        print tree
         return id
 
 class listElement(Node):
@@ -641,123 +666,120 @@ class listElement(Node):
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class numExpression_plus(Node):
     def __init__(self, name, son1, son2):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
 
     def translate(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translate()
-        son2 = self.son2[0].translate()
+        son1 = self.son1.translate()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
+
+        print tree
         return id
 
 class numExpression_minus(Node):
-    def __init__(self, name, son1, son2):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
 
     def translate(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translate()
-        son2 = self.son2[0].translate()
+        son1 = self.son1.translate()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
+
+        print tree
         return id
 
 class numExpression_uminus(Node):
     def __init__(self, name, son1, son2):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
 
     def translate(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translate()
+        son1 = self.son1.translate()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class term_multiply(Node):
-    def __init__(self, name, son1, son2):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
 
     def translate(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translate()
-        son2 = self.son2[0].translate()
+        son1 = self.son1.translate()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
+
+        print tree
         return id
 
 class term_divide(Node):
-    def __init__(self, name, son1, son2):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
 
     def translate(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translate()
-        son2 = self.son2[0].translate()
+        son1 = self.son1.translate()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
+
+        print tree
         return id
 
 class term_modulo(Node):
     def __init__(self, name, son1, son2):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
 
     def translate(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translate()
-        son2 = self.son2[0].translate()
+        son1 = self.son1.translate()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
+
+        print tree
         return id
 
 class term_power(Node):
     def __init__(self, name, son1, son2):
         self.name = name
         self.son1 = son1
-        self.son2 = son2
 
     def translate(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translate()
-        son2 = self.son2[0].translate()
+        son1 = self.son1.translate()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
+
+        print tree
         return id
 
 class numExpression_term(Node):
@@ -772,6 +794,8 @@ class numExpression_term(Node):
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class term_factor(Node):
@@ -786,6 +810,8 @@ class term_factor(Node):
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class factor_integer(Node):
@@ -800,6 +826,8 @@ class factor_integer(Node):
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class procedureDeclaration_noParameters(Node):
@@ -837,6 +865,8 @@ class procedureDeclaration_noParameters(Node):
         tree += id + "->" + son6 + "\n\t"
         tree += id + "->" + son7 + "\n\t"
         tree += id + "->" + son8 + "\n\t"
+
+        print tree
         return id
 
 class procedureDeclaration_parameters(Node):
@@ -877,6 +907,8 @@ class procedureDeclaration_parameters(Node):
         tree += id + "->" + son7 + "\n\t"
         tree += id + "->" + son8 + "\n\t"
         tree += id + "->" + son9 + "\n\t"
+
+        print tree
         return id
 
 class parameters_one(Node):
@@ -891,6 +923,8 @@ class parameters_one(Node):
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class parameters_many(Node):
@@ -911,6 +945,8 @@ class parameters_many(Node):
         tree += id + "->" + son1 + "\n\t"
         tree += id + "->" + son2 + "\n\t"
         tree += id + "->" + son3 + "\n\t"
+
+        print tree
         return id
 
 class parameter(Node):
@@ -925,6 +961,8 @@ class parameter(Node):
         
         tree += id + "[label= "+self.name+"]"+"\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class procedureCall_noParameters(Node):
@@ -951,6 +989,8 @@ class procedureCall_noParameters(Node):
         tree += id + "->" + son3 + "\n\t"
         tree += id + "->" + son4 + "\n\t"
         tree += id + "->" + son5 + "\n\t"
+
+        print tree
         return id
 
 class procedureCall_parameters(Node):
@@ -980,6 +1020,8 @@ class procedureCall_parameters(Node):
         tree += id + "->" + son4 + "\n\t"
         tree += id + "->" + son5 + "\n\t"
         tree += id + "->" + son6 + "\n\t"
+
+        print tree
         return id
 
 class arguments_one(Node):
@@ -994,6 +1036,8 @@ class arguments_one(Node):
 
         tree += id + "[label= "+self.name+"]"+"\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class arguments_many(Node):
@@ -1014,6 +1058,8 @@ class arguments_many(Node):
         tree += id + "->" + son1 + "\n\t"
         tree += id + "->" + son2 + "\n\t"
         tree += id + "->" + son3 + "\n\t"
+
+        print tree
         return id
 
 class argument(Node):
@@ -1028,6 +1074,8 @@ class argument(Node):
         
         tree += id + "[label= "+self.name+"]"+"\n\t"
         tree += id + "->" + son1 + "\n\t"
+
+        print tree
         return id
 
 class empty(Node):
