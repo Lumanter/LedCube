@@ -79,7 +79,7 @@ class configurationConstants(Node):
         if type(self.son3) == type(type(tuple)):
             son3 = self.son3[0].translation()
         else:
-            son4 = self.son4.translation()
+            son3 = self.son3.translation()
         if type(self.son4) == type(type(tuple)):
             son4 = self.son4[0].translation()
         else:
@@ -89,21 +89,21 @@ class configurationConstants(Node):
         else:
             son5 = self.son5.translation()
 
-        tree += id + "[label= " + self.name + "]" + "\n\t"
+        tree += str(id) + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += str(id) + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += str(id) + "->" + str(son2) + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
+        tree += str(id) + "->" + str(son3) + "\n\t"
 
-        tree += id + "->" + son4 + "\n\t"
+        tree += str(id) + "->" + str(son4) + "\n\t"
 
-        tree += id + "->" + son5 + "\n\t"
+        tree += str(id) + "->" + str(son5) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class timer(Node):
     def __init__(self, name, son1, son2, son3, son4):
@@ -125,20 +125,20 @@ class timer(Node):
         tree += str(id) + "[label= " + self.name + "]" + "\n\t"
         print tree
 
-        tree += str(id) + "->" + son1 + "\n\t"
+        tree += str(id) + "->" + str(son1) + "\n\t"
         print tree
 
-        tree += str(id) + "->" + son2 + "\n\t"
+        tree += str(id) + "->" + str(son2) + "\n\t"
         print tree
 
         tree += str(id) + "->" + str(son3) + "\n\t"
         print tree
 
-        tree += str(id) + "->" + son4 + "\n\t"
+        tree += str(id) + "->" + str(son4) + "\n\t"
         print tree
 
 
-        return id
+        return str(id)
 
 class timeUnit(Node):
     def __init__(self, name, son1, son2, son3, son4):
@@ -152,24 +152,24 @@ class timeUnit(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        son4 = self.son4
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
-        tree += id + "->" + son4 + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class rows(Node):
     def __init__(self, name, son1, son2, son3, son4):
@@ -183,24 +183,24 @@ class rows(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        son4 = self.son4
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
-        tree += id + "->" + son4 + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class columns(Node):
     def __init__(self, name, son1, son2, son3, son4):
@@ -214,24 +214,24 @@ class columns(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        son4 = self.son4
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
-        tree += id + "->" + son4 + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class cube(Node):
     def __init__(self, name, son1, son2, son3, son4):
@@ -245,24 +245,27 @@ class cube(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4.translation()
+        son1 = self.son1
+        son2 = self.son2
+        if type(self.son3) == type(type(tuple)):
+            son3 = self.son3[0].translation()
+        else:
+            son3 = self.son3.translation()
+        son4 = self.son4
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
-        tree += id + "->" + son4 + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class statementList_one(Node):
     def __init__(self, name, son1):
@@ -273,15 +276,18 @@ class statementList_one(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class statementList_many(Node):
     def __init__(self, name, son1, son2):
@@ -293,18 +299,24 @@ class statementList_many(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1[0].translation()
-        son2 = self.son2[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
+        if type(self.son2) == type(type(tuple)):
+            son2 = self.son2[0].translation()
+        else:
+            son2 = self.son2.translation()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class statementList_empty(Node):
     def __init__(self, name, son1):
@@ -315,15 +327,18 @@ class statementList_empty(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class statement(Node):
     def __init__(self, name, son1):
@@ -334,15 +349,18 @@ class statement(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class varAssignment(Node):
     def __init__(self, name, son1):
@@ -352,16 +370,18 @@ class varAssignment(Node):
     def translation(self):
         global tree
         id = increaseCount()
-
-        son1 = self.son1[0].translation()
-
+        
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class simpleAssignment(Node):
     def __init__(self, name, son1, son2, son3, son4):
@@ -375,24 +395,27 @@ class simpleAssignment(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3[0].translation()
-        son4 = self.son4.translation()
+        son1 = self.son1
+        son2 = self.son2
+        if type(self.son3) == type(type(tuple)):
+            son3 = self.son3[0].translation()
+        else:
+            son3 = self.son3.translation()
+        son4 = self.son4
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
-        tree += id + "->" + son4 + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class indexAssignment(Node):
     def __init__(self, name, son1, son2, son3, son4, son5):
@@ -407,27 +430,34 @@ class indexAssignment(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
-        son2 = self.son2[0].translation()
-        son3 = self.son3.translation()
-        son4 = self.son4[0].translation()
-        son5 = self.son5.translation()
+        son1 = self.son1
+        if type(self.son2) == type(type(tuple)):
+            son2 = self.son2[0].translation()
+        else:
+            son2 = self.son2.translation()
+
+        son3 = self.son3
+        if type(self.son4) == type(type(tuple)):
+            son4 = self.son4[0].translation()
+        else:
+            son4 = self.son4.translation()
+        son5 = self.son5
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
-        tree += id + "->" + son4 + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
 
-        tree += id + "->" + son5 + "\n\t"
+        tree += id + "->" + str(son5) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class index_one(Node):
     def __init__(self, name, son1, son2, son3):
@@ -440,21 +470,25 @@ class index_one(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
-        son2 = self.son2[0].translation()
-        son3 = self.son3.translation()
+        son1 = self.son1
+        if type(self.son2) == type(type(tuple)):
+            son2 = self.son2[0].translation()
+        else:
+            son2 = self.son2.translation()
+
+        son3 = self.son3
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class index_many(Node):
     def __init__(self, name, son1, son2):
@@ -466,18 +500,24 @@ class index_many(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
+        if type(self.son2) == type(type(tuple)):
+            son2 = self.son2[0].translation()
+        else:
+            son2 = self.son2.translation()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class indexValue(Node):
     def __init__(self, name, son1):
@@ -488,16 +528,17 @@ class indexValue(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
+        son1 = self.son1
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
+#Special Case #1
 class varValue(Node):
     def __init__(self, name, son1):
         self.name = name
@@ -506,15 +547,15 @@ class varValue(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
+        son1 = self.son1
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class builtInFunction(Node):
     def __init__(self, name, son1):
@@ -525,15 +566,18 @@ class builtInFunction(Node):
         global tree
         id = increaseCount()
 
-        son1 = self.son1.translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
 
         print tree
-        return id
+        return str(id)
 
 class delay_default(Node):
     def __init__(self, name, son1, son2, son3, son4):
@@ -543,22 +587,22 @@ class delay_default(Node):
         self.son3 = son3
         self.son4 = son4
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        son4 = self.son4
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
-        tree += id + "->" + son4 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class delay_custom(Node):
     def __init__(self, name, son1, son2, son3, son4, son5, son6, son7):
@@ -571,28 +615,28 @@ class delay_custom(Node):
         self.son6 = son6
         self.son7 = son7
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4.translation()
-        son5 = self.son5.translation()
-        son6 = self.son6.translation()
-        son7 = self.son7.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        son4 = self.son4
+        son5 = self.son5
+        son6 = self.son6
+        son7 = self.son7
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
-        tree += id + "->" + son4 + "\n\t"
-        tree += id + "->" + son5 + "\n\t"
-        tree += id + "->" + son6 + "\n\t"
-        tree += id + "->" + son7 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
+        tree += id + "->" + str(son5) + "\n\t"
+        tree += id + "->" + str(son6) + "\n\t"
+        tree += id + "->" + str(son7) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class list_empty(Node):
     def __init__(self, name, son1, son2):
@@ -600,18 +644,18 @@ class list_empty(Node):
         self.son1 = son1
         self.son2 = son2
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
+        son1 = self.son1
+        son2 = self.son2
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class list(Node):
     def __init__(self, name, son1, son2, son3):
@@ -620,36 +664,43 @@ class list(Node):
         self.son2 = son2
         self.son3 = son3
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
-        son2 = self.son2[0].translation()
-        son3 = self.son3.translation()
+        son1 = self.son1
+        if type(self.son2) == type(type(tuple)):
+            son2 = self.son2[0].translation()
+        else:
+            son2 = self.son2.translation()
+        son3 = self.son3
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class listElements_one(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
+
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class listElements_many(Node):
     def __init__(self, name, son1, son2, son3):
@@ -658,196 +709,212 @@ class listElements_many(Node):
         self.son2 = son2
         self.son3 = son3
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
-        son2 = self.son2.translation()
-        son3 = self.son3[0].translation()
+
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
+
+        son2 = self.son2
+
+        if type(self.son3) == type(type(tuple)):
+            son3 = self.son3[0].translation()
+        else:
+            son3 = self.son3.translation()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
+#Special case#2
 class listElement(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class numExpression_plus(Node):
-    def __init__(self, name, son1, son2):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class numExpression_minus(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class numExpression_uminus(Node):
-    def __init__(self, name, son1, son2):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class term_multiply(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class term_divide(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class term_modulo(Node):
-    def __init__(self, name, son1, son2):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class term_power(Node):
-    def __init__(self, name, son1, son2):
+    def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class numExpression_term(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class term_factor(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class factor_integer(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class procedureDeclaration_noParameters(Node):
     def __init__(self, name, son1, son2, son3, son4, son5, son6, son7, son8):
@@ -862,31 +929,35 @@ class procedureDeclaration_noParameters(Node):
         self.son8 = son8
 
         
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4.translation()
-        son5 = self.son5.translation()
-        son6 = self.son6[0].translation()
-        son7 = self.son7.translation()
-        son8 = self.son8.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        son4 = self.son4
+        son5 = self.son5
+        if type(self.son6) == type(type(tuple)):
+            son6 = self.son6[0].translation()
+        else:
+            son6 = self.son6.translation()
+
+        son7 = self.son7
+        son8 = self.son8
 
 
         tree += id + "[label= "+self.name+"]"+"\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
-        tree += id + "->" + son4 + "\n\t"
-        tree += id + "->" + son5 + "\n\t"
-        tree += id + "->" + son6 + "\n\t"
-        tree += id + "->" + son7 + "\n\t"
-        tree += id + "->" + son8 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
+        tree += id + "->" + str(son5) + "\n\t"
+        tree += id + "->" + str(son6) + "\n\t"
+        tree += id + "->" + str(son7) + "\n\t"
+        tree += id + "->" + str(son8) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class procedureDeclaration_parameters(Node):
     def __init__(self, name, son1, son2, son3, son4, son5, son6, son7, son8, son9):
@@ -902,49 +973,60 @@ class procedureDeclaration_parameters(Node):
         self.son9 = son9
 
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4[0].translation()
-        son5 = self.son5.translation()
-        son6 = self.son6.translation()
-        son7 = self.son7[0].translation()
-        son8 = self.son8.translation()
-        son9 = self.son9.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        if type(self.son4) == type(type(tuple)):
+            son4 = self.son4[0].translation()
+        else:
+            son4 = self.son4.translation()
+        
+        son5 = self.son5
+        son6 = self.son6
+        if type(self.son7) == type(type(tuple)):
+            son7 = self.son7[0].translation()
+        else:
+            son7 = self.son7.translation()
+
+        son8 = self.son8
+        son9 = self.son9
 
 
         tree += id + "[label= "+self.name+"]"+"\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
-        tree += id + "->" + son4 + "\n\t"
-        tree += id + "->" + son5 + "\n\t"
-        tree += id + "->" + son6 + "\n\t"
-        tree += id + "->" + son7 + "\n\t"
-        tree += id + "->" + son8 + "\n\t"
-        tree += id + "->" + son9 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
+        tree += id + "->" + str(son5) + "\n\t"
+        tree += id + "->" + str(son6) + "\n\t"
+        tree += id + "->" + str(son7) + "\n\t"
+        tree += id + "->" + str(son8) + "\n\t"
+        tree += id + "->" + str(son9) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class parameters_one(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
         
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class parameters_many(Node):
     def __init__(self, name, son1, son2, son3):
@@ -953,36 +1035,43 @@ class parameters_many(Node):
         self.son2 = son2
         self.son3 = son3
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
-        son2 = self.son2.translation()
-        son3 = self.son3[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
+
+        son2 = self.son2
+        if type(self.son3) == type(type(tuple)):
+            son3 = self.son3[0].translation()
+        else:
+            son3 = self.son3.translation()
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class parameter(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
+        son1 = self.son1
         
         tree += id + "[label= "+self.name+"]"+"\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class procedureCall_noParameters(Node):
     def __init__(self, name, son1, son2, son3, son4, son5):
@@ -993,24 +1082,24 @@ class procedureCall_noParameters(Node):
         self.son4 = son4
         self.son5 = son5
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4.translation()
-        son5 = self.son5.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        son4 = self.son4
+        son5 = self.son5
         
         tree += id + "[label= "+self.name+"]"+"\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
-        tree += id + "->" + son4 + "\n\t"
-        tree += id + "->" + son5 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
+        tree += id + "->" + str(son5) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class procedureCall_parameters(Node):
     def __init__(self, name, son1, son2, son3, son4, son5, son6):
@@ -1022,42 +1111,49 @@ class procedureCall_parameters(Node):
         self.son5 = son5
         self.son6 = son6
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1.translation()
-        son2 = self.son2.translation()
-        son3 = self.son3.translation()
-        son4 = self.son4[0].translation()
-        son5 = self.son5.translation()
-        son6 = self.son6.translation()
+        son1 = self.son1
+        son2 = self.son2
+        son3 = self.son3
+        if type(self.son4) == type(type(tuple)):
+            son4 = self.son4[0].translation()
+        else:
+            son4 = self.son4.translation()
+
+        son5 = self.son5
+        son6 = self.son6
         
         tree += id + "[label= "+self.name+"]"+"\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
-        tree += id + "->" + son4 + "\n\t"
-        tree += id + "->" + son5 + "\n\t"
-        tree += id + "->" + son6 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
+        tree += id + "->" + str(son4) + "\n\t"
+        tree += id + "->" + str(son5) + "\n\t"
+        tree += id + "->" + str(son6) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class arguments_one(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
 
         tree += id + "[label= "+self.name+"]"+"\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class arguments_many(Node):
     def __init__(self, name, son1, son2, son3):
@@ -1066,43 +1162,53 @@ class arguments_many(Node):
         self.son2 = son2
         self.son3 = son3
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
-        son2 = self.son2.translation()
-        son3 = self.son3[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
+
+        son2 = self.son2
+        if type(self.son3) == type(type(tuple)):
+            son3 = self.son3[0].translation()
+        else:
+            son3 = self.son3.translation()
         
         tree += id + "[label= "+self.name+"]"+"\n\t"
-        tree += id + "->" + son1 + "\n\t"
-        tree += id + "->" + son2 + "\n\t"
-        tree += id + "->" + son3 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
+        tree += id + "->" + str(son2) + "\n\t"
+        tree += id + "->" + str(son3) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class argument(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
-        son1 = self.son1[0].translation()
+        if type(self.son1) == type(type(tuple)):
+            son1 = self.son1[0].translation()
+        else:
+            son1 = self.son1.translation()
         
         tree += id + "[label= "+self.name+"]"+"\n\t"
-        tree += id + "->" + son1 + "\n\t"
+        tree += id + "->" + str(son1) + "\n\t"
 
         print tree
-        return id
+        return str(id)
 
 class empty(Node):
     def __init__(self, name, son1):
         self.name = name
         self.son1 = son1
 
-    def translate(self,):
+    def translation(self,):
         global tree 
         id = increaseCount()
 
