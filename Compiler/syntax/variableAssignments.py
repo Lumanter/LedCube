@@ -41,5 +41,6 @@ def p_varValue(p):
     '''varValue : ID
                 | numExpression 
                 | BOOLEAN
-                | list'''
+                | list
+                | listDimension'''
     p[0] = p[1]

@@ -11,3 +11,8 @@ def p_delay_default(p):
 def p_delay_custom(p):
     'delay : DELAY LPARENTHESES INTEGER COMMA TIMEUNIT RPARENTHESES SEMICOLON'
     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+
+# Matrix Shape 
+def p_listDimension(p):
+    'listDimension : ID DOT DIMENSION'
+    p[0] = (p[1], p[2], p[3])

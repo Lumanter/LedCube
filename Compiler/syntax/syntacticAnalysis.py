@@ -1,4 +1,5 @@
 import ply.yacc as yacc
+
 import sys
 sys.path.append('../')
 from lexicalAnalysis import tokens
@@ -11,7 +12,6 @@ from lists import *
 from procedures import *
 from statements import *
 
-#name of the first production
 start = 'program'
 
 def p_program(p):
@@ -19,7 +19,7 @@ def p_program(p):
     p[0] = (p[1], p[2])
 
 def p_error(p):
-	print "Syntaxis Error at character "+str(p.value)+", in line "+str(p.lineno)
+	print "Syntaxis error in line " + str(p.lineno) + ", immediately before character \""+str(p.value)+"\""
 
 # extra stuff for temporal tests
 data= '''
@@ -29,6 +29,10 @@ data= '''
     Dim_columnas = 8;
     Cubo = [];
 
+    rows = Cubo.shapeF;
+'''
+
+'''
     Procedure sum(a,b) {
         x = 5 + 7 * 9;
         Delay(5,"Mil");

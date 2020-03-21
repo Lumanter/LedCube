@@ -1,0 +1,10 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = [];
+
+myList = [True, False]
+columns = myList.shapeC
+rows = myList.shapeF
+intersec = myList.shapeA

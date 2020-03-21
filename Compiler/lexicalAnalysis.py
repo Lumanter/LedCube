@@ -8,7 +8,10 @@ keywords = {
 	'Rango_timer': 'RANGO_TIMER',
 	'Dim_filas': 'DIM_FILAS',
 	'Dim_columnas': 'DIM_COLUMNAS',
-	'Cubo': 'CUBO'
+	'Cubo': 'CUBO',
+
+	# reserved functions
+	'Neg': 'NEG',
 }
 
 tokens = [
@@ -18,9 +21,10 @@ tokens = [
 	# Variable Types
 	'INTEGER',
 	'BOOLEAN',
-
-	# open to discussion
 	'TIMEUNIT',
+
+	# List Operators
+	'DIMENSION',
 
 	#Reserve Tokens
 	'TIMER',
@@ -84,12 +88,15 @@ def t_BOOLEAN(t):
 	t.value = (t.value == 'true')
 	return t
 
+def t_DIMENSION(t):
+	r'shape(A|F|C)'
+	return t
+
 def t_ID(t):
 	r'[a-zA-Z_][a-zA-Z0-9@_&]*'
 	if t.value in keywords:
 		if t.value != "Cubo":
-			t.value = t.value.upper()
-			t.type = t.value
+			t.type = t.value.upper()
 	#print t.value, t.type
 	return t
 
