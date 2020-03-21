@@ -9,9 +9,6 @@ keywords = {
 	'Dim_filas': 'DIM_FILAS',
 	'Dim_columnas': 'DIM_COLUMNAS',
 	'Cubo': 'CUBO',
-
-	# reserved functions
-	'Neg': 'NEG',
 }
 
 tokens = [
@@ -23,8 +20,9 @@ tokens = [
 	'BOOLEAN',
 	'TIMEUNIT',
 
-	# List Operators
-	'DIMENSION',
+	# List Functions
+	'LISTDIMENSION',
+	'LISTOPERATOR',
 
 	#Reserve Tokens
 	'TIMER',
@@ -51,9 +49,8 @@ tokens = [
 	
 	# Punctuation Marks
 	'COMMA',
-	'SEMICOLON',
-	'DOT'
-	]
+	'SEMICOLON'
+]
 
 # Adding the keywords to the total tokens
 tokens = tokens + list(keywords.values())
@@ -75,7 +72,6 @@ t_LBRACE = r'\{'
 t_RBRACE = r'\}' 
 t_COMMA = r','
 t_SEMICOLON = r';'
-t_DOT = r'\.'
 
 # Regular expressions for not so simple tokens
 def t_TIMEUNIT(t):
@@ -83,14 +79,22 @@ def t_TIMEUNIT(t):
 	t.value = t.value[1:-1]
 	return t
 
+	
 def t_BOOLEAN(t):
-	r'true|false'
+	r'True|False'
 	t.value = (t.value == 'true')
 	return t
 
-def t_DIMENSION(t):
-	r'shape(A|F|C)'
+def t_LISTOPERATOR(t):
+	r'\.(F|T|Neg)'
+	t.value = t.value[1:]
 	return t
+
+def t_LISTDIMENSION(t):
+	r'\.shape(A|F|C)'
+	t.value = t.value[1:]
+	return t
+
 
 def t_ID(t):
 	r'[a-zA-Z_][a-zA-Z0-9@_&]*'

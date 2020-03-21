@@ -21,6 +21,8 @@ def p_program(p):
 def p_error(p):
 	print "Syntaxis error in line " + str(p.lineno) + ", immediately before character \""+str(p.value)+"\""
 
+syntacticAnalyzer = yacc.yacc()
+
 # extra stuff for temporal tests
 data= '''
     Timer = 500;
@@ -30,20 +32,19 @@ data= '''
     Cubo = [];
 
     rows = Cubo.shapeF;
+    x[0][1][8].Neg;
+    y[4].T;
+    x[8][2][0].F;
 '''
 
-'''
-    Procedure sum(a,b) {
-        x = 5 + 7 * 9;
-        Delay(5,"Mil");
-    };
-    list = [true, false];
-    CALL sum(5,5);
-    y = 7;
+program = syntacticAnalyzer.parse(data)
 
-    Procedure main() {
-        x[0][0][0] = true; 
-    };
-'''
-syntacticAnalyzer = yacc.yacc()
-print syntacticAnalyzer.parse(data)
+def printTuple(myTuple):
+    for subTuple in myTuple:
+        if isinstance(subTuple[0], tuple):
+            printTuple(subTuple)
+        else:
+            print subTuple
+
+# print "\n" + "Syntax Analysis Result:" + "\n"
+# printTuple(program[1])

@@ -9,7 +9,7 @@ from lexicalAnalysis import lexicalAnalyzer
 
 
 testDirectory = './codeSamples/'
-testType = "lexic" #lexic, syntax or semantic
+testType = "syntax" #lexic, syntax or semantic
 
 def askTestName(directory):
 	foundedFiles = []
@@ -50,7 +50,14 @@ def lexicTest(data):
 
 def syntaxTest(data):
 	abstractSyntaxTree = syntacticAnalyzer.parse(data)
-	print abstractSyntaxTree
+	def printTuple(myTuple):
+		for subTuple in myTuple:
+			if isinstance(subTuple[0], tuple):
+				printTuple(subTuple)
+			else:
+				print subTuple
+	print "\n" + "Syntax Analysis Result:" + "\n"
+	printTuple(abstractSyntaxTree)
 
 testName = askTestName(testDirectory)
 testPath = testDirectory + testName
