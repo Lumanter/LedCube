@@ -1,9 +1,12 @@
-from lexicalAnalysis import lexicalAnalyzer
-from syntacticAnalysis import syntacticAnalyzer
 import re
 import codecs
 import os
 import sys
+sys.path.append('./syntax/')
+
+from syntacticAnalysis import syntacticAnalyzer
+from lexicalAnalysis import lexicalAnalyzer
+
 
 testDirectory = './codeSamples/'
 testType = "syntax" #lexic, syntax or semantic
