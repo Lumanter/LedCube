@@ -33,7 +33,8 @@ data= '''
     Dim_columnas = 8;
     Cubo = [];
 
-    for n in lista Step 5 { };
+    list.del(0);
+    list.del(0, 0);
 '''
 
 def printTuple(myTuple):

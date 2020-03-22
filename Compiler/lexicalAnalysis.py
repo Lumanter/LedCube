@@ -30,6 +30,8 @@ tokens = [
 	# List Functions
 	'LISTDIMENSION',
 	'LISTOPERATOR',
+	'DELETE',
+	'INSERT',
 
 	# Numerical Operators 
 	'PLUS',
@@ -81,7 +83,6 @@ def t_TIMEUNIT(t):
 	r'\"(Mil|Seg|Min)\"'
 	t.value = t.value[1:-1]
 	return t
-
 	
 def t_BOOLEAN(t):
 	r'True|False'
@@ -95,6 +96,16 @@ def t_LISTOPERATOR(t):
 
 def t_LISTDIMENSION(t):
 	r'\.shape(A|F|C)'
+	t.value = t.value[1:]
+	return t
+
+def t_DELETE(t):
+	r'\.del'
+	t.value = t.value[1:]
+	return t
+
+def t_INSERT(t):
+	r'\.insert'
 	t.value = t.value[1:]
 	return t
 
