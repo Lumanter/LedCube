@@ -17,7 +17,8 @@ def p_statement(p):
                  | procedureDeclaration
                  | procedureCall
                  | builtInFunction
-                 | ifStatement'''
+                 | ifStatement
+                 | forLoop'''
     p[0] = p[1]
 
 def p_empty(p):

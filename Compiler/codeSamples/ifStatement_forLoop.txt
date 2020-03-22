@@ -8,3 +8,7 @@ if Cubo[0][0][0] == True {
 	x = 5;	
 };
 
+for n in lista { };
+for n in lista Step 2 { };
+
+

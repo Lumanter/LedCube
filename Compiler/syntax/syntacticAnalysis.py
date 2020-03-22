@@ -12,6 +12,7 @@ from lists import *
 from procedures import *
 from statements import *
 from ifStatement import *
+from forLoop import *
 
 start = 'program'
 
@@ -32,9 +33,7 @@ data= '''
     Dim_columnas = 8;
     Cubo = [];
 
-    if x.shapeC == True {
-
-    };
+    for n in lista Step 5 { };
 '''
 
 def printTuple(myTuple):
@@ -45,6 +44,5 @@ def printTuple(myTuple):
             print subTuple
 
 # program = syntacticAnalyzer.parse(data)
-
 # print "\n" + "Syntax Analysis Result:" + "\n"
 # print program
