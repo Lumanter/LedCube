@@ -1,0 +1,10 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = [];
+
+if Cubo[0][0][0] == True {
+	x = 5;	
+};
+

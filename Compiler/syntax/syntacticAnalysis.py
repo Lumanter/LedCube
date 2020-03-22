@@ -11,6 +11,7 @@ from builtinFunctions import *
 from lists import *
 from procedures import *
 from statements import *
+from ifStatement import *
 
 start = 'program'
 
@@ -31,13 +32,10 @@ data= '''
     Dim_columnas = 8;
     Cubo = [];
 
-    rows = Cubo.shapeF;
-    x[0][1][8].Neg;
-    y[4].T;
-    x[8][2][0].F;
-'''
+    if x.shapeC == True {
 
-program = syntacticAnalyzer.parse(data)
+    };
+'''
 
 def printTuple(myTuple):
     for subTuple in myTuple:
@@ -46,5 +44,7 @@ def printTuple(myTuple):
         else:
             print subTuple
 
+# program = syntacticAnalyzer.parse(data)
+
 # print "\n" + "Syntax Analysis Result:" + "\n"
-# printTuple(program[1])
+# print program

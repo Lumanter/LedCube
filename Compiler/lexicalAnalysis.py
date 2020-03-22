@@ -9,6 +9,7 @@ keywords = {
 	'Dim_filas': 'DIM_FILAS',
 	'Dim_columnas': 'DIM_COLUMNAS',
 	'Cubo': 'CUBO',
+	'if': 'IF'
 }
 
 tokens = [
@@ -38,6 +39,9 @@ tokens = [
 	'DIVIDE',
 	'POWER',
 	'MODULO',
+
+	# Logical Operator 
+	'COMPARATOR',
 
 	# Enclosing Characters
 	'LPARENTHESES', 
@@ -82,7 +86,7 @@ def t_TIMEUNIT(t):
 	
 def t_BOOLEAN(t):
 	r'True|False'
-	t.value = (t.value == 'true')
+	t.value = (t.value == 'True')
 	return t
 
 def t_LISTOPERATOR(t):
@@ -95,6 +99,9 @@ def t_LISTDIMENSION(t):
 	t.value = t.value[1:]
 	return t
 
+def t_COMPARATOR(t):
+	r'>=|<=|>|<|==|!='
+	return t
 
 def t_ID(t):
 	r'[a-zA-Z_][a-zA-Z0-9@_&]*'
