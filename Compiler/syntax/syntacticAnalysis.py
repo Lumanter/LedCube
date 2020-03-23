@@ -33,9 +33,12 @@ data= '''
     Dim_columnas = 8;
     Cubo = [];
 
-    list.del(0);
-    list.del(0, 0);
+    list.insert(2, False);
+    list.insert([True, True, False], 0);
+    list.insert([True, True, False], 0, 1);
 '''
+
+# list.insert(2, False);
 
 def printTuple(myTuple):
     for subTuple in myTuple:

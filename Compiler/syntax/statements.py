@@ -19,7 +19,8 @@ def p_statement(p):
                  | builtInFunction
                  | ifStatement
                  | forLoop
-                 | listDelete'''
+                 | listDelete
+                 | listInsert'''
     p[0] = p[1]
 
 def p_empty(p):

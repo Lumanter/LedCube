@@ -14,7 +14,7 @@ def p_delay_custom(p):
     'delay : DELAY LPARENTHESES INTEGER COMMA TIMEUNIT RPARENTHESES SEMICOLON'
     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6])
 
-# Matrix Shape
+# Matrix Shape Function
 # - referenced within p_varValue, inside variableAssignments
 def p_listDimension(p):
     'listDimension : ID LISTDIMENSION'
@@ -35,5 +35,16 @@ def p_listDelete_eliminationType(p):
     p[0] = (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7])
 
 
+# List Insert Function
+def p_listInsert_one(p):
+    'listInsert : ID INSERT LPARENTHESES INTEGER COMMA BOOLEAN RPARENTHESES SEMICOLON'
+    p[0] = (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7])
 
+def p_listInsert_many(p):
+    'listInsert : ID INSERT LPARENTHESES list COMMA INTEGER RPARENTHESES SEMICOLON'
+    p[0] = (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7])
+
+def p_listInsert_many_atIndex(p):
+    'listInsert : ID INSERT LPARENTHESES list COMMA INTEGER COMMA INTEGER RPARENTHESES SEMICOLON'
+    p[0] = (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
 
