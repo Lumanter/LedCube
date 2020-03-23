@@ -19,3 +19,7 @@ def p_listElement(p):
     '''listElement : BOOLEAN
                    | list'''
     p[0] = p[1]
+
+def p_list_fromRange(p):
+    'list : listRange'
+    p[0] = p[1]

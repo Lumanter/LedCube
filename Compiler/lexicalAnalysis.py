@@ -15,7 +15,11 @@ keywords = {
 	'for': 'FOR',
 	'in': 'IN',
 	'Step': 'STEP',
-	'Delay': 'DELAY'
+
+	# Built-in Functions
+	'Delay': 'DELAY',
+	'list': 'LIST',
+	'range': 'RANGE'
 }
 
 tokens = [
@@ -117,6 +121,7 @@ def t_ID(t):
 	r'[a-zA-Z_][a-zA-Z0-9@_&]*'
 	if t.value in keywords:
 		if t.value != "Cubo":
+			print t.value
 			t.type = t.value.upper()
 	#print t.value, t.type
 	return t

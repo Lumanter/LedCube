@@ -21,7 +21,10 @@ def p_program(p):
     p[0] = (p[1], p[2])
 
 def p_error(p):
-	print "Syntaxis error in line " + str(p.lineno) + ", immediately before character \""+str(p.value)+"\""
+    if(p == None):
+        print "Syntax error at the last character"
+    else:
+        print "Syntaxis error in line " + str(p.lineno) + ", immediately before character \""+str(p.value)+"\""
 
 syntacticAnalyzer = yacc.yacc()
 
@@ -33,12 +36,10 @@ data= '''
     Dim_columnas = 8;
     Cubo = [];
 
-    list.insert(2, False);
-    list.insert([True, True, False], 0);
-    list.insert([True, True, False], 0, 1);
+    myList = list(range(8, True));
 '''
 
-# list.insert(2, False);
+
 
 def printTuple(myTuple):
     for subTuple in myTuple:

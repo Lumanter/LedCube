@@ -48,3 +48,7 @@ def p_listInsert_many_atIndex(p):
     'listInsert : ID INSERT LPARENTHESES list COMMA INTEGER COMMA INTEGER RPARENTHESES SEMICOLON'
     p[0] = (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
 
+# List Range Function
+def p_listRange(p):
+    'listRange : LIST LPARENTHESES RANGE LPARENTHESES INTEGER COMMA BOOLEAN RPARENTHESES RPARENTHESES'
+    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9]) 

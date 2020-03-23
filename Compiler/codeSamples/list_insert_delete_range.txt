@@ -4,10 +4,11 @@ Dim_filas = 8;
 Dim_columnas = 8;
 Cubo = [];
 
-list.del(0);
-list.del(0,0);
+myList.del(0);
+myList.del(0,0);
 
-list.insert(2, False);
-list.insert([True, True, False], 0);
-list.insert([True, True, False], 0, 1);
+myList.insert(2, False);
+myList.insert([True, True, False], 0);
+myList.insert([True, True, False], 0, 1);
+otherList = list(range(4, False));
 
