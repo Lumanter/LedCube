@@ -2,7 +2,8 @@
 # Variable Assignments
 def p_varAssignment(p):
     '''varAssignment : simpleAssignment
-                     | indexAssignment'''
+                     | indexAssignment
+                     | multipleAssignment'''
     p[0] = p[1]
 
 def p_simpleAssignment(p):
@@ -62,3 +63,23 @@ def p_varValue(p):
                 | list
                 | listDimension'''
     p[0] = p[1]
+
+def p_multipleAssignment(p):
+    'multipleAssignment : ID COMMA idList ASSIGN varValue COMMA varValueList SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+
+def p_idList_one(p):
+    'idList : ID'
+    p[0] = p[1]
+
+def p_idList_many(p):
+    'idList : ID COMMA idList'
+    p[0] = (p[1], p[2], p[3])
+
+def p_varValueList_one(p):
+    'varValueList : varValue'
+    p[0] = p[1]
+
+def p_varValueList_many(p):
+    'varValueList : varValue COMMA varValueList'
+    p[0] = (p[1], p[2], p[3])

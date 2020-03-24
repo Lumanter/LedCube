@@ -4,6 +4,6 @@ Dim_filas = 8;
 Dim_columnas = 8;
 Cubo = [];
 
-x = 1;
+x, y, z = 1, 2, 3;
 type(x);
 
