@@ -37,6 +37,7 @@ data= '''
     Cubo = [];
 
     myList = list(range(8, True));
+    myList = myList[:2];
 '''
 
 

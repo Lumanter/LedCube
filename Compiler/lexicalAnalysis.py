@@ -58,7 +58,8 @@ tokens = [
 	
 	# Punctuation Marks
 	'COMMA',
-	'SEMICOLON'
+	'SEMICOLON',
+	'COLON'
 ]
 
 # Adding the keywords to the total tokens
@@ -81,6 +82,7 @@ t_LBRACE = r'\{'
 t_RBRACE = r'\}' 
 t_COMMA = r','
 t_SEMICOLON = r';'
+t_COLON = r':'
 
 # Regular expressions for not so simple tokens
 def t_TIMEUNIT(t):
