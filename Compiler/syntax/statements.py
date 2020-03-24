@@ -16,11 +16,9 @@ def p_statement(p):
     '''statement : varAssignment 
                  | procedureDeclaration
                  | procedureCall
-                 | builtInFunction
                  | ifStatement
                  | forLoop
-                 | listDelete
-                 | listInsert'''
+                 | builtInFunction'''
     p[0] = p[1]
 
 def p_empty(p):

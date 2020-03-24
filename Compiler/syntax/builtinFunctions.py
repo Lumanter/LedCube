@@ -2,7 +2,10 @@
 # Built-in Functions 
 def p_builtInFunction(p):
     '''builtInFunction : delay
-                       | listOperation'''
+                       | listOperation
+                       | listDelete
+                       | listInsert
+                       | type'''
     p[0] = p[1]
 
 # Delay 
@@ -15,7 +18,7 @@ def p_delay_custom(p):
     p[0] = (p[1], p[2], p[3], p[4], p[5], p[6])
 
 # Matrix Shape Function
-# - referenced within p_varValue, inside variableAssignments
+# referenced within p_varValue, inside variableAssignments.py
 def p_listDimension(p):
     'listDimension : ID LISTDIMENSION'
     p[0] = (p[1], p[2])
@@ -51,4 +54,9 @@ def p_listInsert_many_atIndex(p):
 # List Range Function
 def p_listRange(p):
     'listRange : LIST LPARENTHESES RANGE LPARENTHESES INTEGER COMMA BOOLEAN RPARENTHESES RPARENTHESES'
-    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9]) 
+    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+
+# Type 
+def p_type(p):
+    'type : TYPE LPARENTHESES ID RPARENTHESES SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4])

@@ -19,7 +19,8 @@ keywords = {
 	# Built-in Functions
 	'Delay': 'DELAY',
 	'list': 'LIST',
-	'range': 'RANGE'
+	'range': 'RANGE',
+	'type': 'TYPE'
 }
 
 tokens = [

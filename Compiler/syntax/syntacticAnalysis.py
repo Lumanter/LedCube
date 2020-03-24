@@ -36,8 +36,8 @@ data= '''
     Dim_columnas = 8;
     Cubo = [];
 
-    myList = list(range(8, True));
-    myList = myList[:2];
+    x = 5;
+    type(x);
 '''
 
 
@@ -49,6 +49,6 @@ def printTuple(myTuple):
         else:
             print subTuple
 
-# program = syntacticAnalyzer.parse(data)
-# print "\n" + "Syntax Analysis Result:" + "\n"
-# print program
+program = syntacticAnalyzer.parse(data)
+print "\n" + "Syntax Analysis Result:" + "\n"
+print program
