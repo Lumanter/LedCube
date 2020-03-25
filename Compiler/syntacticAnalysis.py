@@ -15,7 +15,7 @@ precedence = (
 
 def p_program(p):
     'program : configurationConstants statementList'
-    p[0] = program("program", (p[1], p[2])).translation()
+    p[0] = program("program", (p[1], p[2]))
 
 # TEMPORTAL FOR TESTING REASONS
 # def p_configurationConstants_empty(p):

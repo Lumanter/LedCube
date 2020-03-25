@@ -10,11 +10,11 @@ class Scopes(enum.Enum):
 
 class SymbolTable:
     def __init__(self):
-		self.symbols = {}
+        self.symbols = {}
     def add(self, newSymbol):
         self.symbols[newSymbol.id] = newSymbol
     def hasSymbol(self, id):
-		return id in self.symbols
+        return id in self.symbols
     def getSymbol(self, id):
         return self.symbols[id]
 

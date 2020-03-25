@@ -7,20 +7,37 @@ def increaseCount():
     return "%d" %count
 
 class Node():
-    pass
+    def __init__(self, name):
+        self.name = name
+        self.sonList = []
+
+    def addChild(self, son):
+        self.sonList.append(son)
 
 class Null(Node):
-	def __init__(self):
-		self.type = 'void'
+    def __init__(self, sonList):
+        self.type = 'void'
+        self.sonList = []
 
-	def imprimir(self,ident):
-		print ident + "nodo nulo"
+    def imprimir(self,ident):
+        print ident + "nodo nulo"
 
+
+#def processTree(Tree):
+    #Variable checks:
+        #Scope Resolution
+        #Type
+        #Multiple declaration of variable in same scope
+        #Reserve Identifier misuse
+        #Undeclare Variable
+        #index access
+    #loop checking
 
 class program(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
+        self.translation()
 
     def getName(self):
         return self.name
@@ -34,18 +51,20 @@ class program(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        return "AST {\n\t"+tree+"}"
+        #return processTree(tempNode)
 
 class configurationConstants(Node):
     def __init__(self, name, sonList):
@@ -64,20 +83,20 @@ class configurationConstants(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class timer(Node):
@@ -97,20 +116,20 @@ class timer(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class timeUnit(Node):
@@ -130,20 +149,20 @@ class timeUnit(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class rows(Node):
@@ -163,20 +182,20 @@ class rows(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class columns(Node):
@@ -196,20 +215,20 @@ class columns(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class cube(Node):
@@ -229,20 +248,20 @@ class cube(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class statementList_one(Node):
@@ -262,20 +281,20 @@ class statementList_one(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class statementList_many(Node):
@@ -295,20 +314,20 @@ class statementList_many(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 class statementList_empty(Node):
     def __init__(self, name, sonList):
@@ -327,20 +346,20 @@ class statementList_empty(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class statement(Node):
@@ -360,20 +379,20 @@ class statement(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class varAssignment(Node):
@@ -393,20 +412,20 @@ class varAssignment(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class simpleAssignment(Node):
@@ -426,20 +445,20 @@ class simpleAssignment(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class indexAssignment(Node):
@@ -459,20 +478,20 @@ class indexAssignment(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class index_one(Node):
@@ -492,20 +511,20 @@ class index_one(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class index_many(Node):
@@ -525,20 +544,20 @@ class index_many(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class indexValue(Node):
@@ -558,20 +577,20 @@ class indexValue(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 #Special Case #1
@@ -591,20 +610,20 @@ class varValue(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class builtInFunction(Node):
@@ -624,20 +643,20 @@ class builtInFunction(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class delay_default(Node):
@@ -657,20 +676,20 @@ class delay_default(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class delay_custom(Node):
@@ -690,20 +709,20 @@ class delay_custom(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class list_empty(Node):
@@ -723,20 +742,20 @@ class list_empty(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class list(Node):
@@ -756,20 +775,20 @@ class list(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class listElements_one(Node):
@@ -789,20 +808,20 @@ class listElements_one(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class listElements_many(Node):
@@ -822,20 +841,20 @@ class listElements_many(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 #Special case#2
@@ -856,20 +875,20 @@ class listElement(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class numExpression_plus(Node):
@@ -889,20 +908,20 @@ class numExpression_plus(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class numExpression_minus(Node):
@@ -922,20 +941,20 @@ class numExpression_minus(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class numExpression_uminus(Node):
@@ -955,20 +974,20 @@ class numExpression_uminus(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class term_multiply(Node):
@@ -988,20 +1007,20 @@ class term_multiply(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class term_divide(Node):
@@ -1021,20 +1040,20 @@ class term_divide(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class term_modulo(Node):
@@ -1054,20 +1073,20 @@ class term_modulo(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class term_power(Node):
@@ -1087,20 +1106,20 @@ class term_power(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class numExpression_term(Node):
@@ -1120,20 +1139,20 @@ class numExpression_term(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class term_factor(Node):
@@ -1153,20 +1172,20 @@ class term_factor(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class factor_integer(Node):
@@ -1186,20 +1205,20 @@ class factor_integer(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class procedureDeclaration_noParameters(Node):
@@ -1220,20 +1239,20 @@ class procedureDeclaration_noParameters(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class procedureDeclaration_parameters(Node):
@@ -1254,20 +1273,20 @@ class procedureDeclaration_parameters(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class parameters_one(Node):
@@ -1287,20 +1306,20 @@ class parameters_one(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class parameters_many(Node):
@@ -1320,20 +1339,20 @@ class parameters_many(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class parameter(Node):
@@ -1353,20 +1372,20 @@ class parameter(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class procedureCall_noParameters(Node):
@@ -1386,20 +1405,20 @@ class procedureCall_noParameters(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class procedureCall_parameters(Node):
@@ -1419,20 +1438,20 @@ class procedureCall_parameters(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class arguments_one(Node):
@@ -1452,20 +1471,20 @@ class arguments_one(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class arguments_many(Node):
@@ -1485,20 +1504,20 @@ class arguments_many(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class argument(Node):
@@ -1518,20 +1537,20 @@ class argument(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
 
 
 class empty(Node):
@@ -1551,17 +1570,17 @@ class empty(Node):
         global tree
         id = increaseCount()
 
+        tempNode = Node(self.name)
+
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
             if (type(son) != str) and (type(son) != int) and (type(son) != bool):
                 if son.hasSons():
-                    tree += id + "->" + son.translation() + "\n\t"
+                    tempNode.addChild(son.translation())
                 else:
-                    tree += id + "->" + son.getName() + "\n\t"
+                    tempNode.addChild(Node(son.getName()))
             else:
-                tree += id + "->" + str(son) + "\n\t"
+                tempNode.addChild(Node(son))
 
-        print tree
-
-        return str(id)
+        return tempNode
