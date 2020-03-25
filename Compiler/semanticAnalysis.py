@@ -22,6 +22,14 @@ class program(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -29,10 +37,13 @@ class program(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
 
         return "AST {\n\t"+tree+"}"
 
@@ -41,6 +52,14 @@ class configurationConstants(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -48,10 +67,15 @@ class configurationConstants(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -61,6 +85,14 @@ class timer(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -68,10 +100,15 @@ class timer(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -81,6 +118,14 @@ class timeUnit(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -88,10 +133,15 @@ class timeUnit(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -101,6 +151,14 @@ class rows(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -108,10 +166,15 @@ class rows(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -121,6 +184,14 @@ class columns(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -128,10 +199,15 @@ class columns(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -141,6 +217,14 @@ class cube(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -148,10 +232,15 @@ class cube(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -161,6 +250,14 @@ class statementList_one(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -168,10 +265,15 @@ class statementList_one(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -181,6 +283,14 @@ class statementList_many(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -188,10 +298,15 @@ class statementList_many(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -200,6 +315,14 @@ class statementList_empty(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -207,10 +330,15 @@ class statementList_empty(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -220,6 +348,14 @@ class statement(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -227,10 +363,15 @@ class statement(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -240,6 +381,14 @@ class varAssignment(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -247,10 +396,15 @@ class varAssignment(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -260,6 +414,14 @@ class simpleAssignment(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -267,10 +429,15 @@ class simpleAssignment(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -280,6 +447,14 @@ class indexAssignment(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -287,10 +462,15 @@ class indexAssignment(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -300,6 +480,14 @@ class index_one(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -307,10 +495,15 @@ class index_one(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -320,6 +513,14 @@ class index_many(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -327,10 +528,15 @@ class index_many(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -340,6 +546,14 @@ class indexValue(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -347,10 +561,15 @@ class indexValue(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -360,6 +579,14 @@ class varValue(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
+
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
     def translation(self):
         global tree
         id = increaseCount()
@@ -367,10 +594,15 @@ class varValue(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -380,6 +612,14 @@ class builtInFunction(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self):
         global tree
         id = increaseCount()
@@ -387,10 +627,15 @@ class builtInFunction(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -400,6 +645,14 @@ class delay_default(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -407,10 +660,15 @@ class delay_default(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -420,6 +678,14 @@ class delay_custom(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -427,10 +693,15 @@ class delay_custom(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -440,6 +711,14 @@ class list_empty(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -447,10 +726,15 @@ class list_empty(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -460,6 +744,14 @@ class list(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -467,10 +759,15 @@ class list(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -480,6 +777,14 @@ class listElements_one(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -487,10 +792,15 @@ class listElements_one(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -500,6 +810,14 @@ class listElements_many(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -507,10 +825,15 @@ class listElements_many(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -521,6 +844,14 @@ class listElement(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -528,10 +859,15 @@ class listElement(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -541,6 +877,14 @@ class numExpression_plus(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -548,10 +892,15 @@ class numExpression_plus(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -561,6 +910,14 @@ class numExpression_minus(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -568,10 +925,15 @@ class numExpression_minus(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -581,6 +943,14 @@ class numExpression_uminus(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -588,10 +958,15 @@ class numExpression_uminus(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -601,6 +976,14 @@ class term_multiply(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -608,10 +991,15 @@ class term_multiply(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -621,6 +1009,14 @@ class term_divide(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -628,10 +1024,15 @@ class term_divide(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -641,6 +1042,14 @@ class term_modulo(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -648,10 +1057,15 @@ class term_modulo(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -661,6 +1075,14 @@ class term_power(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -668,10 +1090,15 @@ class term_power(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -681,6 +1108,14 @@ class numExpression_term(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -688,10 +1123,15 @@ class numExpression_term(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -701,6 +1141,14 @@ class term_factor(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -708,10 +1156,15 @@ class term_factor(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -721,6 +1174,14 @@ class factor_integer(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -728,10 +1189,15 @@ class factor_integer(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -741,6 +1207,14 @@ class procedureDeclaration_noParameters(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
         
     def translation(self,):
         global tree
@@ -749,10 +1223,15 @@ class procedureDeclaration_noParameters(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -762,6 +1241,14 @@ class procedureDeclaration_parameters(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
 
     def translation(self,):
         global tree
@@ -770,10 +1257,15 @@ class procedureDeclaration_parameters(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -783,6 +1275,14 @@ class parameters_one(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -790,10 +1290,15 @@ class parameters_one(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -803,6 +1308,14 @@ class parameters_many(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -810,10 +1323,15 @@ class parameters_many(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -823,6 +1341,14 @@ class parameter(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -830,10 +1356,15 @@ class parameter(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -843,6 +1374,14 @@ class procedureCall_noParameters(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -850,10 +1389,15 @@ class procedureCall_noParameters(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -863,6 +1407,14 @@ class procedureCall_parameters(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -870,10 +1422,15 @@ class procedureCall_parameters(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -883,6 +1440,14 @@ class arguments_one(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -890,10 +1455,15 @@ class arguments_one(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -903,6 +1473,14 @@ class arguments_many(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -910,10 +1488,15 @@ class arguments_many(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -923,6 +1506,14 @@ class argument(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -930,10 +1521,15 @@ class argument(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)
 
@@ -943,6 +1539,14 @@ class empty(Node):
         self.name = name
         self.sonList = sonList
 
+    def getName(self):
+        return self.name
+
+    def hasSons(self):
+        if len(self.sonList) == 0:
+            return False
+        return True
+
     def translation(self,):
         global tree
         id = increaseCount()
@@ -950,9 +1554,14 @@ class empty(Node):
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
         for son in self.sonList:
-            if type(son) == type(type(tuple)):
-                tree += id + "->" + son.traslation() + "\n\t"
+            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                if son.hasSons():
+                    tree += id + "->" + son.translation() + "\n\t"
+                else:
+                    tree += id + "->" + son.getName() + "\n\t"
             else:
-                tree += id + "->" + son + "\n\t"
+                tree += id + "->" + str(son) + "\n\t"
+
+        print tree
 
         return str(id)

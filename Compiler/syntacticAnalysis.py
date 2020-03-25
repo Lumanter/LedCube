@@ -50,7 +50,7 @@ def p_cube(p):
 # Statement Productions
 def p_statementList_one(p):
     'statementList : statement '
-    p[0] = statementList_one("statementList", p[1])
+    p[0] = statementList_one("statementList", [p[1]])
 
 def p_statementList_many(p):
     'statementList : statement statementList'
@@ -58,20 +58,20 @@ def p_statementList_many(p):
 
 def p_statementList_empty(p):
     'statementList : empty'
-    p[0] = statementList_empty("statementList", p[1])
+    p[0] = statementList_empty("statementList", [p[1]])
 
 def p_statement(p):
     '''statement : varAssignment 
                  | procedureDeclaration
                  | procedureCall
                  | builtInFunction'''
-    p[0] = statement("statement", p[1])
+    p[0] = statement("statement", [p[1]])
 
 # Variable Assignment Productions
 def p_varAssignment(p):
     '''varAssignment : simpleAssignment
                      | indexAssignment'''
-    p[0] = varAssignment("varAssignment", p[1])
+    p[0] = varAssignment("varAssignment", [p[1]])
 
 def p_simpleAssignment(p):
     'simpleAssignment : ID ASSIGN varValue SEMICOLON'
@@ -92,7 +92,7 @@ def p_index_many(p):
 def p_indexValue(p):
     '''indexValue : INTEGER 
                   | ID'''
-    p[0] = indexValue("indexValue", p[1])
+    p[0] = indexValue("indexValue", ([p[1]]))
 
 # productions to restrain index to 3 indexes
 # def p_index_1D(p):
@@ -110,12 +110,12 @@ def p_varValue(p):
                 | numExpression 
                 | BOOLEAN
                 | list'''
-    p[0] = varValue("varValue", p[1])
+    p[0] = varValue("varValue", ([p[1]]))
 
 # Built In Functions Syntax Productions
 def p_builtInFunction(p):
     'builtInFunction : delay'
-    p[0] = builtInFunction("builtInFunction", p[1])
+    p[0] = builtInFunction("builtInFunction", ([p[1]]))
 
     # Delay Productions
 def p_delay_default(p):
@@ -137,7 +137,7 @@ def p_list(p):
 
 def p_listElements_one(p):
     'listElements : listElement'
-    p[0] = listElements_one("listElements", p[1])
+    p[0] = listElements_one("listElements", ([p[1]]))
 
 def p_listElements_many(p):
     'listElements : listElement COMMA listElements'
@@ -146,50 +146,50 @@ def p_listElements_many(p):
 def p_listElement(p):
     '''listElement : BOOLEAN
                    | list'''
-    p[0] = listElement("listElement", p[1])
+    p[0] = listElement("listElement", ([p[1]]))
 
 # Numerical Operations Productions
 # don't support ids yet
 # they return the number itself so the tupple (aka tree) isn't propagated
 def p_numExpression_plus(p):
     'numExpression : numExpression PLUS term'
-    p[0] = numExpression_plus("numExpression", p[1] + p[3])
+    p[0] = numExpression_plus("numExpression", (p[1] + p[3]))
 
 def p_numExpression_minus(p):
     'numExpression : numExpression MINUS term'
-    p[0] = numExpression_minus("numExpression", p[1] - p[3])
+    p[0] = numExpression_minus("numExpression", (p[1] - p[3]))
 
 def p_numExpression_uminus(p):
     'numExpression : MINUS term'
-    p[0] = numExpression_uminus("numExpression",- p[2])
+    p[0] = numExpression_uminus("numExpression",(- p[2]))
 
 def p_term_multiply(p):
     'term : term MULTIPLY factor'
-    p[0] = term_multiply("term", p[1] * p[3])
+    p[0] = term_multiply("term", (p[1] * p[3]))
 
 def p_term_divide(p):
     'term : term DIVIDE factor'
-    p[0] = term_divide("term", p[1] / p[3])
+    p[0] = term_divide("term", (p[1] / p[3]))
 
 def p_term_modulo(p):
     'term : term MODULO factor'
-    p[0] = term_modulo("term", p[1] % p[3])
+    p[0] = term_modulo("term", (p[1] % p[3]))
 
 def p_term_power(p):
     'term : term POWER factor'
-    p[0] = term_power("term", p[1] ** p[3])
+    p[0] = term_power("term", (p[1] ** p[3]))
 
 def p_numExpression_term(p):
     'numExpression : term'
-    p[0] = numExpression_term("numExpression", p[1])
+    p[0] = numExpression_term("numExpression", [p[1]])
 
 def p_term_factor(p):
     'term : factor'
-    p[0] = term_factor("term", p[1])
+    p[0] = term_factor("term", [p[1]])
 
 def p_factor_integer(p):
     'factor : INTEGER'
-    p[0] = factor_integer("factor", p[1])
+    p[0] = factor_integer("factor", [p[1]])
 
 # Procedure Declaration Syntax
 def p_procedureDeclaration_noParameters(p):
@@ -203,7 +203,7 @@ def p_procedureDeclaration_parameters(p):
 
 def p_parameters_one(p):
     'parameters : parameter'
-    p[0] = parameters_one("parameters", p[1])
+    p[0] = parameters_one("parameters", [p[1]])
 
 def p_parameters_many(p):
     'parameters : parameter COMMA parameters '
@@ -211,7 +211,7 @@ def p_parameters_many(p):
 
 def p_parameter(p):
     'parameter : ID'
-    p[0] = parameter("parameter", p[1])
+    p[0] = parameter("parameter", [p[1]])
 
 # Procedure Call Syntax Productions
 def p_procedureCall_noParameters(p):
@@ -224,7 +224,7 @@ def p_procedureCall_parameters(p):
 
 def p_arguments_one(p):
     'arguments : argument'
-    p[0] = arguments_one("arguments", p[1])
+    p[0] = arguments_one("arguments", [p[1]])
 
 def p_arguments_many(p):
     'arguments : argument COMMA arguments'
@@ -232,7 +232,7 @@ def p_arguments_many(p):
 
 def p_argument(p):
     'argument : varValue'
-    p[0] = argument("argument", p[1])
+    p[0] = argument("argument", [p[1]])
 
 # Special productions 
 def p_empty(p):
