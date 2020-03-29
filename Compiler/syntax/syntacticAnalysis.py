@@ -36,7 +36,8 @@ data= '''
     Dim_columnas = 8;
     Cubo = [];
 
-    x, y, z = 1, 2, 3;
+    Blink(x[1], 500, "Mil", True);
+    Blink(x[1], False);
 '''
 
 

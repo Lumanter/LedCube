@@ -5,7 +5,8 @@ def p_builtInFunction(p):
                        | listOperation
                        | listDelete
                        | listInsert
-                       | type'''
+                       | type
+                       | blink'''
     p[0] = p[1]
 
 # Delay 
@@ -60,3 +61,12 @@ def p_listRange(p):
 def p_type(p):
     'type : TYPE LPARENTHESES ID RPARENTHESES SEMICOLON'
     p[0] = (p[1], p[2], p[3], p[4])
+
+# Blink
+def p_blink_default(p):
+    'blink : BLINK LPARENTHESES indexedId COMMA BOOLEAN RPARENTHESES SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6])
+
+def p_blink_custom(p):
+    'blink : BLINK LPARENTHESES indexedId COMMA INTEGER COMMA TIMEUNIT COMMA BOOLEAN RPARENTHESES SEMICOLON'
+    p[0] = (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10])
