@@ -1,0 +1,10 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = [];
+
+Blink(x[1][1][1], 500, "Mil", True); -- this is the custom blink function
+Blink(x[1][1][1], False); -- we deactivate the blink
+-- we're done
+

@@ -61,7 +61,9 @@ tokens = [
 	# Punctuation Marks
 	'COMMA',
 	'SEMICOLON',
-	'COLON'
+	'COLON',
+
+	'COMMENT'
 ]
 
 # Adding the keywords to the total tokens
@@ -134,6 +136,10 @@ def t_INTEGER(t):
 	r'\d+'
 	t.value = int(t.value)
 	return t
+
+def t_COMMENT(t):
+	r'--.*'
+	pass
 
 # Tracking the line number, for error messaging 
 def t_newline(t):

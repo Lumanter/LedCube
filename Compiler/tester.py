@@ -9,7 +9,7 @@ from lexicalAnalysis import lexicalAnalyzer
 
 
 testDirectory = './codeSamples/'
-testType = "syntax" #lexic, syntax or semantic
+testType = "lexic" #lexic, syntax or semantic
 
 def askTestName(directory):
 	foundedFiles = []
