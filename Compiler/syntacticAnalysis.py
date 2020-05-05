@@ -254,6 +254,7 @@ data= '''
 
     Procedure sum(a,b) {
         x = 5;
+        y = 25;
         Delay(5,"Mil");
     };
     list = [true, false];
@@ -261,7 +262,7 @@ data= '''
     y = 7;
 
     Procedure main() {
-        x[0][0][0] = true; 
+        x[0][0][0] = true;
     };
 '''
 
