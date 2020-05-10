@@ -1,14 +1,30 @@
 from symbolTable import *
+from codeRunner import searchNodeByName
+from codeGenerator import delay
+
+readyForRun = False
+code = None
 
 
 def fun(tree):
+    global code
+    code = tree
     symbolTable = SymbolTable()
     children = tree.getSons()
     if not processConfigConstants(children[0], symbolTable):
         return False
     if not processVariables(children[1], symbolTable):
         return False
+    processSimulationOfCode(children[1], symbolTable)
     return True
+
+
+def processSimulationOfCode(tree, symbolTable):
+    global readyForRun
+    readyForRun = True
+
+    tempNode = searchNodeByName(tree, "main")
+    procedureDeclaration(tempNode, symbolTable)
 
 
 def processConfigConstants(configBranch, symbolTable):
@@ -40,6 +56,43 @@ def processVariables(statementBranch, symbolTable):
     return True
 
 
+def procedureCall(node, symbolTable):
+    global code
+    tempCode = code.getSons()[1]
+    functionName = node.getSon(0).getSon(1).getName()
+    tempNode = searchNodeByName(tempCode, functionName)
+    procedureDeclaration(tempNode, symbolTable)
+
+
+def getAttributes(functionNode):
+    attributes = []
+    tempList = functionNode.getSons()[2:-2]
+    for attribute in tempList:
+        tempName = attribute.getName()
+        if tempName != ',':
+            attributes.append(tempName)
+    return attributes
+
+
+def delayFunction(tempNode, symbolTable):
+    if readyForRun:
+        attributes = getAttributes(tempNode)
+        if len(attributes) != 0:
+            delay(attributes[0], attributes[1])
+        else:
+            tempSymbolTime = symbolTable.getSymbol("timer").getByIndex(0).getValue()
+            tempSymbolTimeUnit = symbolTable.getSymbol("timeUnit").getByIndex(0).getValue()
+            delay(str(tempSymbolTime.getValue()), str(tempSymbolTimeUnit.getValue()))
+
+
+def builtInFunction(node, symbolTable):
+    tempNode = node.getSon(0)
+    tempName = tempNode.getName()
+
+    if tempName == "delay":
+        delayFunction(tempNode, symbolTable)
+
+
 def statement(node, symbolTable, scope):
     tempNode = node.getSon(0)
 
@@ -48,10 +101,9 @@ def statement(node, symbolTable, scope):
     if tempNode.getName() == "varAssignment":
         varAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "procedureCall":
-        # procedureCall(node, symbolTable)
-        pass
+        procedureCall(node, symbolTable)
     if tempNode.getName() == "builtInFunction":
-        # procedureDeclaration(node, symbolTable)
+        builtInFunction(tempNode, symbolTable)
         pass
 
 

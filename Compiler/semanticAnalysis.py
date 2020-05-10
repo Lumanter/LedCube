@@ -29,7 +29,6 @@ class Node():
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -79,7 +78,6 @@ class program(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -127,7 +125,6 @@ class configurationConstants(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -172,7 +169,6 @@ class timer(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -219,7 +215,6 @@ class timeUnit(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -264,7 +259,6 @@ class rows(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -311,7 +305,6 @@ class columns(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -356,7 +349,6 @@ class cube(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -403,7 +395,6 @@ class statementList_one(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -448,7 +439,6 @@ class statementList_many(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -495,7 +485,6 @@ class statementList_empty(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -540,7 +529,6 @@ class statement(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -587,7 +575,6 @@ class varAssignment(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -632,7 +619,6 @@ class simpleAssignment(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -679,7 +665,6 @@ class indexAssignment(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -724,7 +709,6 @@ class index_one(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -771,7 +755,6 @@ class index_many(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -816,7 +799,6 @@ class indexValue(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -864,7 +846,6 @@ class varValue(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -909,7 +890,6 @@ class builtInFunction(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
@@ -956,7 +936,6 @@ class delay_default(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -1002,7 +981,6 @@ class delay_custom(Node):
             counter += 1
         return counter
 
-
     def getSons(self):
         return self.sonList
 
@@ -1047,7 +1025,6 @@ class list_empty(Node):
         for son in self.sonList:
             counter += 1
         return counter
-
 
     def getSons(self):
         return self.sonList
