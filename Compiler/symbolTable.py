@@ -1,28 +1,53 @@
 import enum
+from LinkedList import *
+
 
 class Types(enum.Enum):
     Boolean = "bool"
     Integer = "int"
     List = "list"
 
+
 class Scopes(enum.Enum):
     Local = "local"
     Global = "global"
 
+
 class SymbolTable:
     def __init__(self):
         self.symbols = {}
+
     def add(self, newSymbol):
-        self.symbols[newSymbol.id] = newSymbol
+        if newSymbol.id in self.symbols.keys():
+            tempList = self.symbols[newSymbol.id]
+            tempNode = Node(newSymbol)
+            tempList.add(tempNode)
+            self.symbols[newSymbol.id] = tempList
+        else:
+            tempList = LinkedList()
+            tempNode = Node(newSymbol)
+            tempList.add(tempNode)
+            self.symbols[newSymbol.id] = tempList
+
+
+
     def hasSymbol(self, id):
         return id in self.symbols
+
     def hasSymbolByScope(self, id, scope):
-        for symbol in self.symbols:
-            if self.symbols.get(symbol).getID() == id and self.symbols.get(symbol).getScope() == scope:
-                return True
+        if id in self.symbols.keys():
+            tempList = self.symbols[id]
+            for index in range(tempList.getLength()):
+                tempNode = tempList.getByIndex(index)
+                tempSymbol = tempNode.getValue()
+                if tempSymbol.getScope() == scope:
+                    return True
+            return False
         return False
+
     def getSymbol(self, id):
         return self.symbols[id]
+
 
 class Symbol:
     def __init__(self, id, value, type, scope):
@@ -46,15 +71,12 @@ class Symbol:
     def setValue(self, value):
         self.value = value
 
-
-
 # Example
-#symbolTable = SymbolTable()
-#symbolTable.add(Symbol("x", True, Types.Boolean, Scopes.Global))
-#symbolTable.add(Symbol("y", 5, Types.Integer, Scopes.Global))
+# symbolTable = SymbolTable()
+# symbolTable.add(Symbol("x", True, Types.Boolean, Scopes.Global))
+# symbolTable.add(Symbol("y", 5, Types.Integer, Scopes.Global))
 
 # say we are trying to set a Integer to x, that type is newVariableType
-#newVariableType = Types.Integer
-#if(symbolTable.getSymbol("x").type != newVariableType):
-    #print "that's some illegal semantic violation: cannot set integer value to boolean variable"
-
+# newVariableType = Types.Integer
+# if(symbolTable.getSymbol("x").type != newVariableType):
+# print "that's some illegal semantic violation: cannot set integer value to boolean variable"

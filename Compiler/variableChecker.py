@@ -1,4 +1,6 @@
 from symbolTable import *
+
+
 def fun(tree):
     symbolTable = SymbolTable()
     children = tree.getSons()
@@ -7,6 +9,7 @@ def fun(tree):
     if not processVariables(children[1], symbolTable):
         return False
     return True
+
 
 def processConfigConstants(configBranch, symbolTable):
     lookupList = ['timer', 'timeUnit', 'rows', 'columns', 'cube']
@@ -21,6 +24,7 @@ def processConfigConstants(configBranch, symbolTable):
             elif keyword == lookupList[-1]:
                 return False
     return True
+
 
 def processVariables(statementBranch, symbolTable):
     scope = "global"
@@ -44,20 +48,20 @@ def statement(node, symbolTable, scope):
     if tempNode.getName() == "varAssignment":
         varAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "procedureCall":
-        #procedureCall(node, symbolTable)
+        # procedureCall(node, symbolTable)
         pass
     if tempNode.getName() == "builtInFunction":
-        #procedureDeclaration(node, symbolTable)
+        # procedureDeclaration(node, symbolTable)
         pass
 
 
 def statementList(node, symbolTable, scope):
-
     for tempNode in node.getSons():
         if tempNode.getName() == "statement":
             statement(tempNode, symbolTable, scope)
         if tempNode.getName() == "statementList":
             statementList(tempNode, symbolTable, scope)
+
 
 def procedureDeclaration(node, symbolTable):
     scope = node.getSon(1).getName()
@@ -79,32 +83,35 @@ def numExpression(value, symbolTable, scope, varID):
             return False
 
 
-def listElements(valueNode, symbolTable, scope, varID, tempFinalValue):
-
-    isFinal = True
-
-    for child in valueNode.getSons():
-        if child.getName() == "listElement":
-            tempElement = str(child.getSon(0).getName())
-            tempFinalValue += tempElement + ','
-        if child.getName() == "listElements":
-            isFinal = False
-            listElements(child, symbolTable, scope, varID, tempFinalValue)
-
-    if isFinal:
-        tempFinalValue = '[' + tempFinalValue[:-1] + ']'
-        tempSymbol = Symbol(varID, tempFinalValue, Types.List, scope)
-        symbolTable.add(tempSymbol)
+def listElement(element):
+    tempNode = None
+    elementType = element.getName()
+    if elementType == "listElement":
+        tempNode = Node(element.getSon(0).getName())
+    elif elementType == "listElements":
+        if element.getSonsLength() == 1:
+            tempNode = Node(element.getSon(0).getSon(0).getName())
+        else:
+            tempNode = Node(listElements(element))
+    return tempNode
 
 
+def listElements(elements):
+    tempLinkedList = LinkedList()
 
+    for child in elements.getSons():
+        tempNode = listElement(child)
+        if tempNode != None:
+            tempLinkedList.add(tempNode)
 
+    return tempLinkedList
 
 
 def list_process(valueNode, symbolTable, scope, varID):
     elements = valueNode.getSon(1)
-    tempFinalValue = ""
-    listElements(elements, symbolTable, scope, varID, tempFinalValue)
+    newValue = listElements(elements)
+    tempSymbol = Symbol(varID, newValue, Types.List, scope)
+    symbolTable.add(tempSymbol)
 
 
 def varValue(valueNode, symbolTable, scope, varID):
