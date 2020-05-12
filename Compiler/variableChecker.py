@@ -166,6 +166,23 @@ def list_process(valueNode, symbolTable, scope, varID):
     symbolTable.add(tempSymbol)
 
 
+def ID(value, symbolTable, scope, varID):
+    tempSymbol = symbolTable.getSymbolByScope(value, scope)
+    if tempSymbol != None:
+        tempValue = tempSymbol.getValue()
+        tempNewSymbol = Symbol(varID, tempValue, tempSymbol.getType(), scope)
+        symbolTable.modifySymbol(tempNewSymbol)
+        return True
+    tempSymbol = symbolTable.getSymbolByScope(value, "global")
+    if tempSymbol != None:
+        tempValue = tempSymbol.getValue()
+        tempNewSymbol = Symbol(varID, tempValue, tempSymbol.getType(), scope)
+        symbolTable.modifySymbol(tempNewSymbol)
+        return True
+    return False
+
+
+
 def varValue(valueNode, symbolTable, scope, varID):
     value = valueNode.getSon(0)
     varValueType = value.getName()
@@ -173,10 +190,11 @@ def varValue(valueNode, symbolTable, scope, varID):
         numExpression(value, symbolTable, scope, varID)
     if varValueType == "list":
         list_process(value, symbolTable, scope, varID)
-    # if varValueType == "ID":
-    #     #add symbol for ID
-    # if varValueType == "BOOLEAN":
-    #     #add symbol for BOOLEAN
+    if varValueType.lower() == "true" or varValueType.lower() == "false":
+        pass
+        #boolean
+    else:
+        ID(varValueType, symbolTable, scope, varID)
 
 
 def simpleAssignment(tempNode, symbolTable, scope):
