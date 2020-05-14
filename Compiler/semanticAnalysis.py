@@ -64,26 +64,6 @@ class program(Node):
         self.sonList = sonList
         self.translation()
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -111,26 +91,6 @@ class configurationConstants(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -155,26 +115,6 @@ class timer(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -201,26 +141,6 @@ class timeUnit(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -245,26 +165,6 @@ class rows(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -291,26 +191,6 @@ class columns(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -335,26 +215,6 @@ class cube(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -381,26 +241,6 @@ class statementList_one(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -425,26 +265,6 @@ class statementList_many(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -471,26 +291,6 @@ class statementList_empty(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -515,26 +315,6 @@ class statement(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -561,26 +341,6 @@ class varAssignment(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -605,26 +365,6 @@ class simpleAssignment(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -651,26 +391,6 @@ class indexAssignment(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -695,26 +415,6 @@ class index_one(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -741,26 +441,6 @@ class index_many(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -785,26 +465,6 @@ class indexValue(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -832,26 +492,6 @@ class varValue(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self):
         global tree
         id = increaseCount()
@@ -876,26 +516,6 @@ class builtInFunction(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self):
         global tree
@@ -922,26 +542,6 @@ class delay_default(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -966,26 +566,6 @@ class delay_custom(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1012,26 +592,6 @@ class list_empty(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1056,26 +616,6 @@ class list(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1102,26 +642,6 @@ class listElements_one(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1146,26 +666,6 @@ class listElements_many(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1193,26 +693,6 @@ class listElement(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1237,26 +717,6 @@ class numExpression_plus(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1283,26 +743,6 @@ class numExpression_minus(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1327,26 +767,6 @@ class numExpression_uminus(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1373,26 +793,6 @@ class term_multiply(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1417,26 +817,6 @@ class term_divide(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1463,26 +843,6 @@ class term_modulo(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1507,26 +867,6 @@ class term_power(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1553,26 +893,6 @@ class numExpression_term(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1597,26 +917,6 @@ class term_factor(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1643,26 +943,6 @@ class factor_integer(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1687,26 +967,6 @@ class procedureDeclaration_noParameters(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1733,26 +993,6 @@ class procedureDeclaration_parameters(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1777,26 +1017,6 @@ class parameters_one(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1823,26 +1043,6 @@ class parameters_many(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1867,26 +1067,6 @@ class parameter(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -1913,26 +1093,6 @@ class procedureCall_noParameters(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -1957,26 +1117,6 @@ class procedureCall_parameters(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -2003,26 +1143,6 @@ class arguments_one(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -2047,26 +1167,6 @@ class arguments_many(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree
@@ -2093,26 +1193,6 @@ class argument(Node):
         self.name = name
         self.sonList = sonList
 
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
-
     def translation(self, ):
         global tree
         id = increaseCount()
@@ -2137,26 +1217,6 @@ class empty(Node):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-
-    def getName(self):
-        return self.name
-
-    def hasSons(self):
-        if len(self.sonList) == 0:
-            return False
-        return True
-
-    def getSonsLength(self):
-        counter = 0
-        for son in self.sonList:
-            counter += 1
-        return counter
-
-    def getSons(self):
-        return self.sonList
-
-    def getSon(self, index):
-        return self.sonList[index]
 
     def translation(self, ):
         global tree

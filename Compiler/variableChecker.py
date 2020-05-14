@@ -1,6 +1,8 @@
 from symbolTable import *
 from codeRunner import searchNodeByName
 from codeGenerator import delay
+from codeGenerator import readFinalCode
+from codeGenerator import wipeCode
 
 readyForRun = False
 code = None
@@ -8,7 +10,10 @@ code = None
 
 def fun(tree):
     global code
+    global readyForRun
     code = tree
+    wipeCode()
+    readyForRun = False
     symbolTable = SymbolTable()
     children = tree.getSons()
     if not processConfigConstants(children[0], symbolTable):
@@ -16,14 +21,14 @@ def fun(tree):
     if not processVariables(children[1], symbolTable):
         return False
     processSimulationOfCode(children[1], symbolTable)
-    return True
+    readFinalCode()
 
 
 def processSimulationOfCode(tree, symbolTable):
     global readyForRun
     readyForRun = True
 
-    tempNode = searchNodeByName(tree, "main")
+    tempNode = searchNodeByName(tree, "Main")
     procedureDeclaration(tempNode, symbolTable)
 
 
@@ -139,22 +144,22 @@ def listElement(element):
     tempNode = None
     elementType = element.getName()
     if elementType == "listElement":
-        tempNode = Node(element.getSon(0).getName())
+        tempNode = element.getSon(0).getName()
     elif elementType == "listElements":
         if element.getSonsLength() == 1:
-            tempNode = Node(element.getSon(0).getSon(0).getName())
+            tempNode = element.getSon(0).getSon(0).getName()
         else:
-            tempNode = Node(listElements(element))
+            tempNode = listElements(element)
     return tempNode
 
 
 def listElements(elements):
-    tempLinkedList = LinkedList()
+    tempLinkedList = []
 
     for child in elements.getSons():
         tempNode = listElement(child)
         if tempNode != None:
-            tempLinkedList.add(tempNode)
+            tempLinkedList.append(tempNode)
 
     return tempLinkedList
 
@@ -182,7 +187,6 @@ def ID(value, symbolTable, scope, varID):
     return False
 
 
-
 def varValue(valueNode, symbolTable, scope, varID):
     value = valueNode.getSon(0)
     varValueType = value.getName()
@@ -190,9 +194,9 @@ def varValue(valueNode, symbolTable, scope, varID):
         numExpression(value, symbolTable, scope, varID)
     if varValueType == "list":
         list_process(value, symbolTable, scope, varID)
-    if varValueType.lower() == "true" or varValueType.lower() == "false":
+    if type(True) == type(value.getName()):
         pass
-        #boolean
+        # boolean
     else:
         ID(varValueType, symbolTable, scope, varID)
 
@@ -203,9 +207,60 @@ def simpleAssignment(tempNode, symbolTable, scope):
     varValue(valueNode, symbolTable, scope, varID)
 
 
+def getIndexes(newList, indexNode):
+    tempList = indexNode.getSons()
+    for node in tempList:
+        if node.getName() == "index":
+            newList.append(getIndexes(newList, node))
+        if node.getName() == "indexValue":
+            return node.getSon(0).getName()
+    return newList
+
+
+def indexVarValue(valueNode, symbolTable, scope):
+    value = valueNode.getSon(0)
+    if type(True) == type(value.getName()):
+        return value.getName()
+    else:
+        tempSymbol = symbolTable.getSymbolByScope(value.getName(), scope)
+        tempValue = tempSymbol.getValue()
+        return tempValue
+
+
+def changeValueInList(lista, indexes, value):
+    if not isinstance(lista[0], list):
+        lista[indexes[0]] = value
+    else:
+        changeValueInList(lista[indexes[0]], indexes[1:], value)
+
+
+def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
+    tempSymbol = symbolTable.getSymbolByScope(tempID, scope)
+    if tempSymbol != None:
+        tempList = tempSymbol.getValue()
+        changeValueInList(tempList, tempIndex, tempValue)
+        return True
+    tempSymbol = symbolTable.getSymbolByScope(tempID, "global")
+    if tempSymbol != None:
+        tempList = tempSymbol.getValue()
+        changeValueInList(tempList, tempIndex, tempValue)
+        return True
+
+
+def indexAssignment(tempNode, symbolTable, scope):
+    tempID = tempNode.getSon(0).getName()
+    tempIndex = getIndexes([], tempNode.getSon(1))
+    tempValue = indexVarValue(tempNode.getSon(3), symbolTable, scope)
+
+    if modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
+        pass
+    else:
+        return False
+
+
 def varAssignment(node, symbolTable, scope):
     tempNode = node.getSons()[0]
     if tempNode.getName() == "simpleAssignment":
         simpleAssignment(tempNode, symbolTable, scope)
-    # if tempNode.getName() == "indexAssignment":
-    #     #indexAssignment(tempNode, symbolTable, scope)
+    if tempNode.getName() == "indexAssignment":
+        indexAssignment(tempNode, symbolTable, scope)

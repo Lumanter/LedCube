@@ -1,10 +1,18 @@
 finalCode = ""
 
 
+def wipeCode():
+    global finalCode
+    finalCode = ""
+
 def writeCode(lineOfCode):
     global finalCode
     finalCode += lineOfCode
 
+
+def readFinalCode():
+    print finalCode
+    print "\n\n\n"
 
 def delay(time, timeUnit):
     instruction = "delay," + str(time) + ',' + str(timeUnit) + "\n"
