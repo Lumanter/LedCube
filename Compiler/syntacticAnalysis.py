@@ -15,7 +15,8 @@ precedence = (
 
 def p_program(p):
     'program : configurationConstants statementList'
-    p[0] = ASTNode("program", (p[1], p[2]))
+    p[0] = program("program", (p[1], p[2]))
+
 
 # Configuration Constants
 def p_configurationConstants(p):
@@ -104,6 +105,7 @@ def p_indexValue(p):
                   | ID'''
     p[0] = ASTNode("indexValue", ([p[1]]))
 
+
 def p_varValue(p):
     '''varValue : ID
                 | numExpression 
@@ -115,7 +117,7 @@ def p_varValue(p):
 # Built In Functions Syntax Productions
 def p_builtInFunction(p):
     'builtInFunction : delay'
-    p[0] =ASTNode("builtInFunction", ([p[1]]))
+    p[0] = ASTNode("builtInFunction", ([p[1]]))
 
 
 # Delay Productions
@@ -161,37 +163,46 @@ def p_numExpression_plus(p):
     'numExpression : numExpression PLUS term'
     p[0] = p[1] + p[3]
 
+
 def p_numExpression_minus(p):
     'numExpression : numExpression MINUS term'
     p[0] = p[1] - p[3]
+
 
 def p_numExpression_uminus(p):
     'numExpression : MINUS term'
     p[0] = - p[2]
 
+
 def p_term_multiply(p):
     'term : term MULTIPLY factor'
     p[0] = p[1] * p[3]
+
 
 def p_term_divide(p):
     'term : term DIVIDE factor'
     p[0] = p[1] / p[3]
 
+
 def p_term_modulo(p):
     'term : term MODULO factor'
     p[0] = p[1] % p[3]
+
 
 def p_term_power(p):
     'term : term POWER factor'
     p[0] = p[1] ** p[3]
 
+
 def p_numExpression_term(p):
     'numExpression : term'
     p[0] = p[1]
 
+
 def p_term_factor(p):
     'term : factor'
     p[0] = p[1]
+
 
 def p_factor_integer(p):
     'factor : INTEGER'
@@ -297,4 +308,4 @@ with warnings.catch_warnings():
     warnings.warn("deprecated", DeprecationWarning)
 
 ast = syntacticAnalyzer.parse(data)
-ast.translation()
+# ast.translation()

@@ -8,7 +8,7 @@ readyForRun = False
 code = None
 
 
-def fun(tree):
+def findVariables(tree):
     global code
     global readyForRun
     code = tree
@@ -33,7 +33,6 @@ def processSimulationOfCode(tree, symbolTable):
 
 
 def processConfigConstants(configBranch, symbolTable):
-
     lookupList = ['timer', 'timeUnit', 'rows', 'columns', 'cube']
     for son in configBranch.getSons():
         for keyword in lookupList:
