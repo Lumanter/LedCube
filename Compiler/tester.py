@@ -6,7 +6,7 @@ import os
 import sys
 
 testDirectory = './codeSamples/'
-testType = "syntax"  # lexic, syntax or semantic
+testType = "lai"  # lexic, syntax or semantic
 
 
 def askTestName(directory):

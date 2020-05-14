@@ -8,7 +8,8 @@ keywords = {
     'Rango_timer': 'RANGO_TIMER',
     'Dim_filas': 'DIM_FILAS',
     'Dim_columnas': 'DIM_COLUMNAS',
-    'Cubo': 'CUBO'
+    'Cubo': 'CUBO',
+    'defaultCube': 'DEFAULTCUBE'    
 }
 
 tokens = [
@@ -19,15 +20,7 @@ tokens = [
     'INTEGER',
     'BOOLEAN',
 
-    # open to discussion
     'TIMEUNIT',
-
-    # Reserve Tokens
-    'TIMER',
-    'RANGO_TIMER',
-    'DIM_FILAS',
-    'DIM_COLUMNAS',
-    'CUBO',
 
     # Numerical Operators
     'PLUS',
@@ -47,8 +40,7 @@ tokens = [
 
     # Punctuation Marks
     'COMMA',
-    'SEMICOLON',
-    'DOT'
+    'SEMICOLON'
 ]
 
 # Adding the keywords to the total tokens
@@ -71,7 +63,6 @@ t_LBRACE = r'\{'
 t_RBRACE = r'\}'
 t_COMMA = r','
 t_SEMICOLON = r';'
-t_DOT = r'\.'
 
 
 # Regular expressions for not so simple tokens
@@ -93,7 +84,6 @@ def t_ID(t):
         if t.value != "Cubo":
             t.value = t.value.upper()
             t.type = t.value
-    # print t.value, t.type
     return t
 
 
@@ -101,32 +91,6 @@ def t_INTEGER(t):
     r'\d+'
     t.value = int(t.value)
     return t
-
-
-def t_TIMER(t):
-    r'Timer'
-    return t
-
-
-def t_RANGO_TIMER(t):
-    r'Rango_Timer'
-    return t
-
-
-def t_DIM_FILAS(t):
-    r'Dim_filas'
-    return t
-
-
-def t_DIM_COLUMNAS(t):
-    r'Dim_columnas'
-    return t
-
-
-def t__CUBO(t):
-    r'Cubo'
-    return t
-
 
 # Tracking the line number, for error messaging
 def t_newline(t):

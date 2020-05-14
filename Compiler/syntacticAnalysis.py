@@ -12,7 +12,6 @@ precedence = (
 
 
 # first production
-
 def p_program(p):
     'program : configurationConstants statementList'
     p[0] = program("program", (p[1], p[2]))
@@ -47,7 +46,6 @@ def p_columns(p):
 def p_cube(p):
     'cube : ID ASSIGN list SEMICOLON'
     p[0] = ASTNode("cube", (p[1], p[2], p[3], p[4]))
-
 
 # Statement Productions
 def p_statementList_one(p):
@@ -130,8 +128,12 @@ def p_delay_custom(p):
     'delay : DELAY LPARENTHESES INTEGER COMMA TIMEUNIT RPARENTHESES SEMICOLON'
     p[0] = ASTNode("delay", (p[1], p[2], p[3], p[4], p[5], p[6], p[7]))
 
+def p_defaultCube(p):
+    'list : DEFAULTCUBE LPARENTHESES BOOLEAN RPARENTHESES'
+    p[0] = ASTNode("defaultCube", (p[1], p[2], p[3], p[4]))
 
 # Lists Syntax Productions
+
 def p_list_empty(p):
     'list : LSQUAREBRACKET RSQUAREBRACKET'
     p[0] = ASTNode("list", (p[1], p[2]))
@@ -279,11 +281,11 @@ data = '''
     Rango_timer = "Mil";
     Dim_filas = 8;
     Dim_columnas = 8;
-    Cubo = [];
+    Cubo = defaultCube(false);
 
     Procedure sum(a,b) {
         x = 5;
-        z = True;
+        z = true;
         y = 25;
         Delay();
         Delay();
