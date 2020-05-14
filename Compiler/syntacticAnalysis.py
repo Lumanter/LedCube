@@ -1,6 +1,7 @@
 import ply.yacc as yacc
 from lexicalAnalysis import tokens
 from semanticAnalysis import *
+from Utils import findNumValue
 
 # Ordered from lowest to highest priority
 precedence = (
@@ -181,52 +182,43 @@ def p_listElement(p):
 # they return the number itself so the tupple (aka tree) isn't propagated
 def p_numExpression_plus(p):
     'numExpression : numExpression PLUS term'
-    p[0] = numExpression_plus("numExpression", (p[1] + p[3]))
-
+    p[0] = p[1] + p[3]
 
 def p_numExpression_minus(p):
     'numExpression : numExpression MINUS term'
-    p[0] = numExpression_minus("numExpression", (p[1] - p[3]))
-
+    p[0] = p[1] - p[3]
 
 def p_numExpression_uminus(p):
     'numExpression : MINUS term'
-    p[0] = numExpression_uminus("numExpression", (- p[2]))
-
+    p[0] = - p[2]
 
 def p_term_multiply(p):
     'term : term MULTIPLY factor'
-    p[0] = term_multiply("term", (p[1] * p[3]))
-
+    p[0] = p[1] * p[3]
 
 def p_term_divide(p):
     'term : term DIVIDE factor'
-    p[0] = term_divide("term", (p[1] / p[3]))
-
+    p[0] = p[1] / p[3]
 
 def p_term_modulo(p):
     'term : term MODULO factor'
-    p[0] = term_modulo("term", (p[1] % p[3]))
-
+    p[0] = p[1] % p[3]
 
 def p_term_power(p):
     'term : term POWER factor'
-    p[0] = term_power("term", (p[1] ** p[3]))
-
+    p[0] = p[1] ** p[3]
 
 def p_numExpression_term(p):
     'numExpression : term'
-    p[0] = numExpression_term("numExpression", [p[1]])
-
+    p[0] = p[1]
 
 def p_term_factor(p):
     'term : factor'
-    p[0] = term_factor("term", [p[1]])
-
+    p[0] = p[1]
 
 def p_factor_integer(p):
     'factor : INTEGER'
-    p[0] = factor_integer("factor", [p[1]])
+    p[0] = p[1]
 
 
 # Procedure Declaration Syntax
@@ -304,13 +296,17 @@ data = '''
 
     Procedure sum(a,b) {
         x = 5;
+        z = True;
         y = 25;
+        Delay();
+        Delay();
+        Delay();
         Delay();
     };
     list = [true, false];
     y = 7;
 
-    Procedure main() {
+    Procedure Main() {
         x[0][0][0] = true;
         CALL sum(5,5);
     };
