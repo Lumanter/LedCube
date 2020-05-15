@@ -3,6 +3,7 @@ from codeRunner import searchNodeByName
 from codeGenerator import delay
 from codeGenerator import readFinalCode
 from codeGenerator import wipeCode
+from Utils import createCube
 
 readyForRun = False
 code = None
@@ -37,7 +38,12 @@ def processConfigConstants(configBranch, symbolTable):
     for son in configBranch.getSons():
         for keyword in lookupList:
             name = son.getName()
-            if name == keyword:
+            if name == "cube":
+                tempValue = createCube(3, 6, False)
+                tempSymbol = Symbol(son.getName(), tempValue, "Reserved", "global")
+                symbolTable.add(tempSymbol)
+                break
+            elif name == keyword:
                 tempValue = son.getSons()[2].getName()
                 tempSymbol = Symbol(son.getName(), tempValue, "Reserved", "global")
                 symbolTable.add(tempSymbol)
@@ -90,12 +96,24 @@ def delayFunction(tempNode, symbolTable):
             delay(str(tempSymbolTime.getValue()), str(tempSymbolTimeUnit.getValue()))
 
 
+def defaultCode(tempNode, symbolTable):
+    if readyForRun:
+        attributes = getAttributes(tempNode)
+        cubeValue = createCube(3, 6, attributes)
+        tempCubeSymbol = symbolTable.getSymbolByScope("cube", "global")
+        tempCubeSymbol.setValue(cubeValue)
+        symbolTable.modifySymbol(tempCubeSymbol)
+
+
+
 def builtInFunction(node, symbolTable):
     tempNode = node.getSon(0)
     tempName = tempNode.getName()
 
     if tempName == "delay":
         delayFunction(tempNode, symbolTable)
+    if tempName == "defaultCube":
+        defaultCode(tempNode, symbolTable)
 
 
 def statement(node, symbolTable, scope):

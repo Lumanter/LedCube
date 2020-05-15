@@ -10,12 +10,12 @@ def findNumValue(node):
     pass
 
 
-def createCube(dimension, size):
+def createCube(dimension, size, value):
     cube = []
     if dimension == 1:
         for index in range(size):
-            cube.append(False)
+            cube.append(value)
     else:
         for index in range(size):
-            cube.append(createCube(dimension - 1, size))
+            cube.append(createCube(dimension - 1, size, value))
     return cube
