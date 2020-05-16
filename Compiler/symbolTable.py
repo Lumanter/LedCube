@@ -99,6 +99,9 @@ class Symbol:
     def setValue(self, value):
         self.value = value
 
+    def setType(self, type):
+        self.type = type
+
 # Example
 # symbolTable = SymbolTable()
 # symbolTable.add(Symbol("x", True, Types.Boolean, Scopes.Global))

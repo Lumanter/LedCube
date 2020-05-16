@@ -82,10 +82,18 @@ def procedureCall(node, symbolTable):
 def symbolTableAdder(parameters, values, symbolTable, scope):
     for i in range(0, len(parameters)):
         if not (symbolTable.hasSymbol(parameters[i])):
-            symbolTable.add(Symbol(parameters[i], values[i], Types.Undefined, scope))
+            tempType = Types.Undefined
+            if isinstance(values[i], int):
+                tempType = Types.Integer
+            if isinstance(values[i], bool):
+                tempType = Types.Boolean
+            if isinstance(values[i], list):
+                tempType = Types.List
+            symbolTable.add(Symbol(parameters[i], values[i], tempType, scope))
         else:
             variable = symbolTable.getSymbol(parameters[i])
-            variable.modifySymbol(values[i])
+            variable.setValue(parameters[i])
+            symbolTable.modifySymbol(variable)
 
 
 def getArgumentsAux(argumentNode, arguments):
