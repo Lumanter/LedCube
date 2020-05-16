@@ -193,6 +193,18 @@ def numExpression(value, symbolTable, scope, varID):
             return False
 
 
+def boolean(value, symbolTable, scope, varID):
+    if value.hasSons():
+        numExpression(value.getSon(0), symbolTable, scope, varID)
+    else:
+        tempValue = bool(value.getName())
+        if not symbolTable.hasSymbolByScope(varID, scope):
+            tempSymbol = Symbol(varID, tempValue, Types.Integer, scope)
+            symbolTable.add(tempSymbol)
+        else:
+            return False
+
+
 def listElement(element):
     tempNode = None
     elementType = element.getName()
@@ -243,13 +255,12 @@ def ID(value, symbolTable, scope, varID):
 def varValue(valueNode, symbolTable, scope, varID):
     value = valueNode.getSon(0)
     varValueType = value.getName()
-    if varValueType == "numExpression":
-        numExpression(value, symbolTable, scope, varID)
     if varValueType == "list":
         list_process(value, symbolTable, scope, varID)
-    if type(True) == type(value.getName()):
-        pass
-        # boolean
+    elif type(True) == type(value.getName()):
+        boolean(value, symbolTable, scope, varID)
+    elif isinstance(varValueType, int):
+        numExpression(value, symbolTable, scope, varID)
     else:
         ID(varValueType, symbolTable, scope, varID)
 
@@ -299,20 +310,43 @@ def changeValueInList(lista, indexes, value):
     if not isinstance(lista[0], list):
         lista[indexes[0]] = value
     else:
-        changeValueInList(lista[indexes[0]], indexes[1:], value)
+        if indexes[0] < len(lista):
+            changeValueInList(lista[indexes[0]], indexes[1:], value)
+        print "Error in function changeValueInList: " + str(
+            indexes[0]) + " is bigger than the size of the dimensions of the list or matrix"
+
+
+def verifyIndexBoundries(tempList, indexes):
+    if indexes == []:
+        return True
+    if tempList[0] <= indexes[0]:
+        return False
+    elif len(indexes) < 2:
+        verifyIndexBoundries(tempList, [])
+    else:
+        verifyIndexBoundries(tempList[0], indexes[1:])
 
 
 def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
     tempSymbol = symbolTable.getSymbolByScope(tempID, scope)
     if tempSymbol != None:
         tempList = tempSymbol.getValue()
-        changeValueInList(tempList, tempIndex, tempValue)
-        return True
+        if verifyIndexBoundries(tempList, tempIndex):
+            changeValueInList(tempList, tempIndex, tempValue)
+            return True
+        else:
+            print "Error in modifySymbolList: indexes out of range"
+            return False
     tempSymbol = symbolTable.getSymbolByScope(tempID, "global")
     if tempSymbol != None:
         tempList = tempSymbol.getValue()
-        changeValueInList(tempList, tempIndex, tempValue)
-        return True
+        if verifyIndexBoundries(tempList, tempIndex):
+            changeValueInList(tempList, tempIndex, tempValue)
+            return True
+        else:
+            print "Error in modifySymbolList: indexes out of range"
+            return False
+
 
 
 def indexAssignment(tempNode, symbolTable, scope):
@@ -321,10 +355,10 @@ def indexAssignment(tempNode, symbolTable, scope):
         tempIndex = getIndexes(tempNode.getSon(1), [], symbolTable, scope)
         tempValue = indexVarValue(tempNode.getSon(3), symbolTable, scope)
 
-        if tempID.lower() == "cubo" or tempID.lower() == "cube":
-            turn(tempIndex[0], tempIndex[1], tempIndex[2], tempValue)
         if not modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
             return False
+        if tempID.lower() == "cubo" or tempID.lower() == "cube":
+            turn(tempIndex[0], tempIndex[1], tempIndex[2], tempValue)
 
 
 def varAssignment(node, symbolTable, scope):

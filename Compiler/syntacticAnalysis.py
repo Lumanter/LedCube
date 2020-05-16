@@ -297,7 +297,10 @@ data = '''
     y = 7;
 
     Procedure Main() {
-        x[0][0][0] = true;
+        x = 9;
+        y = 9;
+        z = 9;
+        Cubo[x][y][z] = true;
         CALL sum(5,5);
     };
 '''
