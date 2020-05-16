@@ -273,7 +273,7 @@ def getIndexes(indexNode, indexes, symbolTable, scope):
                     tempValue = tempSymbol.getValue()
                     indexes.append(tempValue)
                 else:
-                    tempSymbol = symbolTable.getSymbolByScope(tempValue, scope)
+                    tempSymbol = symbolTable.getSymbolByScope(tempValue, "global")
                     if tempSymbol != None:
                         tempValue = tempSymbol.getValue()
                         indexes.append(tempValue)
