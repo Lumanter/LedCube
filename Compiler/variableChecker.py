@@ -260,13 +260,28 @@ def simpleAssignment(tempNode, symbolTable, scope):
     varValue(valueNode, symbolTable, scope, varID)
 
 
-def getIndexes(indexNode, indexes):
+def getIndexes(indexNode, indexes, symbolTable, scope):
     tempList = indexNode.getSons()
     for node in tempList:
         if node.getSonsLength() == 3:
-            indexes.append(node.getSon(1).getSon(0).getName())
+            tempValue = node.getSon(1).getSon(0).getName()
+            if isinstance(tempValue, int):
+                indexes.append(tempValue)
+            else:
+                tempSymbol = symbolTable.getSymbolByScope(tempValue, scope)
+                if tempSymbol != None:
+                    tempValue = tempSymbol.getValue()
+                    indexes.append(tempValue)
+                else:
+                    tempSymbol = symbolTable.getSymbolByScope(tempValue, scope)
+                    if tempSymbol != None:
+                        tempValue = tempSymbol.getValue()
+                        indexes.append(tempValue)
+                    else:
+                        print str(tempValue) + "doesn't fit any symbol stored in the symbolTable"
+                        return None
         else:
-            getIndexes(node, indexes)
+            getIndexes(node, indexes, symbolTable, scope)
     return indexes
 
 
@@ -303,7 +318,7 @@ def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
 def indexAssignment(tempNode, symbolTable, scope):
     if readyForRun:
         tempID = tempNode.getSon(0).getName()
-        tempIndex = getIndexes(tempNode.getSon(1), [])
+        tempIndex = getIndexes(tempNode.getSon(1), [], symbolTable, scope)
         tempValue = indexVarValue(tempNode.getSon(3), symbolTable, scope)
 
         if tempID.lower() == "cubo" or tempID.lower() == "cube":
