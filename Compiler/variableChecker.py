@@ -1,8 +1,6 @@
 from symbolTable import *
 from codeRunner import searchNodeByName
-from codeGenerator import delay
-from codeGenerator import readFinalCode
-from codeGenerator import wipeCode
+from codeGenerator import *
 from Utils import createCube
 
 readyForRun = False
@@ -40,7 +38,7 @@ def processConfigConstants(configBranch, symbolTable):
             name = son.getName()
             if name == "cube":
                 tempValue = createCube(3, 6, False)
-                tempSymbol = Symbol(son.getName(), tempValue, "Reserved", "global")
+                tempSymbol = Symbol(son.getSon(0).getName(), tempValue, "Reserved", "global")
                 symbolTable.add(tempSymbol)
                 break
             elif name == keyword:
@@ -105,7 +103,6 @@ def getArgumentsAux(argumentNode, arguments):
         getArguments(argumentNode, arguments)
 
 
-
 def getArguments(argumentNode, arguments):
     tempList = argumentNode.getSons()
     for node in tempList:
@@ -142,7 +139,6 @@ def defaultCode(tempNode, symbolTable):
         tempCubeSymbol = symbolTable.getSymbolByScope("cube", "global")
         tempCubeSymbol.setValue(cubeValue)
         symbolTable.modifySymbol(tempCubeSymbol)
-
 
 
 def builtInFunction(node, symbolTable):
@@ -264,14 +260,14 @@ def simpleAssignment(tempNode, symbolTable, scope):
     varValue(valueNode, symbolTable, scope, varID)
 
 
-def getIndexes(newList, indexNode):
+def getIndexes(indexNode, indexes):
     tempList = indexNode.getSons()
     for node in tempList:
-        if node.getName() == "index":
-            newList.append(getIndexes(newList, node))
-        if node.getName() == "indexValue":
-            return node.getSon(0).getName()
-    return newList
+        if node.getSonsLength() == 3:
+            indexes.append(node.getSon(1).getSon(0).getName())
+        else:
+            getIndexes(node, indexes)
+    return indexes
 
 
 def indexVarValue(valueNode, symbolTable, scope):
@@ -305,14 +301,15 @@ def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
 
 
 def indexAssignment(tempNode, symbolTable, scope):
-    tempID = tempNode.getSon(0).getName()
-    tempIndex = getIndexes([], tempNode.getSon(1))
-    tempValue = indexVarValue(tempNode.getSon(3), symbolTable, scope)
+    if readyForRun:
+        tempID = tempNode.getSon(0).getName()
+        tempIndex = getIndexes(tempNode.getSon(1), [])
+        tempValue = indexVarValue(tempNode.getSon(3), symbolTable, scope)
 
-    if modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
-        pass
-    else:
-        return False
+        if tempID.lower() == "cubo" or tempID.lower() == "cube":
+            turn(tempIndex[0], tempIndex[1], tempIndex[2], tempValue)
+        if not modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
+            return False
 
 
 def varAssignment(node, symbolTable, scope):
