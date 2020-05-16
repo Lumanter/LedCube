@@ -68,11 +68,42 @@ def processVariables(statementBranch, symbolTable):
 
 
 def procedureCall(node, symbolTable):
-    global code
-    tempCode = code.getSons()[1]
-    functionName = node.getSon(0).getSon(1).getName()
-    tempNode = searchNodeByName(tempCode, functionName)
-    procedureDeclaration(tempNode, symbolTable)
+    if readyForRun:
+        global code
+        tempCode = code.getSons()[1]
+        functionName = node.getSon(1).getName()
+        tempNode = searchNodeByName(tempCode, functionName)
+        valuesParameters = getArguments(node.getSon(3), [])
+        parameters = getArguments(tempNode.getSon(3), [])
+        symbolTableAdder(parameters, valuesParameters, symbolTable, node.getSon(1))
+        procedureDeclaration(tempNode, symbolTable)
+
+
+def symbolTableAdder(parameters, values, symbolTable, scope):
+    for i in range(0, len(parameters)):
+        if not (symbolTable.hasSymbol(parameters[i])):
+            symbolTable.add(Symbol(parameters[i], values[i], Types.Undefined, scope))
+        else:
+            variable = symbolTable.getSymbol(parameters[i])
+            variable.modifySymbol(values[i])
+
+
+def getArgumentsAux(argumentNode, arguments):
+    if argumentNode.getName() == "argument":
+        arguments.append(argumentNode.getSon(0).getSon(0).getName())
+    elif argumentNode.getName() == "parameter":
+        arguments.append(argumentNode.getSon(0).getName())
+    else:
+        getArguments(argumentNode, arguments)
+
+
+
+def getArguments(argumentNode, arguments):
+    tempList = argumentNode.getSons()
+    for node in tempList:
+        if node.getName() != ',':
+            getArgumentsAux(node, arguments)
+    return arguments
 
 
 def getAttributes(functionNode):
@@ -124,7 +155,7 @@ def statement(node, symbolTable, scope):
     if tempNode.getName() == "varAssignment":
         varAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "procedureCall":
-        procedureCall(node, symbolTable)
+        procedureCall(tempNode, symbolTable)
     if tempNode.getName() == "builtInFunction":
         builtInFunction(tempNode, symbolTable)
         pass

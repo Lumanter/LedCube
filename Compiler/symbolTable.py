@@ -6,6 +6,7 @@ class Types(enum.Enum):
     Boolean = "bool"
     Integer = "int"
     List = "list"
+    Undefined = "undefined"
 
 
 class Scopes(enum.Enum):
