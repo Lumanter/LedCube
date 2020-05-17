@@ -1,12 +1,13 @@
-from lexicalAnalysis import lexicalAnalyzer
-from syntacticAnalysis import syntacticAnalyzer
+import sys
+sys.path.append("..")
+from Lexic.lexicalAnalysis import lexicalAnalyzer
+from Syntax.syntacticAnalysis import syntacticAnalyzer
 import re
 import codecs
 import os
-import sys
 
 testDirectory = './codeSamples/'
-testType = "lai"  # lexic, syntax or semantic
+testType = "lexic"  # lexic, syntax or semantic
 
 
 def askTestName(directory):

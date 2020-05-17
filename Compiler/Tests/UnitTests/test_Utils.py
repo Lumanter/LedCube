@@ -1,6 +1,9 @@
+import sys
+sys.path.append("..")
+
 from unittest import TestCase
 
-from Compiler.Utils import createCube
+from Utils import createCube
 
 
 class TestUtils(TestCase):
