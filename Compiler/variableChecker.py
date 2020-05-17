@@ -73,13 +73,13 @@ def procedureCall(node, symbolTable):
         tempNode = searchNodeByName(tempCode, functionName)
         valuesParameters = getArguments(node.getSon(3), [])
         parameters = getArguments(tempNode.getSon(3), [])
-        symbolTableAdder(parameters, valuesParameters, symbolTable, node.getSon(1))
+        symbolTableAdder(parameters, valuesParameters, symbolTable, node.getSon(1).getName())
         procedureDeclaration(tempNode, symbolTable)
 
 
 def symbolTableAdder(parameters, values, symbolTable, scope):
     for i in range(0, len(parameters)):
-        if not (symbolTable.hasSymbol(parameters[i])):
+        if not (symbolTable.hasSymbolByScope(parameters[i], scope)):
             tempType = Types.Undefined
             if isinstance(values[i], int):
                 tempType = Types.Integer
@@ -89,8 +89,8 @@ def symbolTableAdder(parameters, values, symbolTable, scope):
                 tempType = Types.List
             symbolTable.add(Symbol(parameters[i], values[i], tempType, scope))
         else:
-            variable = symbolTable.getSymbol(parameters[i])
-            variable.setValue(parameters[i])
+            variable = symbolTable.getSymbolByScope(parameters[i], scope)
+            variable.setValue(values[i])
             symbolTable.modifySymbol(variable)
 
 
@@ -312,19 +312,20 @@ def changeValueInList(lista, indexes, value):
     else:
         if indexes[0] < len(lista):
             changeValueInList(lista[indexes[0]], indexes[1:], value)
-        print "Error in function changeValueInList: " + str(
-            indexes[0]) + " is bigger than the size of the dimensions of the list or matrix"
+        else:
+            print "Error in function changeValueInList: " + str(
+                indexes[0]) + " is bigger than the size of the dimensions of the list or matrix"
 
 
 def verifyIndexBoundries(tempList, indexes):
     if indexes == []:
         return True
-    if tempList[0] <= indexes[0]:
+    if len(tempList) <= indexes[0]:
         return False
     elif len(indexes) < 2:
-        verifyIndexBoundries(tempList, [])
+        return verifyIndexBoundries(tempList, [])
     else:
-        verifyIndexBoundries(tempList[0], indexes[1:])
+        return verifyIndexBoundries(tempList[0], indexes[1:])
 
 
 def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
@@ -343,9 +344,6 @@ def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
         if verifyIndexBoundries(tempList, tempIndex):
             changeValueInList(tempList, tempIndex, tempValue)
             return True
-        else:
-            print "Error in modifySymbolList: indexes out of range"
-            return False
 
 
 

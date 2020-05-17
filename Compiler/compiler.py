@@ -17,7 +17,11 @@ code = '''
     };
 
     Procedure Main() {
-        Delay();
+        x = 0;
+        y = 0;
+        z = 0;
+        Cubo[x][y][z] = true;
+        CALL turnOn(0,0,1);
     };
 '''
 
