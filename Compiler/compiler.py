@@ -22,6 +22,7 @@ code = '''
         z = 0;
         Cubo[x][y][z] = true;
         CALL turnOn(0,0,1);
+        CALL turnOn(0,1,1);
     };
 '''
 

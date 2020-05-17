@@ -71,8 +71,8 @@ class SymbolTable:
 
         if self.hasSymbol(tempID):
             self.eliminateSymbolByScope(tempID, tempScope)
-
-            self.symbols[tempID].add(newSymbol)
+            tempNode = Node(newSymbol)
+            self.symbols[tempID].add(tempNode)
         else:
             self.add(newSymbol)
 
