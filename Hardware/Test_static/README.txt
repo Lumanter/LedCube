@@ -1,0 +1,1 @@
+this algorithm will set an specific led arrangement in the cube. After, is not possible to change it's configuration
