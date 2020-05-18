@@ -21,7 +21,8 @@ void setup(){
   pinMode(STCP_pin,OUTPUT);
   pinMode(SHCP_pin,OUTPUT);
 
-  clear_cube();
+  void clear_cube();
+  void writeReg();
   //this lines are only for debug, they wont be in the final code!
   write_in_cube(0,1,2,HIGH);//random led in [0,1,2]
   write_in_cube(5,3,7,HIGH);//random led in [5,3,7]
@@ -36,7 +37,8 @@ void writeReg(int led_position){ // original writeReg function
   digitalWrite(DS_pin,registers[led_position]);
   digitalWrite(STCP_pin,HIGH);
   digitalWrite(SHCP_pin,HIGH);
-  delayMicroseconds(multiplex_delay_microseconds);//multiplexing. 
+  delayMicroseconds(multiplex_delay_microseconds);//multiplexing.
+  registers[led_position]=LOW; 
 }
 
 void loop() {
@@ -59,5 +61,5 @@ void loop() {
 }
 
 void clear_cube(){
-  memset(cube,false,sizeof(cube));//would work??
+  memset(cube,LOW,sizeof(cube));//would work??
 }
