@@ -1,7 +1,7 @@
 
 import sys
 sys.path.append("..")
-from ASTNodes import ASTNode
+from DataStructures.ASTNodes import ASTNode
 
 # Procedure Declaration 
 def p_procedureDeclaration_noParameters(p):

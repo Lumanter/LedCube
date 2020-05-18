@@ -1,9 +1,9 @@
 import ply.yacc as yacc
 import sys
 sys.path.append("..")
-from Lexic.lexicAnalysis import tokens
-from semanticAnalysis import *
 
+from Lexic.lexicAnalysis import  tokens
+from DataStructures.ASTNodes import *
 from numericalOperations import *
 from configurationConstants import *
 from variableAssignments import *
@@ -11,7 +11,6 @@ from statements import *
 from builtinFunctions import *
 from lists import *
 from procedures import *
-from ASTNodes import *
 
 start = 'program'
 
