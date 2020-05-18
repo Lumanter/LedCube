@@ -20,7 +20,9 @@ code = '''
         x = 0;
         y = 0;
         z = 0;
-        Cubo[x][y][z] = true;
+        lista1D = [true,true,true,true];
+        lista2D = [[true,true],[true,true]];
+        lista3D = [[[true,true],[true,true]],[[true,true],[true,true]],[[true,true],[true,true]]];
         CALL turnOn(0,0,1);
         CALL turnOn(0,1,1);
     };
