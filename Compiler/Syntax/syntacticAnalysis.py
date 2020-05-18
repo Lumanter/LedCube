@@ -11,6 +11,7 @@ from statements import *
 from builtinFunctions import *
 from lists import *
 from procedures import *
+from ASTNodes import *
 
 start = 'program'
 

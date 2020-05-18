@@ -1,7 +1,7 @@
 
 import sys
 sys.path.append("..")
-from semanticAnalysis import ASTNode
+from ASTNodes import ASTNode
 
 
 def p_list_empty(p):
