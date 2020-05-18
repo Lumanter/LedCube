@@ -1,6 +1,6 @@
-from symbolTable import *
+from DataStructures.symbolTable import *
 from codeRunner import searchNodeByName
-from codeGenerator import *
+from CodeProduction.codeGenerator import *
 from Utils import createCube
 
 readyForRun = False

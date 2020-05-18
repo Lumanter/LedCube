@@ -3,7 +3,7 @@ sys.path.append("..")
 
 from unittest import TestCase
 
-from Utils import createCube
+from Semantic.Utils import createCube
 
 
 class TestUtils(TestCase):

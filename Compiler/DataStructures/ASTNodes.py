@@ -1,4 +1,4 @@
-from semanticAnalysis import *
+from Semantic.semanticAnalysis import *
 
 tree = "\t"
 count = 0
