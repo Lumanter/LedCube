@@ -6,6 +6,7 @@ def resetErrorLog():
     file.close()
 
 def logError(error):
+    print "Error logged - " + error
     file = open(os.path.abspath('.//ErrorHandling//errorLog.txt'), "a")
     file.write(error + "\n")
     file.close()

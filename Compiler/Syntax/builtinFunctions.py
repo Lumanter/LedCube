@@ -5,16 +5,17 @@ from DataStructures.ASTNodes import ASTNode
 
 
 def p_builtInFunction(p):
-    'builtInFunction : delay'
+    '''builtInFunction : delay
+                       | listOperation'''
     p[0] = ASTNode("builtInFunction", ([p[1]]))
 
 
 # Delay 
-def p_delay_default(p):
+def p_delayDefault(p):
     'delay : DELAY LPARENTHESES RPARENTHESES SEMICOLON'
     p[0] = ASTNode("delay", (p[1], p[2], p[3], p[4]))
 
-def p_delay_custom(p):
+def p_delayCustom(p):
     'delay : DELAY LPARENTHESES INTEGER COMMA TIMEUNIT RPARENTHESES SEMICOLON'
     p[0] = ASTNode("delay", (p[1], p[2], p[3], p[4], p[5], p[6], p[7]))
 
@@ -23,3 +24,12 @@ def p_delay_custom(p):
 def p_defaultCube(p):
     'list : DEFAULTCUBE LPARENTHESES BOOLEAN RPARENTHESES'
     p[0] = ASTNode("defaultCube", (p[1], p[2], p[3], p[4]))
+
+# List T/F/Neg Operations
+def p_listOperation(p):
+    'listOperation : ID LISTOPERATOR SEMICOLON'
+    p[0] = ASTNode("listOperation", (p[1], '.', p[2]))
+
+def p_listOperation_index(p):
+    'listOperation : ID index LISTOPERATOR SEMICOLON'
+    p[0] = ASTNode("listOperation", (p[1], p[2], '.', p[3]))

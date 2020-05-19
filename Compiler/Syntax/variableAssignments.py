@@ -20,12 +20,12 @@ def p_indexAssignment(p):
     p[0] = ASTNode("indexAssignment", (p[1], p[2], p[3], p[4], p[5]))
 
 
-def p_index_one(p):
+def p_indexOne(p):
     'index : LSQUAREBRACKET indexValue RSQUAREBRACKET'
     p[0] = ASTNode("index", (p[1], p[2], p[3]))
 
 
-def p_index_many(p):
+def p_indexMany(p):
     'index : index index'
     p[0] = ASTNode("index", (p[1], p[2]))
 

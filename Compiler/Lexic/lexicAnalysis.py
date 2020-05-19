@@ -30,6 +30,9 @@ tokens = [
     'BOOLEAN',
     'TIMEUNIT',
 
+    # List Functions
+	'LISTOPERATOR',
+
     # Numerical Operators
     'PLUS',
     'MINUS',
@@ -85,6 +88,10 @@ def t_BOOLEAN(t):
     t.value = (t.value == 'true')
     return t
 
+def t_LISTOPERATOR(t):
+	r'\.(F|T|Neg)'
+	t.value = t.value[1:]
+	return t
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9@_&]*'
@@ -107,9 +114,7 @@ def t_newline(t):
 
 
 def t_error(t):
-    errorMessage = "Lexical error: Illegal character '" + t.value[0] + "' at line number " + str(t.lexer.lineno)
-    print errorMessage
-    logError(errorMessage)
+    logError("Lexical error: Illegal character '" + t.value[0] + "' at line number " + str(t.lexer.lineno))
     t.lexer.skip(1)
 
 lexicalAnalyzer = lex.lex()

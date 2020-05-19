@@ -4,6 +4,7 @@ from DataStructures.symbolTable import *
 from codeRunner import searchNodeByName
 from CodeProduction.codeGenerator import *
 from Utils import createCube
+from ErrorHandling.ErrorHandler import *
 
 readyForRun = False
 code = None
@@ -39,7 +40,7 @@ def processConfigConstants(configBranch, symbolTable):
         for keyword in lookupList:
             name = son.getName()
             if name == "cube":
-                tempValue = createCube(3, 6, False)
+                tempValue = createCube(3, 8, False)
                 tempSymbol = Symbol(son.getSon(0).getName(), tempValue, "Reserved", "global")
                 symbolTable.add(tempSymbol)
                 break
@@ -143,7 +144,7 @@ def defaultCode(tempNode, symbolTable):
         symbolTable.modifySymbol(tempCubeSymbol)
 
 
-def builtInFunction(node, symbolTable):
+def builtInFunction(node, symbolTable, scope):
     tempNode = node.getSon(0)
     tempName = tempNode.getName()
 
@@ -151,6 +152,8 @@ def builtInFunction(node, symbolTable):
         delayFunction(tempNode, symbolTable)
     if tempName == "defaultCube":
         defaultCode(tempNode, symbolTable)
+    if tempName == "listOperation":
+        listOperation(node, symbolTable, scope)
 
 
 def statement(node, symbolTable, scope):
@@ -163,7 +166,7 @@ def statement(node, symbolTable, scope):
     if tempNode.getName() == "procedureCall":
         procedureCall(tempNode, symbolTable)
     if tempNode.getName() == "builtInFunction":
-        builtInFunction(tempNode, symbolTable)
+        builtInFunction(tempNode, symbolTable, scope)
         pass
 
 
@@ -361,3 +364,68 @@ def varAssignment(node, symbolTable, scope):
         simpleAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "indexAssignment":
         indexAssignment(tempNode, symbolTable, scope)
+
+def listOperation(node, symbolTable, scope):
+    if (readyForRun):
+
+        id = node.getSon(0).getSon(0).getName()
+
+        if symbolTable.hasSymbol(id):
+
+            oldList = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+
+            if isAList(oldList):
+                import copy
+                newList = copy.deepcopy(oldList)
+
+                listOperationWithIndex = (node.getSon(0).getSon(2).getName() == '.')
+                if (listOperationWithIndex):
+                    indexes = getIndexes(node.getSon(0).getSon(1), [], symbolTable, scope)
+                    listOperator = node.getSon(0).getSon(3).getName()
+                    replaceAtIndexWithOperator(newList, indexes, listOperator)
+                else :
+                    listOperator = node.getSon(0).getSon(2).getName()
+                    replaceWithOperator(newList, listOperator)
+
+                if (id == "Cubo"):
+                    reportCubeChanges(oldList, newList)
+
+                symbolTable.getSymbol(id).getByIndex(0).getValue().setValue(newList)
+            else:
+                logError("Semantic error: id \"" + id + "\" is not a list")
+        else:
+            logError("Semantic error: id \"" + id + "\" not found")
+
+def isAList(list):
+    return isinstance(list, type([]))
+
+def reportCubeChanges(oldCube, newCube):
+    for x in range(len(oldCube)):
+        for y in range(len(oldCube[0])):
+            for z in range(len(oldCube[0][0])):
+                aLedWasChanged = oldCube[x][y][z] != newCube[x][y][z]
+                if (aLedWasChanged):
+                    turn(x, y, z, newCube[x][y][z])
+
+
+def replaceAtIndexWithOperator(list, indexes, operator):
+    if (len(indexes) == 0):
+        return replaceWithOperator(list, operator)
+    index = indexes.pop(0)
+    list[index] = replaceAtIndexWithOperator(list[index], indexes, operator)
+    return list
+
+def replaceWithOperator(element, operator):
+    elementIsAList = isinstance(element, type([]))
+    if elementIsAList:
+        for i in range(len(element)):
+            element[i] = replaceWithOperator(element[i], operator)
+        return element
+
+    else:
+        if (operator == "T"):
+            return True
+        elif (operator == "F"):
+            return False
+        # toggle boolean value
+        return (not element)
