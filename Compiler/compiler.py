@@ -37,9 +37,12 @@ code = '''
     };
 
     Procedure Main() {
-        x = 5;
-        y = true;
+        x = Cubo.shapeC;
+        y = Cubo.shapeF;
+        z = Cubo.shapeA;
     };
 '''
+
+# x = Cubo.shapeC;
 
 compile(code)

@@ -33,3 +33,8 @@ def p_listOperation(p):
 def p_listOperation_index(p):
     'listOperation : ID index LISTOPERATOR SEMICOLON'
     p[0] = ASTNode("listOperation", (p[1], p[2], '.', p[3]))
+
+# List Dimension
+def p_listDimension(p):
+    'listDimension : ID LISTDIMENSION'
+    p[0] = ASTNode("listDimension", (p[1], p[2]))

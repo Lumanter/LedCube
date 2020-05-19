@@ -153,6 +153,8 @@ def varValue(valueNode, symbolTable, scope, varID):
     varValueType = value.getName()
     if varValueType == "list":
         list_process(value, symbolTable, scope, varID)
+    elif varValueType == "listDimension":
+        listDimension(varID, value, symbolTable, scope)
     elif type(True) == type(value.getName()):
         boolean(value, symbolTable, scope, varID)
     elif isinstance(varValueType, int):

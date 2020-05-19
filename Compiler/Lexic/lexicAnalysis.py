@@ -32,6 +32,7 @@ tokens = [
 
     # List Functions
 	'LISTOPERATOR',
+    'LISTDIMENSION',
 
     # Numerical Operators
     'PLUS',
@@ -90,6 +91,11 @@ def t_BOOLEAN(t):
 
 def t_LISTOPERATOR(t):
 	r'\.(F|T|Neg)'
+	t.value = t.value[1:]
+	return t
+
+def t_LISTDIMENSION(t):
+	r'\.shape(A|F|C)'
 	t.value = t.value[1:]
 	return t
 
