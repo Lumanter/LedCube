@@ -77,3 +77,13 @@ def getAttributes(functionNode):
         if tempName != ',':
             attributes.append(tempName)
     return attributes
+
+def verifyIndexBoundries(tempList, indexes):
+    if indexes == []:
+        return True
+    if len(tempList) <= indexes[0]:
+        return False
+    elif len(indexes) < 2:
+        return verifyIndexBoundries(tempList, [])
+    else:
+        return verifyIndexBoundries(tempList[0], indexes[1:])

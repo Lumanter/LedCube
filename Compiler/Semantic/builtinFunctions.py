@@ -48,7 +48,6 @@ def listOperation(node, symbolTable, scope):
         id = node.getSon(0).getSon(0).getName()
 
         if symbolTable.hasSymbol(id):
-
             oldList = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
 
             if isAList(oldList):
@@ -57,8 +56,12 @@ def listOperation(node, symbolTable, scope):
                 listOperationWithIndex = (node.getSon(0).getSon(2).getName() == '.')
                 if (listOperationWithIndex):
                     indexes = getIndexes(node.getSon(0).getSon(1), [], symbolTable, scope)
-                    listOperator = node.getSon(0).getSon(3).getName()
-                    replaceAtIndexWithOperator(newList, indexes, listOperator)
+                    indexOutOfRange = not verifyIndexBoundries(oldList, indexes)
+                    if not indexOutOfRange:
+                        listOperator = node.getSon(0).getSon(3).getName()
+                        replaceAtIndexWithOperator(newList, indexes, listOperator)
+                    else:
+                        logError("Semantic error: index out of range in \"" + id + "\"")
                 else :
                     listOperator = node.getSon(0).getSon(2).getName()
                     replaceWithOperator(newList, listOperator)
@@ -100,6 +103,7 @@ def replaceWithOperator(element, operator):
             return False
         return (not element)
 
+
 # List Dimension
 def listDimension(varID, node, symbolTable, scope):
     listId = node.getSon(0).name
@@ -121,7 +125,6 @@ def listDimension(varID, node, symbolTable, scope):
             logError("Semantic error: id \"" + listId + "\" is not a list")
     else:
         logError("Semantic error: id \"" + listId + "\" not found")
-
 
 def getDimension(matrix, dimensionType):
     if dimensionType == "shapeC":

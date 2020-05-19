@@ -190,17 +190,6 @@ def changeValueInList(lista, indexes, value):
                 indexes[0]) + " is bigger than the size of the dimensions of the list or matrix"
 
 
-def verifyIndexBoundries(tempList, indexes):
-    if indexes == []:
-        return True
-    if len(tempList) <= indexes[0]:
-        return False
-    elif len(indexes) < 2:
-        return verifyIndexBoundries(tempList, [])
-    else:
-        return verifyIndexBoundries(tempList[0], indexes[1:])
-
-
 def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
     tempSymbol = symbolTable.getSymbolByScope(tempID, scope)
     if tempSymbol != None:

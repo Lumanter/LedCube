@@ -37,9 +37,7 @@ code = '''
     };
 
     Procedure Main() {
-        x = Cubo.shapeC;
-        y = Cubo.shapeF;
-        z = Cubo.shapeA;
+        Cubo[10][10][0].Neg;
     };
 '''
 
