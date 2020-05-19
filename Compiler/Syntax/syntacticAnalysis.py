@@ -1,6 +1,7 @@
 import ply.yacc as yacc
 import sys
 sys.path.append("..")
+from ErrorHandling.ErrorHandler import *
 
 from Lexic.lexicAnalysis import  tokens
 from DataStructures.ASTNodes import *
@@ -19,14 +20,19 @@ def p_program(p):
     p[0] = program("program", (p[1], p[2]))
 
 def p_error(p):
-    if(p == None):
-        print "Syntax error at the last character"
-    else:
-        print "Syntaxis error in line " + str(p.lineno) + ", immediately before character \""+str(p.value)+"\""
+    errorMessage = "Syntax error at the last character"
+    if (p != None):
+        errorMessage = logError("Syntaxis error in line " + str(p.lineno) + ", immediately before character \""+str(p.value)+"\"")
+    print errorMessage
+    logError(errorMessage)
 
-syntacticAnalyzer = yacc.yacc()
 
-# supress unused tokens warnings 
+resetErrorLog()
+syntacticAnalyzer = None
+if not areCompileErrors():
+    syntacticAnalyzer = yacc.yacc()
+
+# supress unused tokens warnings
 import warnings
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")

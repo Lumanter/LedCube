@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 from DataStructures.symbolTable import *
 from codeRunner import searchNodeByName
 from CodeProduction.codeGenerator import *

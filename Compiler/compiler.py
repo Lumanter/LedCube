@@ -1,7 +1,12 @@
 from Syntax.syntacticAnalysis import syntacticAnalyzer
+from ErrorHandling.ErrorHandler import *
 
 def compile(code):
-    ast = syntacticAnalyzer.parse(code)
+    if syntacticAnalyzer != None:
+        ast = syntacticAnalyzer.parse(code)
+        ast.translation()
+    else:
+        print "ast could not be build due to lexic error"
     # targetCode = generateTargetCode(ast)
     # return targetCode 
 

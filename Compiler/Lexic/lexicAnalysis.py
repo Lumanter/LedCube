@@ -1,14 +1,23 @@
 import ply.lex as lex
+import sys
+sys.path.append("..")
+from ErrorHandling.ErrorHandler import *
 
 keywords = {
-    'Procedure': 'PROCEDURE',
-    'CALL': 'CALL',
+
+    # Configuration Constants
     'Delay': 'DELAY',
     'Timer': 'TIMER',
     'Rango_timer': 'RANGO_TIMER',
     'Dim_filas': 'DIM_FILAS',
     'Dim_columnas': 'DIM_COLUMNAS',
     'Cubo': 'CUBO',
+
+    # Procedure
+    'Procedure': 'PROCEDURE',
+    'CALL': 'CALL',
+
+    # Built-in Functions
     'defaultCube': 'DEFAULTCUBE'    
 }
 
@@ -19,7 +28,6 @@ tokens = [
     # Variable Types
     'INTEGER',
     'BOOLEAN',
-
     'TIMEUNIT',
 
     # Numerical Operators
@@ -99,8 +107,9 @@ def t_newline(t):
 
 
 def t_error(t):
-    print "Lexical error: Illegal character '" + t.value[0] + "' at line number " + str(t.lexer.lineno)
+    errorMessage = "Lexical error: Illegal character '" + t.value[0] + "' at line number " + str(t.lexer.lineno)
+    print errorMessage
+    logError(errorMessage)
     t.lexer.skip(1)
-
 
 lexicalAnalyzer = lex.lex()

@@ -62,7 +62,6 @@ class program(ASTNode):
     def __init__(self, name, sonList):
         self.name = name
         self.sonList = sonList
-        self.translation()
 
     def translation(self):
         global tree
@@ -84,6 +83,6 @@ class program(ASTNode):
             else:
                 tempNode.addChild(Node(son))
 
-        print tree
+        # print tree
 
         return findVariables(tempNode)
