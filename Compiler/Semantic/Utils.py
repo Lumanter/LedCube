@@ -1,6 +1,4 @@
 
-
-
 def findNumValue(node):
     if node != None:
         if isinstance(node, int):
