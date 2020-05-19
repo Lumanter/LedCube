@@ -22,7 +22,7 @@ def p_program(p):
 def p_error(p):
     errorMessage = "Syntax error at the last character"
     if (p != None):
-        errorMessage = logError("Syntaxis error in line " + str(p.lineno) + ", immediately before character \""+str(p.value)+"\"")
+        errorMessage = "Syntaxis error in line " + str(p.lineno) + ", immediately before character \""+str(p.value)+"\""
     print errorMessage
     logError(errorMessage)
 

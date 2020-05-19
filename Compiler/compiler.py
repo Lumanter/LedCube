@@ -2,9 +2,14 @@ from Syntax.syntacticAnalysis import syntacticAnalyzer
 from ErrorHandling.ErrorHandler import *
 
 def compile(code):
-    if syntacticAnalyzer != None:
+    areNotLexicErrors = (syntacticAnalyzer != None)
+    if areNotLexicErrors:
         ast = syntacticAnalyzer.parse(code)
-        ast.translation()
+        areNotSyntaxErrors = (ast != None)
+        if areNotSyntaxErrors:
+            ast.translation()
+        else:
+            print "ast could not be build due to syntax error"
     else:
         print "ast could not be build due to lexic error"
     # targetCode = generateTargetCode(ast)
