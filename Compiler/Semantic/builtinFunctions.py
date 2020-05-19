@@ -1,14 +1,47 @@
 import sys
 sys.path.append("..")
-from Utils import isAList, getIndexes
+import copy
+
+from Utils import *
 from CodeProduction.codeGenerator import *
+
+
+def builtInFunction(node, symbolTable, scope):
+    tempNode = node.getSon(0)
+    tempName = tempNode.getName()
+
+    if tempName == "delay":
+        delayFunction(tempNode, symbolTable)
+    if tempName == "defaultCube":
+        defaultCode(tempNode, symbolTable)
+    if tempName == "listOperation":
+        listOperation(node, symbolTable, scope)
+
+# Delay
+def delayFunction(tempNode, symbolTable):
+    if isReadyForRun():
+        attributes = getAttributes(tempNode)
+        if len(attributes) != 0:
+            delay(attributes[0], attributes[1])
+        else:
+            tempSymbolTime = symbolTable.getSymbol("timer").getByIndex(0).getValue()
+            tempSymbolTimeUnit = symbolTable.getSymbol("timeUnit").getByIndex(0).getValue()
+            delay(str(tempSymbolTime.getValue()), str(tempSymbolTimeUnit.getValue()))
+
+
+# Default Cube
+def defaultCode(tempNode, symbolTable):
+    if isReadyForRun():
+        attributes = getAttributes(tempNode)
+        cubeValue = createCube(3, 6, attributes)
+        tempCubeSymbol = symbolTable.getSymbolByScope("cube", "global")
+        tempCubeSymbol.setValue(cubeValue)
+        symbolTable.modifySymbol(tempCubeSymbol)
 
 
 # List T, F, Neg Operations
 def listOperation(node, symbolTable, scope):
-    # needs fix because of circular imports issue
-    isReadyForRun = True
-    if isReadyForRun:
+    if isReadyForRun():
         id = node.getSon(0).getSon(0).getName()
 
         if symbolTable.hasSymbol(id):
@@ -16,7 +49,6 @@ def listOperation(node, symbolTable, scope):
             oldList = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
 
             if isAList(oldList):
-                import copy
                 newList = copy.deepcopy(oldList)
 
                 listOperationWithIndex = (node.getSon(0).getSon(2).getName() == '.')
@@ -63,5 +95,4 @@ def replaceWithOperator(element, operator):
             return True
         elif (operator == "F"):
             return False
-        # toggle boolean value
         return (not element)

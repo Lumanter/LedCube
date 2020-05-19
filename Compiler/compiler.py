@@ -2,6 +2,8 @@ from Syntax.syntacticAnalysis import syntacticAnalyzer
 from ErrorHandling.ErrorHandler import *
 from CodeProduction.codeGenerator import getFinalCode
 
+from Semantic.Utils import *
+
 def compile(code):
 
     areNotLexicErrors = (syntacticAnalyzer != None)
@@ -29,8 +31,14 @@ code = '''
     Dim_columnas = 8;
     Cubo = defaultCube(false);
 
-    Procedure Main() {
+    Procedure x() {
         Cubo[0][0].Neg;
+        Delay();
+    };
+
+    Procedure Main() {
+        x = 5;
+        y = true;
     };
 '''
 

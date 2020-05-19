@@ -8,16 +8,15 @@ from ErrorHandling.ErrorHandler import *
 
 from configurationConstants import *
 from builtinFunctions import *
+from variableAssignments import *
 
-readyForRun = False
 code = None
 
 def findVariables(tree):
     global code
-    global readyForRun
     code = tree
     wipeCode()
-    readyForRun = False
+    resetIsReadyForRun()
     symbolTable = SymbolTable()
     children = tree.getSons()
     if not processConfigConstants(children[0], symbolTable):
@@ -25,12 +24,11 @@ def findVariables(tree):
     if not processVariables(children[1], symbolTable):
         return False
     processSimulationOfCode(children[1], symbolTable)
-    readFinalCode()
+    #readFinalCode()
 
 
 def processSimulationOfCode(tree, symbolTable):
-    global readyForRun
-    readyForRun = True
+    activateIsReadyForRun()
 
     tempNode = searchNodeByName(tree, "Main")
     procedureDeclaration(tempNode, symbolTable)
@@ -51,7 +49,7 @@ def processVariables(statementBranch, symbolTable):
 
 
 def procedureCall(node, symbolTable):
-    if readyForRun:
+    if isReadyForRun():
         global code
         tempCode = code.getSons()[1]
         functionName = node.getSon(1).getName()
@@ -95,49 +93,6 @@ def getArguments(argumentNode, arguments):
             getArgumentsAux(node, arguments)
     return arguments
 
-
-def getAttributes(functionNode):
-    attributes = []
-    tempList = functionNode.getSons()[2:-2]
-    for attribute in tempList:
-        tempName = attribute.getName()
-        if tempName != ',':
-            attributes.append(tempName)
-    return attributes
-
-
-def delayFunction(tempNode, symbolTable):
-    if readyForRun:
-        attributes = getAttributes(tempNode)
-        if len(attributes) != 0:
-            delay(attributes[0], attributes[1])
-        else:
-            tempSymbolTime = symbolTable.getSymbol("timer").getByIndex(0).getValue()
-            tempSymbolTimeUnit = symbolTable.getSymbol("timeUnit").getByIndex(0).getValue()
-            delay(str(tempSymbolTime.getValue()), str(tempSymbolTimeUnit.getValue()))
-
-
-def defaultCode(tempNode, symbolTable):
-    if readyForRun:
-        attributes = getAttributes(tempNode)
-        cubeValue = createCube(3, 6, attributes)
-        tempCubeSymbol = symbolTable.getSymbolByScope("cube", "global")
-        tempCubeSymbol.setValue(cubeValue)
-        symbolTable.modifySymbol(tempCubeSymbol)
-
-
-def builtInFunction(node, symbolTable, scope):
-    tempNode = node.getSon(0)
-    tempName = tempNode.getName()
-
-    if tempName == "delay":
-        delayFunction(tempNode, symbolTable)
-    if tempName == "defaultCube":
-        defaultCode(tempNode, symbolTable)
-    if tempName == "listOperation":
-        listOperation(node, symbolTable, scope)
-
-
 def statement(node, symbolTable, scope):
     tempNode = node.getSon(0)
 
@@ -168,30 +123,6 @@ def procedureDeclaration(node, symbolTable):
             statementList(tempNode, symbolTable, scope)
 
 
-def numExpression(value, symbolTable, scope, varID):
-    if value.hasSons():
-        numExpression(value.getSon(0), symbolTable, scope, varID)
-    else:
-        tempValue = int(value.getName())
-        if not symbolTable.hasSymbolByScope(varID, scope):
-            tempSymbol = Symbol(varID, tempValue, Types.Integer, scope)
-            symbolTable.add(tempSymbol)
-        else:
-            return False
-
-
-def boolean(value, symbolTable, scope, varID):
-    if value.hasSons():
-        numExpression(value.getSon(0), symbolTable, scope, varID)
-    else:
-        tempValue = bool(value.getName())
-        if not symbolTable.hasSymbolByScope(varID, scope):
-            tempSymbol = Symbol(varID, tempValue, Types.Integer, scope)
-            symbolTable.add(tempSymbol)
-        else:
-            return False
-
-
 def listElement(element, tempLinkedList):
     tempValue = element.getSon(0)
     if isinstance(tempValue.getName(), bool):
@@ -215,22 +146,6 @@ def list_process(valueNode, symbolTable, scope, varID):
     newValue = listElements(elements, [])
     tempSymbol = Symbol(varID, newValue, Types.List, scope)
     symbolTable.modifySymbol(tempSymbol)
-
-
-def ID(value, symbolTable, scope, varID):
-    tempSymbol = symbolTable.getSymbolByScope(value, scope)
-    if tempSymbol != None:
-        tempValue = tempSymbol.getValue()
-        tempNewSymbol = Symbol(varID, tempValue, tempSymbol.getType(), scope)
-        symbolTable.modifySymbol(tempNewSymbol)
-        return True
-    tempSymbol = symbolTable.getSymbolByScope(value, "global")
-    if tempSymbol != None:
-        tempValue = tempSymbol.getValue()
-        tempNewSymbol = Symbol(varID, tempValue, tempSymbol.getType(), scope)
-        symbolTable.modifySymbol(tempNewSymbol)
-        return True
-    return False
 
 
 def varValue(valueNode, symbolTable, scope, varID):
@@ -304,7 +219,7 @@ def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
 
 
 def indexAssignment(tempNode, symbolTable, scope):
-    if readyForRun:
+    if isReadyForRun():
         tempID = tempNode.getSon(0).getName()
         tempIndex = getIndexes(tempNode.getSon(1), [], symbolTable, scope)
         tempValue = indexVarValue(tempNode.getSon(3), symbolTable, scope)
