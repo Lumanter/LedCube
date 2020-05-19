@@ -3,12 +3,13 @@ sys.path.append("..")
 from DataStructures.symbolTable import *
 from codeRunner import searchNodeByName
 from CodeProduction.codeGenerator import *
-from Utils import createCube
+from Utils import *
 from ErrorHandling.ErrorHandler import *
+
+from builtinFunctions import *
 
 readyForRun = False
 code = None
-
 
 def findVariables(tree):
     global code
@@ -270,31 +271,6 @@ def simpleAssignment(tempNode, symbolTable, scope):
     varValue(valueNode, symbolTable, scope, varID)
 
 
-def getIndexes(indexNode, indexes, symbolTable, scope):
-    tempList = indexNode.getSons()
-    for node in tempList:
-        if node.getSonsLength() == 3:
-            tempValue = node.getSon(1).getSon(0).getName()
-            if isinstance(tempValue, int):
-                indexes.append(tempValue)
-            else:
-                tempSymbol = symbolTable.getSymbolByScope(tempValue, scope)
-                if tempSymbol != None:
-                    tempValue = tempSymbol.getValue()
-                    indexes.append(tempValue)
-                else:
-                    tempSymbol = symbolTable.getSymbolByScope(tempValue, "global")
-                    if tempSymbol != None:
-                        tempValue = tempSymbol.getValue()
-                        indexes.append(tempValue)
-                    else:
-                        print str(tempValue) + "doesn't fit any symbol stored in the symbolTable"
-                        return None
-        else:
-            getIndexes(node, indexes, symbolTable, scope)
-    return indexes
-
-
 def indexVarValue(valueNode, symbolTable, scope):
     value = valueNode.getSon(0)
     if type(True) == type(value.getName()):
@@ -364,68 +340,3 @@ def varAssignment(node, symbolTable, scope):
         simpleAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "indexAssignment":
         indexAssignment(tempNode, symbolTable, scope)
-
-def listOperation(node, symbolTable, scope):
-    if (readyForRun):
-
-        id = node.getSon(0).getSon(0).getName()
-
-        if symbolTable.hasSymbol(id):
-
-            oldList = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
-
-            if isAList(oldList):
-                import copy
-                newList = copy.deepcopy(oldList)
-
-                listOperationWithIndex = (node.getSon(0).getSon(2).getName() == '.')
-                if (listOperationWithIndex):
-                    indexes = getIndexes(node.getSon(0).getSon(1), [], symbolTable, scope)
-                    listOperator = node.getSon(0).getSon(3).getName()
-                    replaceAtIndexWithOperator(newList, indexes, listOperator)
-                else :
-                    listOperator = node.getSon(0).getSon(2).getName()
-                    replaceWithOperator(newList, listOperator)
-
-                if (id == "Cubo"):
-                    reportCubeChanges(oldList, newList)
-
-                symbolTable.getSymbol(id).getByIndex(0).getValue().setValue(newList)
-            else:
-                logError("Semantic error: id \"" + id + "\" is not a list")
-        else:
-            logError("Semantic error: id \"" + id + "\" not found")
-
-def isAList(list):
-    return isinstance(list, type([]))
-
-def reportCubeChanges(oldCube, newCube):
-    for x in range(len(oldCube)):
-        for y in range(len(oldCube[0])):
-            for z in range(len(oldCube[0][0])):
-                aLedWasChanged = oldCube[x][y][z] != newCube[x][y][z]
-                if (aLedWasChanged):
-                    turn(x, y, z, newCube[x][y][z])
-
-
-def replaceAtIndexWithOperator(list, indexes, operator):
-    if (len(indexes) == 0):
-        return replaceWithOperator(list, operator)
-    index = indexes.pop(0)
-    list[index] = replaceAtIndexWithOperator(list[index], indexes, operator)
-    return list
-
-def replaceWithOperator(element, operator):
-    elementIsAList = isinstance(element, type([]))
-    if elementIsAList:
-        for i in range(len(element)):
-            element[i] = replaceWithOperator(element[i], operator)
-        return element
-
-    else:
-        if (operator == "T"):
-            return True
-        elif (operator == "F"):
-            return False
-        # toggle boolean value
-        return (not element)
