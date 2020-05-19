@@ -18,7 +18,9 @@ keywords = {
     'CALL': 'CALL',
 
     # Built-in Functions
-    'defaultCube': 'DEFAULTCUBE'    
+    'defaultCube': 'DEFAULTCUBE',
+    'list': 'LIST',
+	'range': 'RANGE'
 }
 
 tokens = [

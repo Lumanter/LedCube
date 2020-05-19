@@ -144,3 +144,12 @@ def getDimension(matrix, dimensionType):
         else:
             logError("Semantic error: cannot get shape A of a list that has less than 3 dimensions")
             return 0
+
+
+# List Range
+def listRange(node, symbolTable, scope, varID):
+    size = node.getSon(4).name
+    value = node.getSon(6).name
+    generatedList = [value] * size
+    newSymbol = Symbol(varID, generatedList, Types.List, scope)
+    symbolTable.add(newSymbol)

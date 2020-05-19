@@ -37,10 +37,8 @@ code = '''
     };
 
     Procedure Main() {
-        Cubo[10][10][0].Neg;
+        x = list(range(5, true));
     };
 '''
-
-# x = Cubo.shapeC;
 
 compile(code)

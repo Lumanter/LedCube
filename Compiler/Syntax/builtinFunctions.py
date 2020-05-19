@@ -38,3 +38,8 @@ def p_listOperation_index(p):
 def p_listDimension(p):
     'listDimension : ID LISTDIMENSION'
     p[0] = ASTNode("listDimension", (p[1], p[2]))
+
+# List Range Function
+def p_listRange(p):
+    'listRange : LIST LPARENTHESES RANGE LPARENTHESES INTEGER COMMA BOOLEAN RPARENTHESES RPARENTHESES'
+    p[0] = ASTNode("listRange", (p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9]))
