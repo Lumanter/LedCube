@@ -42,11 +42,13 @@ void loop()
             int led_position=i*8+j;
             registers[led_position]=HIGH;
             writereg();
-            registers[led_position]=LOW; 
+            registers[led_position]=LOW;
+            writereg();
           }
         }
       }
       registers[k+layer_pin]=LOW;
+      writereg();
     }
   }
   previous_milis=millis();
