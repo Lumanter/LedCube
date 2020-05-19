@@ -1,6 +1,6 @@
-int DS_pin = 11;
-int STCP_pin = 10;
-int SHCP_pin = 13;
+#define DS_pin 11
+#define STCP_pin 10
+#define SHCP_pin 13
 
 void setup()
 {
@@ -11,7 +11,7 @@ void setup()
  writereg();
 }
 
-boolean registers[8];
+boolean registers[72];
 
 void writereg()
 {
@@ -30,6 +30,7 @@ void writereg()
 void loop()
 {
 
+ /*
  // Turns on all the leds
  for(int i = 0; i<72; i++)
  {
@@ -52,7 +53,7 @@ void loop()
  delay(2500);
  */
 
- /*
+ // /*
  // Turns off all the LEDs
  for(int i = 0; i<72; i++)
  {
@@ -71,7 +72,5 @@ void loop()
 
  // Waits one second
  delay(1000);
- */
-
- 
+ // */
 }
