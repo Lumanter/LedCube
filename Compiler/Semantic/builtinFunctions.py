@@ -177,9 +177,43 @@ def matrixInsert(node, symbolTable, scope):
 # List Delete
 def listDelete(node, symbolTable, scope):
     if isReadyForRun():
-        print "List delete, I am in Semantic/builtinFunctions, line 180"
+
+        id = node.getSon(0).getSon(0).name
+        if verifyHasId(id, symbolTable):
+
+            list = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+            if verifyIsAList(id, list):
+
+                index = node.getSon(0).getSon(4).name
+                if verifyIndexInBounds(id, list, index):
+                    del list[index]
+
 
 # Matrix Delete
 def matrixDelete(node, symbolTable, scope):
     if isReadyForRun():
-        print "Matrix delete, I am in Semantic/builtinFunctions, line 185"
+
+        deleteColumn = node.getSon(0).getSon(6).name
+        if deleteColumn == 0 or deleteColumn == 1:
+            if deleteColumn:
+
+                id = node.getSon(0).getSon(0).name
+                if verifyHasId(id, symbolTable):
+
+                    matrix = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+                    if verifyIsAMatrix(id, matrix):
+                        index = node.getSon(0).getSon(4).name
+                        indexInRowsRange = True
+                        for row in matrix:
+                            if not verifyIndexInBounds(id+"[row]", row, index):
+                                indexInRowsRange = False
+                        if indexInRowsRange:
+                            deleteColumnAt(matrix, index)
+            else:
+                listDelete(node, symbolTable, scope)
+        else:
+            logError("Semantic error: attempted delete type with illegal value, change to 0 for rows or 1 for columns")
+
+def deleteColumnAt(matrix, index):
+    for subMatrix in matrix:
+        del subMatrix[index]

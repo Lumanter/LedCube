@@ -31,11 +31,6 @@ code = '''
     Dim_columnas = 8;
     Cubo = defaultCube(false);
 
-    Procedure x() {
-        Cubo[0][0].Neg;
-        Delay();
-    };
-
     Procedure Main() {
         anotherList = [true, true];
         
@@ -52,10 +47,7 @@ code = '''
         for row in Cubo Step 2{
             Delay();
         };
-        
     };
 '''
-
-
 
 compile(code)

@@ -1,5 +1,9 @@
 
+import sys
+sys.path.append("..")
 import os
+
+from ErrorHandling.ErrorHandler import logError
 
 def resetIsReadyForRun():
     file = open(os.path.abspath('.//Semantic//runState.txt'), "w")
@@ -87,3 +91,34 @@ def verifyIndexBoundries(tempList, indexes):
         return verifyIndexBoundries(tempList, [])
     else:
         return verifyIndexBoundries(tempList[0], indexes[1:])
+
+def verifyHasId(id, symbolTable):
+    if symbolTable.hasSymbol(id):
+        return True
+    else:
+        logError("Semantic error: id \"" + id + "\" not found")
+
+def verifyIsAList(id, list):
+    if isAList(list):
+        return True
+    else:
+        logError("Semantic error: id \"" + id + "\" is not a list")
+        return False
+
+def verifyIsAMatrix(id, list):
+    if verifyIsAList(id, list):
+        isAMatrix = all(isinstance(subList, type([])) for subList in list)
+        if isAMatrix:
+            return True
+        else:
+            logError("Semantic error: id \"" + id + "\" is not a matrix")
+            return False
+
+def verifyIndexInBounds(id, list, index):
+    indexBound = len(list) - 1
+    indexOutOfRange = index > indexBound or index < 0
+    if not indexOutOfRange:
+        return True
+    else:
+        logError("Semantic error: index out of range in list \"" + id + "\"")
+        return False
