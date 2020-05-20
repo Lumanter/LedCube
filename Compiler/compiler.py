@@ -38,6 +38,16 @@ code = '''
 
     Procedure Main() {
         x = list(range(5, true));
+        a = 0;
+        b = 1;
+        c = 2;
+        lista1D = [true,true,true,true];
+        lista2D = [[true,true],[true,true]];
+        lista3D = [[[true,true],[true,true]],[[true,true],[true,true]],[[true,true],[true,true]]];
+        lista1D[a] = false;
+        lista2D[a][b] = false;
+        lista3D[a][b][b] = false;
+        CALL x();
     };
 '''
 

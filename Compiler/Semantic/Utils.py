@@ -45,29 +45,29 @@ def createCube(dimension, size, value):
 def isAList(list):
     return isinstance(list, type([]))
 
+def resolveIndexes(indexes, symbolTable, scope):
+    for index in range(len(indexes)):
+        if not isinstance(indexes[index], int):
+            tempSymbol = symbolTable.getSymbolByScope(indexes[index], scope)
+            if tempSymbol != None:
+                indexes[index] = tempSymbol.getValue()
+            else:
+                tempSymbol = symbolTable.getSymbolByScope(indexes[index], "global")
+                if tempSymbol != None:
+                    indexes[index] = tempSymbol.getValue()
+                else:
+                    print "Can't resolve index " + str(indexes[index]) + " to a value in symbol table"
+    return indexes
+
+
 def getIndexes(indexNode, indexes, symbolTable, scope):
     tempList = indexNode.getSons()
-    for node in tempList:
-        if node.getSonsLength() == 3:
-            tempValue = node.getSon(1).getSon(0).getName()
-            if isinstance(tempValue, int):
-                indexes.append(tempValue)
-            else:
-                tempSymbol = symbolTable.getSymbolByScope(tempValue, scope)
-                if tempSymbol != None:
-                    tempValue = tempSymbol.getValue()
-                    indexes.append(tempValue)
-                else:
-                    tempSymbol = symbolTable.getSymbolByScope(tempValue, "global")
-                    if tempSymbol != None:
-                        tempValue = tempSymbol.getValue()
-                        indexes.append(tempValue)
-                    else:
-                        print str(tempValue) + "doesn't fit any symbol stored in the symbolTable"
-                        return None
-        else:
-            getIndexes(node, indexes, symbolTable, scope)
-    return indexes
+    if len(tempList) == 2:
+        for node in tempList:
+            indexes = getIndexes(node, indexes, symbolTable, scope)
+    else:
+        indexes.append(tempList[1].getSon(0).getName())
+    return resolveIndexes(indexes, symbolTable, scope)
 
 def getAttributes(functionNode):
     attributes = []
