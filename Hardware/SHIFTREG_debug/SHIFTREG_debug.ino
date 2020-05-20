@@ -53,61 +53,72 @@ void turnLayers(bool layers[]){
   }
 }
 
-void loop()
-{
- 
- // Turns on all the leds
- turnAllOn();
-
- // Waits 2.5 seconds
- delay(2500);
-
- // Turns off the LEDs columns one by one
- for(int i = 63; i>=0; i--)
- {
-  registers[i] = LOW;
-  delay(300);
-  writereg();
-
- }
- // Waits 2.5 seconds
- delay(2500);
+void loop(){
   
+  ///////////////////
+  /*
+   * This section activates the entire cube and starts turning off al the columns one by one 
+   * from last to first
+   */
+  /*
+  // Turns on all the leds
+  turnAllOn();
+
+  // Waits 2.5 seconds
+  delay(2500);
+
+  // Turns off the LEDs columns one by one
+  for(int i = 63;i >=0; i--){
+    registers[i] = LOW;
+    delay(225);
+    writereg();
+  }
+  
+  // Waits 2.5 seconds
+  delay(1500);
+*/
 
   ////////////////
+  /*
+   * This section turns off the entire cube and then blinks the LED for the first 
+   * column and the highest layer
+   */
 
- /*
- // Turns off all the LEDs
- turnAllOff();
+/*
+  // Turns off all the LEDs
+  turnAllOff();
 
- // Waits half a second
- delay(500);
-
- // Turns activates one layer and one column, therefore one LED is turn on
- registers[71] = HIGH;
- registers[0] = HIGH;
- writereg();
-
- // Waits one second
- delay(1000);
- */
-
- ////////////////
-
- /*
- // With this list of layers and this function you can choose which cathode layer is turn on or off
- bool layers[8] = {true,true,true,true,true,true,true,true};
- turnLayers(layers);
- 
- writereg();
-
- for (int i = 0;i < 64;i++){
-  registers[i] = HIGH;
-  writereg();
+  // Waits half a second
   delay(500);
-  registers[i] = LOW;
+
+  // Turns activates one layer and one column, therefore one LED is turn on
+  registers[71] = HIGH;
+  registers[0] = HIGH;
   writereg();
- }
- */
+
+  // Waits one second
+  delay(500);
+*/
  
+
+  ////////////////
+  /*
+   * Using a function for controlling the layers this section of the code tests all 
+   * the columns by turning them on for half a second in ascending order
+   */
+
+ 
+  // With this list of layers and this function you can choose which cathode layer is turn on or off
+  bool layers[8] = {true,true,true,true,true,true,true,true};
+  turnLayers(layers);
+ 
+  writereg();
+
+  for (int i = 0;i < 64;i++){
+    registers[i] = HIGH;
+    writereg();
+    delay(500);
+    registers[i] = LOW;
+    writereg();
+ } 
 }
