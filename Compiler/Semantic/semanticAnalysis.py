@@ -9,6 +9,7 @@ from ErrorHandling.ErrorHandler import *
 from configurationConstants import *
 from builtinFunctions import *
 from variableAssignments import *
+from flowControl import *
 
 code = None
 
@@ -102,6 +103,10 @@ def statement(node, symbolTable, scope):
         varAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "procedureCall":
         procedureCall(tempNode, symbolTable)
+    if tempNode.getName() == "ifStatement":
+        ifStatement(tempNode, symbolTable, scope)
+    if tempNode.getName() == "forLoop":
+        forLoop(tempNode, symbolTable, scope)
     if tempNode.getName() == "builtInFunction":
         builtInFunction(tempNode, symbolTable, scope)
         pass

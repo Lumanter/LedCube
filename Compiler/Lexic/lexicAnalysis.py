@@ -20,7 +20,14 @@ keywords = {
     # Built-in Functions
     'defaultCube': 'DEFAULTCUBE',
     'list': 'LIST',
-	'range': 'RANGE'
+	'range': 'RANGE',
+
+    # Control Flow
+    'if': 'IF',
+	'for': 'FOR',
+	'in': 'IN',
+	'Step': 'STEP'
+
 }
 
 tokens = [
@@ -35,6 +42,11 @@ tokens = [
     # List Functions
 	'LISTOPERATOR',
     'LISTDIMENSION',
+    'DELETE',
+	'INSERT',
+
+    # Logical Operator
+	'COMPARATOR',
 
     # Numerical Operators
     'PLUS',
@@ -99,6 +111,20 @@ def t_LISTOPERATOR(t):
 def t_LISTDIMENSION(t):
 	r'\.shape(A|F|C)'
 	t.value = t.value[1:]
+	return t
+
+def t_DELETE(t):
+	r'\.del'
+	t.value = t.value[1:]
+	return t
+
+def t_INSERT(t):
+	r'\.insert'
+	t.value = t.value[1:]
+	return t
+
+def t_COMPARATOR(t):
+	r'>=|<=|>|<|==|!='
 	return t
 
 def t_ID(t):

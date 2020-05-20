@@ -18,6 +18,14 @@ def builtInFunction(node, symbolTable, scope):
         defaultCode(tempNode, symbolTable)
     if tempName == "listOperation":
         listOperation(node, symbolTable, scope)
+    if tempName == "listInsert":
+        listInsert(node, symbolTable, scope)
+    if tempName == "matrixInsert":
+        matrixInsert(node, symbolTable, scope)
+    if tempName == "listDelete":
+        listDelete(node, symbolTable, scope)
+    if tempName == "matrixDelete":
+        matrixDelete(node, symbolTable, scope)
 
 # Delay
 def delayFunction(tempNode, symbolTable):
@@ -118,7 +126,6 @@ def listDimension(varID, node, symbolTable, scope):
                 dimensionValue = getDimension(list, dimensionType)
                 newSymbol = Symbol(varID, dimensionValue, Types.Integer, scope)
                 symbolTable.add(newSymbol)
-                print ""
             else:
                 logError("Semantic error: " + listId + " is not matrix")
         else:
@@ -153,3 +160,26 @@ def listRange(node, symbolTable, scope, varID):
     generatedList = [value] * size
     newSymbol = Symbol(varID, generatedList, Types.List, scope)
     symbolTable.add(newSymbol)
+
+
+# List Insert
+def listInsert(node, symbolTable, scope):
+    if isReadyForRun():
+        print "List insert, I am in Semantic/builtinFunctions, line 166"
+
+
+# Matrix Insert
+def matrixInsert(node, symbolTable, scope):
+    if isReadyForRun():
+        print "Matrix insert, I am in Semantic/builtinFunctions, line 174"
+
+
+# List Delete
+def listDelete(node, symbolTable, scope):
+    if isReadyForRun():
+        print "List delete, I am in Semantic/builtinFunctions, line 180"
+
+# Matrix Delete
+def matrixDelete(node, symbolTable, scope):
+    if isReadyForRun():
+        print "Matrix delete, I am in Semantic/builtinFunctions, line 185"

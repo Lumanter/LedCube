@@ -37,18 +37,16 @@ code = '''
     };
 
     Procedure Main() {
-        x = list(range(5, true));
-        a = 0;
-        b = 1;
-        c = 2;
-        lista1D = [true,true,true,true];
-        lista2D = [[true,true],[true,true]];
-        lista3D = [[[true,true],[true,true]],[[true,true],[true,true]],[[true,true],[true,true]]];
-        lista1D[a] = false;
-        lista2D[a][b] = false;
-        lista3D[a][b][b] = false;
-        CALL x();
+        anotherList = [true, true];
+        
+        anotherList.insert(0, false);
+        Cubo.insert(false, 0, 0);
+        
+        anotherList.del(0);
+        Cubo.del(0, 1);
     };
 '''
+
+
 
 compile(code)
