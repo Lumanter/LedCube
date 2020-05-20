@@ -1,6 +1,11 @@
 
+from Utils import isReadyForRun
+
+
 def ifStatement(node, symbolTable, scope):
-    print "If Statement, I am in Semantic/flowControl, line 3"
+    if isReadyForRun():
+        print "If Statement, I am in Semantic/flowControl, line 5"
 
 def forLoop(node, symbolTable, scope):
-    print "For Loop, I am in Semantic/flowControl, line 6"
+    if isReadyForRun():
+        print "For Loop, I am in Semantic/flowControl, line 9"

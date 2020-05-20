@@ -19,6 +19,9 @@ def p_indexAssignment(p):
     'indexAssignment : ID index ASSIGN varValue SEMICOLON'
     p[0] = ASTNode("indexAssignment", (p[1], p[2], p[3], p[4], p[5]))
 
+def p_indexedId(p):
+    'indexedId : ID index'
+    p[0] = ASTNode("indexedId", (p[1], p[2]))
 
 def p_indexOne(p):
     'index : LSQUAREBRACKET indexValue RSQUAREBRACKET'

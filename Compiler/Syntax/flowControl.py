@@ -1,7 +1,7 @@
 
 import sys
 sys.path.append("..")
-from DataStructures.ASTNodes import *
+from DataStructures.ASTNodes import ASTNode
 
 # For Loop
 def p_forLoop(p):

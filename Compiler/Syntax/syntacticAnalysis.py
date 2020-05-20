@@ -1,8 +1,9 @@
 import ply.yacc as yacc
 import sys
+import warnings
 sys.path.append("..")
-from ErrorHandling.ErrorHandler import *
 
+from ErrorHandling.ErrorHandler import *
 from Lexic.lexicAnalysis import  tokens
 from DataStructures.ASTNodes import *
 from numericalOperations import *
@@ -12,7 +13,7 @@ from statements import *
 from builtinFunctions import *
 from lists import *
 from procedures import *
-#from flowControl import  *
+from flowControl import  *
 
 start = 'program'
 
@@ -33,7 +34,6 @@ if not areCompileErrors():
     syntacticAnalyzer = yacc.yacc()
 
 # supress unused tokens warnings
-import warnings
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     warnings.warn("deprecated", DeprecationWarning)

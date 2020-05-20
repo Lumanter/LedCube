@@ -44,6 +44,15 @@ code = '''
         
         anotherList.del(0);
         Cubo.del(0, 1);
+        
+        if false == false {
+            Delay();
+        };
+        
+        for row in Cubo Step 2{
+            Delay();
+        };
+        
     };
 '''
 

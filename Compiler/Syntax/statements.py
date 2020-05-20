@@ -26,5 +26,7 @@ def p_statement(p):
     '''statement : varAssignment 
                  | procedureDeclaration
                  | procedureCall
-                 | builtInFunction'''
+                 | builtInFunction
+                 | ifStatement
+                 | forLoop'''
     p[0] = ASTNode("statement", [p[1]])
