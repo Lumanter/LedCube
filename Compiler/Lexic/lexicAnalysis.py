@@ -21,6 +21,7 @@ keywords = {
     'defaultCube': 'DEFAULTCUBE',
     'list': 'LIST',
 	'range': 'RANGE',
+    'print': 'PRINT',
 
     # Control Flow
     'if': 'IF',

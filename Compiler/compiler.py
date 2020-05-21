@@ -34,14 +34,9 @@ code = '''
     
     Procedure Main() {
         for x in 8{
-            for y in 8{
-                for z in 8{
-                    Cubo[x][y][z] = true;
-                };
-            };
+            print(x);
         };
     };
 '''
-
 
 compile(code)

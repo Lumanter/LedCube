@@ -28,5 +28,6 @@ def p_statement(p):
                  | procedureCall
                  | builtInFunction
                  | ifStatement
-                 | forLoop'''
+                 | forLoop
+                 | printStatement'''
     p[0] = ASTNode("statement", [p[1]])

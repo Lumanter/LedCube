@@ -73,3 +73,7 @@ def p_listDelete(p):
 def p_matrixDelete(p):
     'matrixDelete : ID DELETE LPARENTHESES INTEGER COMMA INTEGER RPARENTHESES SEMICOLON'
     p[0] = ASTNode("matrixDelete", (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7]))
+
+def p_printStatement(p):
+    'printStatement : PRINT LPARENTHESES ID RPARENTHESES SEMICOLON'
+    p[0] = ASTNode("printStatement", (p[1], p[2], p[3], p[4], p[5]))

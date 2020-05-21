@@ -1,1 +1,0 @@
-Semantic Error: Cube variable doesn't support matrix insert function
