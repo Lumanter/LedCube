@@ -5,7 +5,7 @@
 
 // Variables
 unsigned long previous_milis = 0L; // L from long, important!
-unsigned long delay_time = 0L;//delay time in ms. Should be long for math with other long numbers
+unsigned long delay_time = 3000L;//delay time in ms. Should be long for math with other long numbers
 boolean registers[72]; //pins
 boolean cube[8][8][8];//cube matrix. Initial values != true?
 
@@ -31,7 +31,7 @@ void setup(){
 
 void loop()
 {
-  while(true){ //while for delay time
+  while((millis() - previous_milis) < delay_time){ //while for delay time
     for(int k = 0;k < 8; k++){
       registers[k + 64] = HIGH;
       for(int j = 0;j < 8;j++){
@@ -47,9 +47,10 @@ void loop()
       write_reg();      
     }
   }
+  delay(delay_time); // the loop is going to run for delay_time, after, a delay of (delay_time)
   previous_milis = millis();
   
-  delay(delay_time); // the loop is going to run for delay_time, after, a delay of (delay_time)
+  
 }
 
 void write_reg(){
