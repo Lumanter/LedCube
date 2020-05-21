@@ -26,6 +26,9 @@ void writereg(){
   digitalWrite(STCP_pin, HIGH);
 }
 
+/*
+ * Turns on all the LEDs on the cube
+ */
 void turnAllOn(){
   for(int i = 0;i < 72;i++)
   {
@@ -34,6 +37,9 @@ void turnAllOn(){
   writereg();
 }
 
+/*
+ * Turns off all the LEDs on the cube
+ */
 void turnAllOff(){
   for(int i = 0;i < 72;i++)
   {
@@ -42,6 +48,9 @@ void turnAllOff(){
   writereg();
 }
 
+/*
+ * Turns the choosen cathode layers on or off
+ */
 void turnLayers(bool layers[]){
   for(int i = 0;i < 8;i++){
     if(layers[i] == true){
@@ -53,6 +62,9 @@ void turnLayers(bool layers[]){
   }
 }
 
+/*
+ * Turns a specific LED either on or off using its coordinates
+ */
 void turnLED(int x,int y,int z,bool state){
   registers[(y * 8) + x] = HIGH;
   registers[z + 64] = HIGH;
@@ -61,7 +73,7 @@ void turnLED(int x,int y,int z,bool state){
 
 void loop(){
   
-  ///////////////////
+  //-//-//-//-//-//-//-//
   /*
    * This section activates the entire cube and starts turning off al the columns one by one 
    * from last to first
@@ -84,7 +96,7 @@ void loop(){
   delay(1500);
 */
 
-  ////////////////
+  //-//-//-//-//-//-//-//
   /*
    * This section turns off the entire cube and then blinks the LED for the first 
    * column and the highest layer
@@ -106,8 +118,7 @@ void loop(){
   delay(500);
 */
  
-
-  ////////////////
+  //-//-//-//-//-//-//-//
   /*
    * Using a function for controlling the layers this section of the code tests all 
    * the columns by turning them on for half a second in ascending order
@@ -129,17 +140,17 @@ void loop(){
  } 
  */
 
- //////////////////////
+ //-//-//-//-//-//-//-//
+  /*
+   * This part is a small simple test for multiplexing using the simple method of turning a LED on and off
+   * rapidly
+   */
 
- 
- turnAllOff();
- turnLED(0,0,7,true);
- turnAllOff();
- turnLED(7,7,0,true);
+  // Alternates between turning two LEDs that if turn on at the same time would turn on two extra LEDs, using this
+  // Multiplexing method this won't happen
+  turnAllOff();
+  turnLED(0,0,7,true);
+  turnAllOff();
+  turnLED(7,7,0,true);
 
-
- for (int i = 0;i < 8;i++){
-      turnLED(i,0,0,true);
-      turnAllOff();
-    }
 }
