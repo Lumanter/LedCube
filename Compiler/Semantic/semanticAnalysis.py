@@ -129,24 +129,6 @@ def procedureDeclaration(node, symbolTable):
             statementList(tempNode, symbolTable, scope)
 
 
-def listElement(element, tempLinkedList):
-    tempValue = element.getSon(0)
-    if isinstance(tempValue.getName(), bool):
-        return tempValue.getName()
-    else:
-        tempElements = tempValue.getSon(1)
-        return listElements(tempElements, [])
-
-
-
-def listElements(elements, tempLinkedList):
-    tempNodeList = elements.getSons()
-    tempLinkedList.append(listElement(tempNodeList[0], tempLinkedList))
-    if len(tempNodeList) == 3:
-        listElements(tempNodeList[2], tempLinkedList)
-    return tempLinkedList
-
-
 def list_process(valueNode, symbolTable, scope, varID):
     elements = valueNode.getSon(1)
     newValue = listElements(elements, [])

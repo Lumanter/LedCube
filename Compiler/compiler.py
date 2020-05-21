@@ -24,38 +24,39 @@ def compile(code):
     else:
         print "AST couldn't be build due to lexic error"
 
+
 code = '''
     Timer = 500;
     Rango_timer = "Mil";
     Dim_filas = 8;
     Dim_columnas = 8;
     Cubo = defaultCube(false);
-
+    
     Procedure Main() {
-        anotherList = [true, true];
-        
-        anotherList.insert(0, false);
-        Cubo.insert(false, 0, 0);
-        
+        anotherList = [[true, true], [true, true]];
+        anotherList.insert(0, [true, true]);
+        anotherList.insert([false, false, false], 0, 1);
         anotherList.del(0);
-        Cubo.del(0, 1);
         
+        Cubo.insert([false, false, false], 0, 1);
+
         if false == false {
             Delay();
         };
-        
+
         for row in Cubo Step 2{
             Delay();
         };
-        
+
         for row in Cubo{
             Delay();
         };
-        
+
         for row in 10{
             Delay();
         };
     };
 '''
+
 
 compile(code)

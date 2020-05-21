@@ -50,7 +50,6 @@ def defaultCode(tempNode, symbolTable):
 
 
 # List T, F, Neg Operations
-# !need to check out of index
 def listOperation(node, symbolTable, scope):
     if isReadyForRun():
         id = node.getSon(0).getSon(0).getName()
@@ -165,14 +164,58 @@ def listRange(node, symbolTable, scope, varID):
 # List Insert
 def listInsert(node, symbolTable, scope):
     if isReadyForRun():
-        print "List insert, I am in Semantic/builtinFunctions, line 166"
 
+        id = node.getSon(0).getSon(0).name
+        if verifyHasId(id, symbolTable):
+
+            list = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+            value = processInsertValue(node.getSon(0).getSon(6).getSon(0))
+
+            index = node.getSon(0).getSon(4).name
+            listVerifyAndInsert(id, list, value, index)
+
+def listVerifyAndInsert(id, list, value, index):
+    if not id == "Cubo":
+        if verifyIsAList(id, list):
+            if verifyIndexInBounds(id, list, index):
+                list.insert(index, value)
+    else:
+        logError("Semantic Error: Cube variable doesn't support list insert function")
 
 # Matrix Insert
 def matrixInsert(node, symbolTable, scope):
     if isReadyForRun():
-        print "Matrix insert, I am in Semantic/builtinFunctions, line 174"
+        id = node.getSon(0).getSon(0).name
+        if not id == "Cubo":
+            if verifyHasId(id, symbolTable):
+                matrix = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+                value = processInsertValue(node.getSon(0).getSon(4).getSon(0))
+                index = node.getSon(0).getSon(6).name
+                insertAsColumn = node.getSon(0).getSon(8).name
+                matrixVerifyAndInsert(id, matrix, value, index, insertAsColumn)
+        else:
+            logError("Semantic Error: Cube variable doesn't support matrix insert function")
 
+def matrixVerifyAndInsert(id, matrix, value, index, insertAsColumn):
+    if insertAsColumn == 0 or insertAsColumn == 1:
+        if insertAsColumn:
+            if verifyIsAMatrix(id, matrix):
+                for i in range(len(value)):
+                    indexInListRange = i < len(matrix)
+                    if indexInListRange:
+                        listVerifyAndInsert(id, matrix[i], value[i], index)
+
+        else:
+            listVerifyAndInsert(id, matrix, value, index)
+    else:
+        logError("Semantic error: attempted insert with type illegal value, change to 0 for rows or 1 for columns")
+
+def processInsertValue(node):
+    if node.name == "list":
+        processedList = listElements(node.getSon(1), [])
+        return processedList
+    else:
+        return node.name
 
 # List Delete
 def listDelete(node, symbolTable, scope):

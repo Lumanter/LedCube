@@ -122,3 +122,20 @@ def verifyIndexInBounds(id, list, index):
     else:
         logError("Semantic error: index out of range in list \"" + id + "\"")
         return False
+
+def listElement(element, tempLinkedList):
+    tempValue = element.getSon(0)
+    if isinstance(tempValue.getName(), bool):
+        return tempValue.getName()
+    else:
+        tempElements = tempValue.getSon(1)
+        return listElements(tempElements, [])
+
+
+
+def listElements(elements, tempLinkedList):
+    tempNodeList = elements.getSons()
+    tempLinkedList.append(listElement(tempNodeList[0], tempLinkedList))
+    if len(tempNodeList) == 3:
+        listElements(tempNodeList[2], tempLinkedList)
+    return tempLinkedList

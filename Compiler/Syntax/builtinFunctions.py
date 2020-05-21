@@ -52,11 +52,11 @@ def p_listRange(p):
 
 
 # List Insert Function
-def p_listInsert_simple(p):
+def p_listInsert(p):
     'listInsert : ID INSERT LPARENTHESES INTEGER COMMA insertValue RPARENTHESES SEMICOLON'
     p[0] = ASTNode("listInsert", (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7]))
 
-def p_listInsert_many_atIndex(p):
+def p_matrixInsert(p):
     'matrixInsert : ID INSERT LPARENTHESES insertValue COMMA INTEGER COMMA INTEGER RPARENTHESES SEMICOLON'
     p[0] = ASTNode("matrixInsert", (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9]))
 
