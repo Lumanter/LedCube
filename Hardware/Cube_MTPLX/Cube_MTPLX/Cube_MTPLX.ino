@@ -19,19 +19,19 @@ void setup(){
   write_reg();
   
   //this lines are only for debug, they wont be in the final code!
-  write_in_cube(0,1,2,HIGH);//random led in [0,0,0]
-  write_in_cube(0,1,2,HIGH);//random led in [0,0,1]
-  write_in_cube(0,1,2,HIGH);//random led in [0,0,2]
-  write_in_cube(0,1,2,HIGH);//random led in [0,0,3]
-  write_in_cube(0,1,2,HIGH);//random led in [0,0,4]
-  write_in_cube(0,1,2,HIGH);//random led in [0,0,5]
-  write_in_cube(5,3,7,HIGH);//random led in [0,0,6]
-  write_in_cube(0,1,2,HIGH);//random led in [0,0,7]
+  write_in_cube(0,0,0,HIGH);//random led in [0,0,0]
+  write_in_cube(0,0,1,HIGH);//random led in [0,0,1]
+  write_in_cube(0,0,2,HIGH);//random led in [0,0,2]
+  write_in_cube(0,0,3,HIGH);//random led in [0,0,3]
+  write_in_cube(0,0,4,HIGH);//random led in [0,0,4]
+  write_in_cube(0,0,5,HIGH);//random led in [0,0,5]
+  write_in_cube(0,0,6,HIGH);//random led in [0,0,6]
+  write_in_cube(0,0,7,HIGH);//random led in [0,0,7]
 }
 
 void loop()
 {
-  while((true)){ //while for delay time
+  while(true){ //while for delay time
     for(int k = 0;k < 8; k++){
       registers[k + 64] = HIGH;
       for(int j = 0;j < 8;j++){
@@ -66,15 +66,11 @@ void write_reg(){
 }
 
 void clear_cube(){
-  memset(cube,LOW,sizeof(cube));//would work??
+  memset(cube,LOW,sizeof(cube));
 }
 
 void clear_registers(){  
-  //memset(registers,LOW,sizeof(registers));
-  for(int i = 0;i < 72;i++)
-  {
-    registers[i] = LOW;
-  }
+  memset(registers,LOW,sizeof(registers));
 }
 
 void write_in_cube(int x,int y,int z,boolean value){
