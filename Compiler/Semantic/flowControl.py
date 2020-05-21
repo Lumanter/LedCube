@@ -20,27 +20,29 @@ def forLoop(node, symbolTable, scope):
             Step = 1
             if node.getSon(4).getName() == "STEP":
                 Step = node.getSon(5).getName()
+            totalCycles = len(iterableValue.getValue())
             if Step == 1:
-                for cycle in range(len(iterableValue.getValue())):
-                    tempStatementList = node.getSon(5)
-                    statementList(tempStatementList, symbolTable, scope)
+                for cycle in range(totalCycles):
                     tempSymbol = symbolTable.getSymbolByScope(varID, scope)
                     tempSymbol.setValue(cycle)
                     symbolTable.modifySymbol(tempSymbol)
+                    tempStatementList = node.getSon(5)
+                    statementList(tempStatementList, symbolTable, scope)
             else:
                 cycle = 0
-                totalCycles = len(iterableValue.getValue())
                 while cycle < totalCycles:
+                    tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                    tempSymbol.setValue(cycle)
+                    symbolTable.modifySymbol(tempSymbol)
                     tempStatementList = node.getSon(7)
                     statementList(tempStatementList, symbolTable, scope)
                     cycle += Step
-                    tempSymbol = symbolTable.getSymbolByScope(varID, scope)
-                    tempSymbol.setValue(cycle)
-                    symbolTable.modifySymbol(tempSymbol)
+        elif iterable.getName() == "indexedId":
+            pass
         else:
             for cycle in range(iterable):
-                tempStatementList = node.getSon(5)
-                statementList(tempStatementList, symbolTable, scope)
                 tempSymbol = symbolTable.getSymbolByScope(varID, scope)
                 tempSymbol.setValue(cycle)
                 symbolTable.modifySymbol(tempSymbol)
+                tempStatementList = node.getSon(5)
+                statementList(tempStatementList, symbolTable, scope)
