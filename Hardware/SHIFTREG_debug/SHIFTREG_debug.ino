@@ -102,7 +102,7 @@ void loop(){
    * column and the highest layer
    */
 
-/*
+
   // Turns off all the LEDs
   turnAllOff();
 
@@ -116,7 +116,7 @@ void loop(){
 
   // Waits one second
   delay(500);
-*/
+
  
   //-//-//-//-//-//-//-//
   /*
@@ -145,12 +145,12 @@ void loop(){
    * This part is a small simple test for multiplexing using the simple method of turning a LED on and off
    * rapidly
    */
-
+/*
   // Alternates between turning two LEDs that if turn on at the same time would turn on two extra LEDs, using this
   // Multiplexing method this won't happen
   turnAllOff();
   turnLED(0,0,7,true);
   turnAllOff();
   turnLED(7,7,0,true);
-
+*/
 }
