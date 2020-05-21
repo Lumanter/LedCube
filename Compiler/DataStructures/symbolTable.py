@@ -18,6 +18,10 @@ class SymbolTable:
     def __init__(self):
         self.symbols = {}
 
+    def simpleAdd(self, id, value, type, scope):
+        tempSymbol = Symbol(id, value, type, scope)
+        self.add(tempSymbol)
+
     def add(self, newSymbol):
         if newSymbol.id in self.symbols.keys():
             tempList = self.symbols[newSymbol.id]

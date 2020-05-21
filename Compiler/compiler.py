@@ -47,6 +47,14 @@ code = '''
         for row in Cubo Step 2{
             Delay();
         };
+        
+        for row in Cubo{
+            Delay();
+        };
+        
+        for row in 10{
+            Delay();
+        };
     };
 '''
 
