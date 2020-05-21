@@ -33,8 +33,8 @@ code = '''
     Cubo = defaultCube(false);
     
     Procedure Main() {
-        for x in 8{
-            print(x);
+        for x in Cubo[0]{
+            Cubo[0][x][0] = true;
         };
     };
 '''

@@ -139,3 +139,9 @@ def listElements(elements, tempLinkedList):
     if len(tempNodeList) == 3:
         listElements(tempNodeList[2], tempLinkedList)
     return tempLinkedList
+
+def getListElementByIndex(list, indexes):
+    if len(indexes) == 1:
+        return list[indexes[0]]
+    else:
+        return getListElementByIndex(list[indexes[0]], indexes[1:])
