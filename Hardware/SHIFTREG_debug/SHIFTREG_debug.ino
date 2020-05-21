@@ -53,6 +53,12 @@ void turnLayers(bool layers[]){
   }
 }
 
+void turnLED(int x,int y,int z,bool state){
+  registers[(y * 8) + x] = HIGH;
+  registers[z + 64] = HIGH;
+  writereg();
+}
+
 void loop(){
   
   ///////////////////
@@ -107,9 +113,9 @@ void loop(){
    * the columns by turning them on for half a second in ascending order
    */
 
- 
+  /*
   // With this list of layers and this function you can choose which cathode layer is turn on or off
-  bool layers[8] = {true,true,true,true,true,true,true,true};
+  bool layers[8] = {false,false,false,false,true,true,true,true};
   turnLayers(layers);
  
   writereg();
@@ -121,4 +127,19 @@ void loop(){
     registers[i] = LOW;
     writereg();
  } 
+ */
+
+ //////////////////////
+
+ 
+ turnAllOff();
+ turnLED(0,0,7,true);
+ turnAllOff();
+ turnLED(7,7,0,true);
+
+
+ for (int i = 0;i < 8;i++){
+      turnLED(i,0,0,true);
+      turnAllOff();
+    }
 }
