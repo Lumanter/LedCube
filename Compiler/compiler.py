@@ -33,27 +33,12 @@ code = '''
     Cubo = defaultCube(false);
     
     Procedure Main() {
-        anotherList = [[true, true], [true, true]];
-        anotherList.insert(0, [true, true]);
-        anotherList.insert([false, false, false], 0, 1);
-        anotherList.del(0);
-        
-        Cubo.insert([false, false, false], 0, 1);
-
-        if false == false {
-            Delay();
-        };
-
-        for row in Cubo Step 2{
-            Delay();
-        };
-
-        for row in Cubo{
-            Delay();
-        };
-
-        for row in 10{
-            Delay();
+        for x in 8{
+            for y in 8{
+                for z in 8{
+                    Cubo[x][y][z] = true;
+                };
+            };
         };
     };
 '''

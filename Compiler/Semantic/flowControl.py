@@ -28,6 +28,7 @@ def forLoop(node, symbolTable, scope):
                     symbolTable.modifySymbol(tempSymbol)
                     tempStatementList = node.getSon(5)
                     statementList(tempStatementList, symbolTable, scope)
+                symbolTable.eliminateSymbolByScope(varID, scope)
             else:
                 cycle = 0
                 while cycle < totalCycles:
@@ -37,8 +38,7 @@ def forLoop(node, symbolTable, scope):
                     tempStatementList = node.getSon(7)
                     statementList(tempStatementList, symbolTable, scope)
                     cycle += Step
-        elif iterable.getName() == "indexedId":
-            pass
+                symbolTable.eliminateSymbolByScope(varID, scope)
         else:
             for cycle in range(iterable):
                 tempSymbol = symbolTable.getSymbolByScope(varID, scope)
@@ -46,3 +46,4 @@ def forLoop(node, symbolTable, scope):
                 symbolTable.modifySymbol(tempSymbol)
                 tempStatementList = node.getSon(5)
                 statementList(tempStatementList, symbolTable, scope)
+            symbolTable.eliminateSymbolByScope(varID, scope)
