@@ -1,0 +1,13 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(false);
+
+Procedure Main() {
+	aList = [true, true];
+	x = 5;
+	print(aList);
+	print(x);
+};

@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 
-from DataStructures.symbolTable import *
+from Compiler.DataStructures.symbolTable import *
 
 # Variable Types
 def ID(value, symbolTable, scope, varID):

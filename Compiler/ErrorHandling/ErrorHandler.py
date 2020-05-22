@@ -1,18 +1,18 @@
 import os
 
 def resetErrorLog():
-    file = open(os.path.abspath('.//ErrorHandling//errorLog.txt'), "w")
+    file = open(os.path.abspath('..//Compiler//ErrorHandling//errorLog.txt'), "w")
     file.write("")
     file.close()
 
 def logError(error):
     print "Error logged - " + error
-    file = open(os.path.abspath('.//ErrorHandling//errorLog.txt'), "a")
+    file = open(os.path.abspath('..//Compiler//ErrorHandling//errorLog.txt'), "a")
     file.write(error + "\n")
     file.close()
 
 def areCompileErrors():
-    file = open(os.path.abspath('.//ErrorHandling//errorLog.txt'), "r")
+    file = open(os.path.abspath('..//Compiler//ErrorHandling//errorLog.txt'), "r")
     errors = ""
     with file:
         errors = file.read()

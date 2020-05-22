@@ -23,20 +23,3 @@ def compile(code):
             print "AST couldn't be build due to syntax error"
     else:
         print "AST couldn't be build due to lexic error"
-
-
-code = '''
-    Timer = 500;
-    Rango_timer = "Mil";
-    Dim_filas = 8;
-    Dim_columnas = 8;
-    Cubo = defaultCube(false);
-    
-    Procedure Main() {
-        for x in Cubo[0]{
-            Cubo[0][x][0] = true;
-        };
-    };
-'''
-
-compile(code)

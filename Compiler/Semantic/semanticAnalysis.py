@@ -1,10 +1,10 @@
 import sys
 sys.path.append("..")
-from DataStructures.symbolTable import *
+from Compiler.DataStructures.symbolTable import *
 from codeRunner import searchNodeByName
-from CodeProduction.codeGenerator import *
+from Compiler.CodeProduction.codeGenerator import *
 from Utils import *
-from ErrorHandling.ErrorHandler import *
+from Compiler.ErrorHandling.ErrorHandler import *
 
 from configurationConstants import *
 from builtinFunctions import *

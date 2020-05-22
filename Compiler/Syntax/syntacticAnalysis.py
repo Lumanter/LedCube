@@ -3,9 +3,9 @@ import sys
 import warnings
 sys.path.append("..")
 
-from ErrorHandling.ErrorHandler import *
-from Lexic.lexicAnalysis import  tokens
-from DataStructures.ASTNodes import *
+from Compiler.ErrorHandling.ErrorHandler import *
+from Compiler.Lexic.lexicAnalysis import  tokens
+from Compiler.DataStructures.ASTNodes import *
 from numericalOperations import *
 from configurationConstants import *
 from variableAssignments import *

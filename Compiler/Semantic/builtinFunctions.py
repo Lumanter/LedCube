@@ -3,9 +3,9 @@ sys.path.append("..")
 import copy
 
 from Utils import *
-from CodeProduction.codeGenerator import *
-from ErrorHandling.ErrorHandler import *
-from DataStructures.symbolTable import *
+from Compiler.CodeProduction.codeGenerator import *
+from Compiler.ErrorHandling.ErrorHandler import *
+from Compiler.DataStructures.symbolTable import *
 
 
 def builtInFunction(node, symbolTable, scope):
@@ -264,7 +264,8 @@ def deleteColumnAt(matrix, index):
 
 # Print Statement
 def printStatement(node, symbolTable):
-    id = node.getSon(2).name
-    if verifyHasId(id, symbolTable):
-        value = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
-        print value
+    if isReadyForRun():
+        id = node.getSon(2).name
+        if verifyHasId(id, symbolTable):
+            value = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+            print value

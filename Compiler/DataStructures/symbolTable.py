@@ -1,5 +1,5 @@
 import enum
-from DataStructures.LinkedList import *
+from Compiler.DataStructures.LinkedList import *
 
 
 class Types(enum.Enum):

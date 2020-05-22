@@ -1,7 +1,7 @@
 
 import sys
 sys.path.append("..")
-from DataStructures.ASTNodes import ASTNode
+from Compiler.DataStructures.ASTNodes import ASTNode
 
 
 def p_configurationConstants(p):

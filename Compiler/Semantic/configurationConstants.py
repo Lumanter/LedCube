@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 
 from Utils import createCube
-from DataStructures.symbolTable import Symbol
+from Compiler.DataStructures.symbolTable import Symbol
 
 def processConfigConstants(configBranch, symbolTable):
     lookupList = ['timer', 'timeUnit', 'rows', 'columns', 'cube']

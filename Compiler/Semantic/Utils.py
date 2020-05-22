@@ -3,20 +3,20 @@ import sys
 sys.path.append("..")
 import os
 
-from ErrorHandling.ErrorHandler import logError
+from Compiler.ErrorHandling.ErrorHandler import logError
 
 def resetIsReadyForRun():
-    file = open(os.path.abspath('.//Semantic//runState.txt'), "w")
+    file = open(os.path.abspath('..//Compiler//Semantic//runState.txt'), "w")
     file.write("notReady")
     file.close()
 
 def activateIsReadyForRun():
-    file = open(os.path.abspath('.//Semantic//runState.txt'), "w")
+    file = open(os.path.abspath('..//Compiler//Semantic//runState.txt'), "w")
     file.write("ready")
     file.close()
 
 def isReadyForRun():
-    file = open(os.path.abspath('.//Semantic//runState.txt'), "r")
+    file = open(os.path.abspath('..//Compiler//Semantic//runState.txt'), "r")
     runState = ""
     with file:
         runState = file.read()

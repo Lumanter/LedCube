@@ -1,7 +1,7 @@
 import ply.lex as lex
 import sys
 sys.path.append("..")
-from ErrorHandling.ErrorHandler import *
+from Compiler.ErrorHandling.ErrorHandler import *
 
 keywords = {
 
