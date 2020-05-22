@@ -7,7 +7,62 @@ from semanticAnalysis import statementList
 
 def ifStatement(node, symbolTable, scope):
     if isReadyForRun():
-        print "If Statement, I am in Semantic/flowControl, line 5"
+        comparable = node.getSon(1).getSon(0).getName()
+        operator = node.getSon(2).getName()
+        value = node.getSon(3).getSon(0).getName()
+        if (symbolTable.hasSymbolByScope(comparable, scope)):
+            comparable = symbolTable.getSymbolByScope(comparable, scope)
+            if isinstance(value, bool):
+                if operator == "==":
+                    if comparable.getValue() == value:
+                        statementList(node.getSon(5), symbolTable, scope)
+                    else:
+                        print "Condition not accepted"
+                elif operator == "!=":
+                    if comparable.getValue() != value:
+                        statementList(node.getSon(5), symbolTable, scope)
+                    else:
+                        print "Condition not accepted"
+                else:
+                    print "Operator not supported to this variable type"
+            elif isinstance(value, int):
+                if operator == "==":
+                    if comparable.getValue() == value:
+                        statementList(node.getSon(5), symbolTable, scope)
+                    else:
+                        print "Condition not accepted"
+                elif operator == '<':
+                    if comparable.getValue() < value:
+                        statementList(node.getSon(5), symbolTable, scope)
+                    else:
+                        print "Condition not accepted"
+                elif operator == ">":
+                    if comparable.getValue() > value:
+                        statementList(node.getSon(5), symbolTable, scope)
+                    else:
+                        print "Condition not accepted"
+                elif operator == "<=":
+                    if comparable.getValue() <= value:
+                        statementList(node.getSon(5), symbolTable, scope)
+                    else:
+                        print "Condition not accepted"
+                elif operator == ">=":
+                    if comparable.getValue() >= value:
+                        statementList(node.getSon(5), symbolTable, scope)
+                    else:
+                        print "Condition not accepted"
+                elif operator == "!=":
+                    if comparable.getValue() != value:
+                        statementList(node.getSon(5), symbolTable, scope)
+                    else:
+                        print "Condition not accepted"
+                else:
+                    print "Value type not supported"
+
+            else:
+                print "Comparator type not supported"
+        else:
+            print "Symbol not found"
 
 
 def forLoop(node, symbolTable, scope):
