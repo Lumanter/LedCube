@@ -49,15 +49,12 @@ void loop()
   }
   delay(delay_time); // the loop is going to run for delay_time, after, a delay of (delay_time)
   previous_milis = millis();
-  
-  
 }
 
 void write_reg(){
   digitalWrite(STCP_pin, LOW);
   
-  for (int i = 71; i>=0; i--)
-  {
+  for (int i = 71;i >= 0; i--){
     digitalWrite(SHCP_pin, LOW);
     digitalWrite(DS_pin, registers[i] );
     digitalWrite(SHCP_pin, HIGH);

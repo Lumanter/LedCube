@@ -17,7 +17,7 @@ void setup(){
 
 //variables
 unsigned long previous_milis = 0L; // L from long, important!
-int multiplex_delay_microseconds = 50; //total multiplex time of the cube:25ms
+int multiplex_delay_microseconds = 50; // total multiplex time of the cube:25ms
 int layer_pin = 64; //the first output of a layer
 unsigned long delay_time = 50L;//delay time in ms. Should be long for math with other long numbers
 
