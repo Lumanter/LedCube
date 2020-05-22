@@ -24,8 +24,9 @@ def delay(time, timeUnit):
 
 
 def turn(x, y, z, state):
-    instruction = "turn," + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(state).lower() + "\n"
-    writeCode(instruction)
+    if x < 8 and y < 8 and z < 8:
+        instruction = "turn," + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(state).lower() + "\n"
+        writeCode(instruction)
 
 
 def blink(x, y, z, time, timeUnit, state):

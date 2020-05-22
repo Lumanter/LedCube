@@ -6,8 +6,8 @@
     Cubo = defaultCube(False);
 
     Procedure Main() {
-	aList = [[True, False, False], [True, False, False]];
-	aList[0].del(0);
+	aList =[ [[False,True], [False,True]], [False, False, False] ];
+	aList[0].del(0, 1);
 	print(aList);
 
     };
