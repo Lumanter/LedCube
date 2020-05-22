@@ -82,14 +82,6 @@ def listOperation(node, symbolTable, scope):
         else:
             logError("Semantic error: id \"" + id + "\" not found")
 
-def reportCubeChanges(oldCube, newCube):
-    for x in range(len(oldCube)):
-        for y in range(len(oldCube[0])):
-            for z in range(len(oldCube[0][0])):
-                aLedWasChanged = oldCube[x][y][z] != newCube[x][y][z]
-                if (aLedWasChanged):
-                    turn(x, y, z, newCube[x][y][z])
-
 def replaceAtIndexWithOperator(list, indexes, operator):
     if (len(indexes) == 0):
         return replaceWithOperator(list, operator)
@@ -222,38 +214,64 @@ def listDelete(node, symbolTable, scope):
     if isReadyForRun():
 
         id = node.getSon(0).getSon(0).name
-        if verifyHasId(id, symbolTable):
+        idIndexNode = node.getSon(0).getSon(1)
+        deleteIndex = node.getSon(0).getSon(5).name
+        listVerifyAndDelete(id, symbolTable, idIndexNode, deleteIndex, scope)
 
-            list = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
-            if verifyIsAList(id, list):
+def listVerifyAndDelete(id, symbolTable, idIndexNode, deleteIndex, scope):
+    if verifyHasId(id, symbolTable):
 
-                index = node.getSon(0).getSon(4).name
-                if verifyIndexInBounds(id, list, index):
-                    del list[index]
+        list = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+        if verifyIsAList(id, list):
 
+            idHasIndexes = idIndexNode.name != ""
+            if idHasIndexes:
+                indexes = getIndexes(idIndexNode, [], symbolTable, scope)
+                if verifyIndexesInBounds(id, list, indexes):
+                    list = getElementAtIndexes(list, indexes)
+                    id = getIndexesAppendedToId(id, indexes)
+                    if verifyIsAList(id, list):
+                        if verifyIndexInBounds(id, list, deleteIndex):
+                            del list[deleteIndex]
+            else:
+                if verifyIndexInBounds(id, list, deleteIndex):
+                    del list[deleteIndex]
 
 # Matrix Delete
 def matrixDelete(node, symbolTable, scope):
     if isReadyForRun():
 
-        deleteColumn = node.getSon(0).getSon(6).name
+        id = node.getSon(0).getSon(0).name
+        idIndexNode = node.getSon(0).getSon(1)
+        deleteIndex = node.getSon(0).getSon(5).name
+        deleteColumn = node.getSon(0).getSon(7).name
+
         if deleteColumn == 0 or deleteColumn == 1:
             if deleteColumn:
 
-                id = node.getSon(0).getSon(0).name
                 if verifyHasId(id, symbolTable):
 
                     matrix = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
                     if verifyIsAMatrix(id, matrix):
-                        index = node.getSon(0).getSon(4).name
+
+                        idHasIndexes = idIndexNode.name != ""
+
+                        if idHasIndexes:
+                            indexes = getIndexes(idIndexNode, [], symbolTable, scope)
+                            if verifyIndexesInBounds(id, matrix, indexes):
+                                matrix = getElementAtIndexes(matrix, indexes)
+                                id = getIndexesAppendedToId(id, indexes)
+                                if not verifyIsAMatrix(id, matrix):
+                                    return
+
                         indexInRowsRange = True
                         for row in matrix:
-                            if not verifyIndexInBounds(id+"[row]", row, index):
+                            if not verifyIndexInBounds(id+ "[" + str(row) + "]", row, deleteIndex):
                                 indexInRowsRange = False
                         if indexInRowsRange:
-                            deleteColumnAt(matrix, index)
+                            deleteColumnAt(matrix, deleteIndex)
             else:
-                listDelete(node, symbolTable, scope)
+                listVerifyAndDelete(id, symbolTable, idIndexNode, deleteIndex, scope)
         else:
             logError("Semantic error: attempted delete type with illegal value, change to 0 for rows or 1 for columns")
 

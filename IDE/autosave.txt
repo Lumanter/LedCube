@@ -6,9 +6,8 @@
     Cubo = defaultCube(False);
 
     Procedure Main() {
-	lista = [True, True, False];
-	x = 15; 
-	print(x);
-	print(lista);
-	Cubo[0][0].Neg;
+	aList = [[True, False, False], [True, False, False]];
+	aList[0].del(0);
+	print(aList);
+
     };

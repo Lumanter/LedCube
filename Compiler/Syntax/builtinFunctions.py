@@ -68,11 +68,19 @@ def p_insertValue(p):
 # List Delete Function
 def p_listDelete(p):
     'listDelete : ID DELETE LPARENTHESES INTEGER RPARENTHESES SEMICOLON'
-    p[0] = ASTNode("listDelete", (p[1], '.', p[2], p[3], p[4], p[5]))
+    p[0] = ASTNode("listDelete", (p[1], "", '.', p[2], p[3], p[4], p[5]))
+
+def p_listDelete_atIdIndex(p):
+    'listDelete : ID index DELETE LPARENTHESES INTEGER RPARENTHESES SEMICOLON'
+    p[0] = ASTNode("listDelete", (p[1], p[2], '.', p[3], p[4], p[5], p[6]))
 
 def p_matrixDelete(p):
     'matrixDelete : ID DELETE LPARENTHESES INTEGER COMMA INTEGER RPARENTHESES SEMICOLON'
-    p[0] = ASTNode("matrixDelete", (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7]))
+    p[0] = ASTNode("matrixDelete", (p[1], "", '.', p[2], p[3], p[4], p[5], p[6], p[7]))
+
+def p_matrixDelete_atIdIndex(p):
+    'matrixDelete : ID index DELETE LPARENTHESES INTEGER COMMA INTEGER RPARENTHESES SEMICOLON'
+    p[0] = ASTNode("matrixDelete", (p[1], p[2], '.', p[3], p[4], p[5], p[6], p[7], p[8]))
 
 def p_printStatement(p):
     'printStatement : PRINT LPARENTHESES ID RPARENTHESES SEMICOLON'

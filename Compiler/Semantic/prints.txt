@@ -1,2 +1,1 @@
-15
-[True, True, False]
+[[[True], [True]], [False, False, False]]

@@ -2,8 +2,10 @@
 import sys
 sys.path.append("..")
 import os
+import copy
 
 from Compiler.ErrorHandling.ErrorHandler import logError
+from Compiler.CodeProduction.codeGenerator import *
 
 def resetIsReadyForRun():
     file = open(os.path.abspath('..//Compiler//Semantic//runState.txt'), "w")
@@ -123,6 +125,23 @@ def verifyIndexInBounds(id, list, index):
         logError("Semantic error: index out of range in list \"" + id + "\"")
         return False
 
+def verifyIndexesInBounds(id, originalList, indexes):
+    indexesInRange = True
+    list = copy.deepcopy(originalList)
+    for index in indexes:
+        if isAList(list):
+            if not verifyIndexInBounds(id, list, index):
+                indexesInRange = False
+                break
+            else:
+                id += "[" + str(index) + "]"
+                list = list[index]
+        else:
+            indexesInRange = False
+            logError("Semantic error: index out of range, element \"" + id + "\" is not a list")
+            break
+    return indexesInRange
+
 def listElement(element, tempLinkedList):
     tempValue = element.getSon(0)
     if isinstance(tempValue.getName(), bool):
@@ -146,6 +165,14 @@ def getListElementByIndex(list, indexes):
     else:
         return getListElementByIndex(list[indexes[0]], indexes[1:])
 
+def reportCubeChanges(oldCube, newCube):
+    for x in range(len(oldCube)):
+        for y in range(len(oldCube[0])):
+            for z in range(len(oldCube[0][0])):
+                aLedWasChanged = oldCube[x][y][z] != newCube[x][y][z]
+                if (aLedWasChanged):
+                    turn(x, y, z, newCube[x][y][z])
+
 def resetPrintLog():
     file = open(os.path.abspath('..//Compiler//Semantic//prints.txt'), "w")
     file.write("")
@@ -164,3 +191,15 @@ def getPrints():
         prints = file.read()
     file.close()
     return prints
+
+def getElementAtIndexes(list, indexes):
+    # shallow copy
+    element = list
+    for index in indexes:
+        element = element[0]
+    return element
+
+def getIndexesAppendedToId(id, indexes):
+    for index in indexes:
+        id += "[" +str(index) + "]"
+    return id
