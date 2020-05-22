@@ -100,8 +100,8 @@ def t_TIMEUNIT(t):
 
 
 def t_BOOLEAN(t):
-    r'true|false'
-    t.value = (t.value == 'true')
+    r'True|False'
+    t.value = (t.value == 'True')
     return t
 
 def t_LISTOPERATOR(t):
@@ -142,7 +142,6 @@ def t_INTEGER(t):
     t.value = int(t.value)
     return t
 
-# Tracking the line number, for error messaging
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
@@ -152,4 +151,13 @@ def t_error(t):
     logError("Lexical error: Illegal character '" + t.value[0] + "' at line number " + str(t.lexer.lineno))
     t.lexer.skip(1)
 
+def t_eof(t):
+    t.lexer.lineno = 1
+
 lexicalAnalyzer = lex.lex()
+
+def lexicAnalysis(code):
+    lexicalAnalyzer.input(code)
+    tokenLeft = True
+    while tokenLeft:
+        tokenLeft = lexicalAnalyzer.token()

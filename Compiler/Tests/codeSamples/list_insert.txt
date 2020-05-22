@@ -3,10 +3,10 @@
     Rango_timer = "Mil";
     Dim_filas = 8;
     Dim_columnas = 8;
-    Cubo = defaultCube(false);
+    Cubo = defaultCube(False);
 
     Procedure Main() {
-        anotherList = [[true, true], [true, true]];
-        anotherList.insert(0, [true, true]);
-        anotherList.insert([false, false, false], 0, 1);
+        anotherList = [[True, True], [True, True]];
+        anotherList.insert(0, [True, True]);
+        anotherList.insert([False, False, False], 0, 1);
     };

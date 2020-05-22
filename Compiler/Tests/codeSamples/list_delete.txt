@@ -6,8 +6,8 @@
     Cubo = defaultCube(false);
 
     Procedure Main() {
-        aList = [true, true];
+        aList = [True, True];
         aList.del(0);
-        anotherList = [[true, false], [true, false]];
+        anotherList = [[True, False], [True, False]];
         anotherList.del(1, 1);
     };

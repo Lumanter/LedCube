@@ -48,6 +48,8 @@ class MainWindow(QMainWindow):
         self.log.setReadOnly(True)
         self.log.setLineWrapMode(QTextEdit.NoWrap)
         self.log.setMaximumHeight(100)
+        self.log.setFontPointSize(11)
+
 
         layout = QVBoxLayout()
         layout.addWidget(self.editor)
@@ -71,9 +73,11 @@ class MainWindow(QMainWindow):
         self.editor.setText(code)
 
     def runCode(self):
+        self.log.clear()
         unicodeCode = self.editor.toPlainText()
         code = unicodedata.normalize('NFKD', unicodeCode).encode('ascii','ignore')
-        compile(code)
+        response = compile(code)
+        self.log.setText(response)
     
     def openFile(self):
         name, _ = QFileDialog.getOpenFileName(self, "Open File")

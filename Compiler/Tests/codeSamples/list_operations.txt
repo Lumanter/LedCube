@@ -3,7 +3,7 @@
     Rango_timer = "Mil";
     Dim_filas = 8;
     Dim_columnas = 8;
-    Cubo = defaultCube(false);
+    Cubo = defaultCube(False);
 
     Procedure Main() {
         Cubo[0][0].Neg;

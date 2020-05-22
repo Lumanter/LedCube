@@ -28,10 +28,7 @@ def p_error(p):
     logError(errorMessage)
 
 
-resetErrorLog()
-syntacticAnalyzer = None
-if not areCompileErrors():
-    syntacticAnalyzer = yacc.yacc()
+syntacticAnalyzer = yacc.yacc()
 
 # supress unused tokens warnings
 with warnings.catch_warnings():

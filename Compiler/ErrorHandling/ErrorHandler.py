@@ -12,10 +12,14 @@ def logError(error):
     file.close()
 
 def areCompileErrors():
-    file = open(os.path.abspath('..//Compiler//ErrorHandling//errorLog.txt'), "r")
+    errors = getErrors()
+    areCompileErrors = (errors != "")
+    return areCompileErrors
+
+def getErrors():
+    file = open(os.path.abspath(os.path.abspath('..//Compiler//ErrorHandling//errorLog.txt')), "r")
     errors = ""
     with file:
         errors = file.read()
-    areCompileErrors = (errors != "")
     file.close()
-    return areCompileErrors
+    return errors

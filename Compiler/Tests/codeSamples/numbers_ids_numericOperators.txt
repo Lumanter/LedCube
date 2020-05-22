@@ -5,5 +5,5 @@ Dim_columnas = 8;
 Cubo = [];
 
 myNumber = 6;
-myBoolean = true;
+myBoolean = True;
 largeOperation = 1 + 2 * 3 ** 4 / 5 % 6;

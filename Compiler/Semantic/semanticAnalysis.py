@@ -17,6 +17,7 @@ def findVariables(tree):
     code = tree
     wipeCode()
     resetIsReadyForRun()
+    resetPrintLog()
     symbolTable = SymbolTable()
     children = tree.getSons()
     if not processConfigConstants(children[0], symbolTable):
@@ -24,8 +25,6 @@ def findVariables(tree):
     if not processVariables(children[1], symbolTable):
         return False
     processSimulationOfCode(children[1], symbolTable)
-    #readFinalCode()
-
 
 def processSimulationOfCode(tree, symbolTable):
     activateIsReadyForRun()

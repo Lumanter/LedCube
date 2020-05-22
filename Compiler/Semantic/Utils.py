@@ -145,3 +145,22 @@ def getListElementByIndex(list, indexes):
         return list[indexes[0]]
     else:
         return getListElementByIndex(list[indexes[0]], indexes[1:])
+
+def resetPrintLog():
+    file = open(os.path.abspath('..//Compiler//Semantic//prints.txt'), "w")
+    file.write("")
+    file.close()
+
+def logPrint(message):
+    print "Print logged - " + message
+    file = open(os.path.abspath('..//Compiler//Semantic//prints.txt'), "a")
+    file.write(message)
+    file.close()
+
+def getPrints():
+    file = open(os.path.abspath(os.path.abspath('..//Compiler//Semantic//prints.txt')), "r")
+    prints = ""
+    with file:
+        prints = file.read()
+    file.close()
+    return prints

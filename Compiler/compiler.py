@@ -1,25 +1,40 @@
-from Syntax.syntacticAnalysis import syntacticAnalyzer
 from ErrorHandling.ErrorHandler import *
 from CodeProduction.codeGenerator import getFinalCode
 
 from Semantic.Utils import *
 
+from Lexic.lexicAnalysis import lexicAnalysis
+from Syntax.syntacticAnalysis import syntacticAnalyzer
+
+import os
+
 def compile(code):
 
-    areNotLexicErrors = (syntacticAnalyzer != None)
-    if areNotLexicErrors:
+    resetErrorLog()
+
+    lexicAnalysis(code)
+
+    if not areCompileErrors():
+
         ast = syntacticAnalyzer.parse(code)
+        if not areCompileErrors():
 
-        areNotSyntaxErrors = (ast != None)
-        if areNotSyntaxErrors:
             ast.translation()
+            if not areCompileErrors():
 
-            producedCode = getFinalCode()
+                log = getPrints()
+                producedCode = getFinalCode()
 
-            print "Final Code:"
-            print producedCode
+                if producedCode != "":
+                    #send produceCode
+                    log += "\n" + "Generated cube code:" + "\n" + producedCode
 
+                return log
+            else:
+                return getErrors()
         else:
-            print "AST couldn't be build due to syntax error"
+            return getErrors()
     else:
-        print "AST couldn't be build due to lexic error"
+        return getErrors()
+
+

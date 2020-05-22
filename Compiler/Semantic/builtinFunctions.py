@@ -268,4 +268,4 @@ def printStatement(node, symbolTable):
         id = node.getSon(2).name
         if verifyHasId(id, symbolTable):
             value = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
-            print value
+            logPrint(str(value) + "\n")
