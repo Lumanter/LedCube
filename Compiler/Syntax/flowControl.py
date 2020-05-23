@@ -21,8 +21,13 @@ def p_iterable(p):
 
 # If Statement
 def p_ifStatement(p):
-    'ifStatement : IF varValue COMPARATOR comparisonValue LBRACE statementList RBRACE SEMICOLON'
+    'ifStatement : IF ifIterable COMPARATOR comparisonValue LBRACE statementList RBRACE SEMICOLON'
     p[0] = ASTNode("ifStatement", (p[1], p[2], p[3], p[4], p[5], p[6], p[7]))
+
+def p_ifIterable(p):
+    '''ifIterable : ID
+                 | indexedId'''
+    p[0] = ASTNode("ifIterable", [p[1]])
 
 def p_comparisonValue(p):
     '''comparisonValue : BOOLEAN
