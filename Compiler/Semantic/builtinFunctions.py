@@ -281,9 +281,17 @@ def deleteColumnAt(matrix, index):
 
 
 # Print Statement
-def printStatement(node, symbolTable):
+def printStatement(node, symbolTable, scope):
     if isReadyForRun():
-        id = node.getSon(2).name
-        if verifyHasId(id, symbolTable):
-            value = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
-            logPrint(str(value) + "\n")
+        id = node.getSon(2).getSon(0).name
+        if id == "type":
+            id = node.getSon(2).getSon(0).getSon(2).name
+            if verifyHasId(id, symbolTable):
+                type = symbolTable.getSymbol(id).getByIndex(0).getValue().type
+                type = (str(type)[6:]).lower()
+                logPrint(str(type) + "\n")
+
+        else:
+            if verifyHasId(id, symbolTable):
+                value = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+                logPrint(str(value) + "\n")

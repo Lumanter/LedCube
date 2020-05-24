@@ -96,7 +96,7 @@ def statement(node, symbolTable, scope):
     tempNode = node.getSon(0)
 
     if tempNode.getName() == "printStatement":
-        printStatement(tempNode, symbolTable)
+        printStatement(tempNode, symbolTable, scope)
     if tempNode.getName() == "procedureDeclaration":
         procedureDeclaration(tempNode, symbolTable)
     if tempNode.getName() == "varAssignment":

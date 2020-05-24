@@ -82,6 +82,17 @@ def p_matrixDelete_atIdIndex(p):
     'matrixDelete : ID index DELETE LPARENTHESES INTEGER COMMA INTEGER RPARENTHESES SEMICOLON'
     p[0] = ASTNode("matrixDelete", (p[1], p[2], '.', p[3], p[4], p[5], p[6], p[7], p[8]))
 
+
+# Print Statement
 def p_printStatement(p):
-    'printStatement : PRINT LPARENTHESES ID RPARENTHESES SEMICOLON'
+    'printStatement : PRINT LPARENTHESES printArgument RPARENTHESES SEMICOLON'
     p[0] = ASTNode("printStatement", (p[1], p[2], p[3], p[4], p[5]))
+
+def p_printArgument(p):
+    '''printArgument : ID
+                    | type'''
+    p[0] = ASTNode("printArgument", [p[1]])
+
+def p_type(p):
+    'type : TYPE LPARENTHESES ID RPARENTHESES'
+    p[0] = ASTNode("type", (p[1], p[2], p[3], p[4]))

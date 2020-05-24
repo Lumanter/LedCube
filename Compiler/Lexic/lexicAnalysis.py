@@ -19,6 +19,7 @@ keywords = {
     'list': 'LIST',
 	'range': 'RANGE',
     'print': 'PRINT',
+    'type': 'TYPE',
 
     # Control Flow
     'if': 'IF',
