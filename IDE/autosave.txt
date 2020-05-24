@@ -1,13 +1,20 @@
-    
-    Timer = 500;
-    Rango_timer = "Mil";
-    Dim_filas = 8;
-    Dim_columnas = 8;
-    Cubo = defaultCube(False);
 
-    Procedure Main() {
-	aList =[ [[False,True], [False,True]], [False, False, False] ];
-	aList[0].del(0, 1);
-	print(aList);
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
 
-    };
+Procedure Main() {
+	Cubo[0][0].Neg;
+	Delay();
+	Cubo[0][0].Neg;
+	Cubo[1][0].Neg;
+	Delay();
+	Cubo[1][0].Neg;
+	Cubo[2][0].Neg;
+	Delay();
+	Cubo[2][0].Neg;
+	Cubo[3][0].Neg;
+	Delay();
+};

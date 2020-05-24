@@ -26,8 +26,17 @@ def compile(code):
                 producedCode = getFinalCode()
 
                 if producedCode != "":
-                    #send produceCode
+
                     log += "\n" + "Generated cube code:" + "\n" + producedCode
+
+                    file = open('producedCode.txt', "w")
+                    file.write(producedCode)
+                    file.close()
+
+                    # Convert to raw string
+                    #producedCode = producedCode.encode('unicode_escape')
+                    # send produceCode via serial
+
 
                 return log
             else:
