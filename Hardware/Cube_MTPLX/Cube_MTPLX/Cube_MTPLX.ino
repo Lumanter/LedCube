@@ -20,13 +20,13 @@ void setup(){
   
   //this lines are only for debug, they wont be in the final code!
   write_in_cube(0,0,0,HIGH);//random led in [0,0,0]
-  write_in_cube(0,0,1,HIGH);//random led in [0,0,1]
-  write_in_cube(0,0,2,HIGH);//random led in [0,0,2]
-  write_in_cube(0,0,3,HIGH);//random led in [0,0,3]
-  write_in_cube(0,0,4,HIGH);//random led in [0,0,4]
-  write_in_cube(0,0,5,HIGH);//random led in [0,0,5]
-  write_in_cube(0,0,6,HIGH);//random led in [0,0,6]
-  write_in_cube(0,0,7,HIGH);//random led in [0,0,7]
+  write_in_cube(1,1,1,HIGH);//random led in [0,0,1]
+  write_in_cube(2,2,2,HIGH);//random led in [0,0,2]
+  write_in_cube(3,3,3,HIGH);//random led in [0,0,3]
+  write_in_cube(4,4,4,HIGH);//random led in [0,0,4]
+  write_in_cube(5,5,5,HIGH);//random led in [0,0,5]
+  write_in_cube(6,6,6,HIGH);//random led in [0,0,6]
+  write_in_cube(7,7,7,HIGH);//random led in [0,0,7]
 }
 
 void loop()
@@ -47,7 +47,7 @@ void loop()
       write_reg();      
     }
   }
-  delay(delay_time); // the loop is going to run for delay_time, after, a delay of (delay_time)
+  //delay(delay_time); // the loop is going to run for delay_time, after, a delay of (delay_time)
   previous_milis = millis();
 }
 
