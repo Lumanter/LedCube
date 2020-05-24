@@ -8,9 +8,7 @@ keywords = {
     # Configuration Constants
     'Delay': 'DELAY',
     'Timer': 'TIMER',
-    'Rango_timer': 'RANGO_TIMER',
     'Dim_filas': 'DIM_FILAS',
-    'Dim_columnas': 'DIM_COLUMNAS',
     'Cubo': 'CUBO',
 
     # Procedure
@@ -18,7 +16,6 @@ keywords = {
     'CALL': 'CALL',
 
     # Built-in Functions
-    'defaultCube': 'DEFAULTCUBE',
     'list': 'LIST',
 	'range': 'RANGE',
     'print': 'PRINT',
@@ -32,7 +29,14 @@ keywords = {
 }
 
 tokens = [
+
     'ID',
+
+    # Id max 10 length exceptions
+    'RANGO_TIMER',
+    'DIM_COLUMNAS',
+    'DEFAULTCUBE',
+
     'ASSIGN',
 
     # Variable Types
@@ -131,8 +135,17 @@ def t_COMPARATOR(t):
 	r'>=|<=|>|<|==|!='
 	return t
 
+# Exceptions to ID max lenght 10
+def t_IDExceptions(t):
+    r'Rango_timer|Dim_columnas|defaultCube'
+    t.value = t.value.upper()
+    t.type = t.value
+    return t
+
+
 def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z0-9@_&]*'
+    # {0, n} n + 1 = max
+    r'[a-zA-Z_][a-zA-Z0-9@_&]{0,9}'
     if t.value in keywords:
         if t.value != "Cubo":
             t.value = t.value.upper()
@@ -168,3 +181,4 @@ def lexicAnalysis(code):
     tokenLeft = True
     while tokenLeft:
         tokenLeft = lexicalAnalyzer.token()
+        #print str(tokenLeft.type) + ": " + str(tokenLeft.value)
