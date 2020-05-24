@@ -119,9 +119,24 @@ void parse_input(String input){
 }
 
 void get_input(char char_input[]){
-  char *instructions_array;
-  instructions_array = strtok (char_input,"\n");
-  for (int i=0; i<sizeof instructions_array/sizeof instructions_array[0]; i++) {
+  char *instructions_array[sizeof char_input/5];
+  
+  const char delimiter[3] = "\n";
+  char *token;
+  int cont_position=0;
+
+  /* get the first token */
+  token = strtok(char_input, delimiter);
+   
+  /* walk through other tokens */
+  while( token != NULL ) {
+     instructions_array[cont_position]=token;
+     cont_position++;
+     token = strtok(NULL, delimiter);
+  }
+
+  
+  for (int i=0; i<sizeof instructions_array; i++) {//for (int i=0; i<sizeof instructions_array/sizeof instructions_array[0]; i++)
     String instruction(instructions_array[i]);
     parse_input(instruction); 
   }
