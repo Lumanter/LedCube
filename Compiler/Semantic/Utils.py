@@ -203,3 +203,13 @@ def getIndexesAppendedToId(id, indexes):
     for index in indexes:
         id += "[" +str(index) + "]"
     return id
+
+def getTypeByValue(value):
+    from Compiler.DataStructures.symbolTable import Types
+    if isinstance(value, bool):
+        return Types.Boolean
+    if isinstance(value, list):
+        return Types.List
+    if isinstance(value, int):
+        return Types.Integer
+    logError("getTypeByValue encounter an unrecognized value" + str(value))

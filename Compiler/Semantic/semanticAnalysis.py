@@ -5,6 +5,7 @@ from codeRunner import searchNodeByName
 from Compiler.CodeProduction.codeGenerator import *
 from Utils import *
 from Compiler.ErrorHandling.ErrorHandler import *
+from Compiler.ErrorHandling.ErrorHandler import logError
 
 from configurationConstants import *
 from builtinFunctions import *
@@ -133,8 +134,16 @@ def procedureDeclaration(node, symbolTable):
 def list_process(valueNode, symbolTable, scope, varID):
     elements = valueNode.getSon(1)
     newValue = listElements(elements, [])
-    tempSymbol = Symbol(varID, newValue, Types.List, scope)
-    symbolTable.modifySymbol(tempSymbol)
+    if varID in symbolTable.getReservedId():
+        cubeSymbol = symbolTable.getSymbolByScope(varID, "global")
+        previousCube = copy.deepcopy(cubeSymbol.getValue())
+        tempSymbol = Symbol(varID, newValue, Types.List, scope)
+        symbolTable.modifySymbol(tempSymbol)
+        newCube = symbolTable.getSymbolByScope(varID, "global")
+        reportCubeChanges(previousCube, newCube)
+    else:
+        tempSymbol = Symbol(varID, newValue, Types.List, scope)
+        symbolTable.modifySymbol(tempSymbol)
 
 
 def varValue(valueNode, symbolTable, scope, varID):
@@ -177,8 +186,8 @@ def changeValueInList(lista, indexes, value):
         if indexes[0] < len(lista):
             changeValueInList(lista[indexes[0]], indexes[1:], value)
         else:
-            print "Error in function changeValueInList: " + str(
-                indexes[0]) + " is bigger than the size of the dimensions of the list or matrix"
+             logError("Semantic Error: Error in function changeValueInList: " + str(
+                indexes[0]) + " is bigger than the size of the dimensions of the list or matrix")
 
 
 def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
@@ -189,7 +198,7 @@ def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
             changeValueInList(tempList, tempIndex, tempValue)
             return True
         else:
-            print "Error in modifySymbolList: indexes out of range"
+            logError("Semantic Error: Error in modifySymbolList: indexes out of range")
             return False
     tempSymbol = symbolTable.getSymbolByScope(tempID, "global")
     if tempSymbol != None:

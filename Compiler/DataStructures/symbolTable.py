@@ -1,5 +1,7 @@
 import enum
 from Compiler.DataStructures.LinkedList import *
+from Compiler.ErrorHandling.ErrorHandler import logError
+from Compiler.Semantic.Utils import getTypeByValue
 
 
 class Types(enum.Enum):
@@ -17,6 +19,16 @@ class Scopes(enum.Enum):
 class SymbolTable:
     def __init__(self):
         self.symbols = {}
+        self.reservedID = []
+
+    def setReservedId(self, reservedID):
+        self.reservedID = reservedID
+
+    def addReservedId(self, reservedID):
+        self.reservedID.append(reservedID)
+
+    def getReservedId(self, reservedID):
+        return self.reservedID
 
     def simpleAdd(self, id, value, type, scope):
         tempSymbol = Symbol(id, value, type, scope)
@@ -50,6 +62,12 @@ class SymbolTable:
     def getSymbolByScope(self, id, scope):
         if id in self.symbols.keys():
             tempList = self.symbols[id]
+            if id in self.reservedID:
+                for index in range(tempList.getLength()):
+                    tempNode = tempList.getByIndex(index)
+                    tempSymbol = tempNode.getValue()
+                    if tempSymbol.getScope() == "global":
+                        return tempSymbol
             for index in range(tempList.getLength()):
                 tempNode = tempList.getByIndex(index)
                 tempSymbol = tempNode.getValue()
@@ -74,9 +92,13 @@ class SymbolTable:
         tempScope = newSymbol.getScope()
 
         if self.hasSymbol(tempID):
-            self.eliminateSymbolByScope(tempID, tempScope)
-            tempNode = Node(newSymbol)
-            self.symbols[tempID].add(tempNode)
+            tempSymbolValue = self.getSymbolByScope(tempID, tempScope).getValue()
+            if getTypeByValue(tempSymbolValue) == getTypeByValue(newSymbol.getValue()):
+                self.eliminateSymbolByScope(tempID, tempScope)
+                tempNode = Node(newSymbol)
+                self.symbols[tempID].add(tempNode)
+            else:
+                logError("Semantic Error: Value: " + str(newSymbol.getValue()) + " doesn't match type for variable " + str(tempID))
         else:
             self.add(newSymbol)
 

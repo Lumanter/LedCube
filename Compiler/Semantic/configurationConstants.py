@@ -12,11 +12,13 @@ def processConfigConstants(configBranch, symbolTable):
             if name == "cube":
                 tempValue = createCube(3, 8, False)
                 tempSymbol = Symbol(son.getSon(0).getName(), tempValue, "Reserved", "global")
+                symbolTable.addReservedId(son.getSon(0).getName())
                 symbolTable.add(tempSymbol)
                 break
             elif name == keyword:
                 tempValue = son.getSons()[2].getName()
                 tempSymbol = Symbol(son.getName(), tempValue, "Reserved", "global")
+                symbolTable.addReservedId(son.getSon(0).getName())
                 symbolTable.add(tempSymbol)
                 break
             elif keyword == lookupList[-1]:
