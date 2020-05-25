@@ -10,59 +10,97 @@ def ifStatement(node, symbolTable, scope):
         comparable = node.getSon(1).getSon(0).getName()
         operator = node.getSon(2).getName()
         value = node.getSon(3).getSon(0).getName()
-        if (symbolTable.hasSymbolByScope(comparable, scope)):
+        if symbolTable.hasSymbolByScope(comparable, scope):
             comparable = symbolTable.getSymbolByScope(comparable, scope)
-            if isinstance(value, bool):
-                if operator == "==":
-                    if comparable.getValue() == value:
-                        statementList(node.getSon(5), symbolTable, scope)
-                    else:
-                        print "Condition not accepted"
-                elif operator == "!=":
-                    if comparable.getValue() != value:
-                        statementList(node.getSon(5), symbolTable, scope)
-                    else:
-                        print "Condition not accepted"
+            if isinstance(comparable.getValue(), list):
+                if isinstance(value, bool):
+                    ifStatementIterative(node, comparable.getValue(), value, operator, symbolTable, scope)
                 else:
-                    print "Operator not supported to this variable type"
-            elif isinstance(value, int):
-                if operator == "==":
-                    if comparable.getValue() == value:
-                        statementList(node.getSon(5), symbolTable, scope)
-                    else:
-                        print "Condition not accepted"
-                elif operator == '<':
-                    if comparable.getValue() < value:
-                        statementList(node.getSon(5), symbolTable, scope)
-                    else:
-                        print "Condition not accepted"
-                elif operator == ">":
-                    if comparable.getValue() > value:
-                        statementList(node.getSon(5), symbolTable, scope)
-                    else:
-                        print "Condition not accepted"
-                elif operator == "<=":
-                    if comparable.getValue() <= value:
-                        statementList(node.getSon(5), symbolTable, scope)
-                    else:
-                        print "Condition not accepted"
-                elif operator == ">=":
-                    if comparable.getValue() >= value:
-                        statementList(node.getSon(5), symbolTable, scope)
-                    else:
-                        print "Condition not accepted"
-                elif operator == "!=":
-                    if comparable.getValue() != value:
-                        statementList(node.getSon(5), symbolTable, scope)
-                    else:
-                        print "Condition not accepted"
+                    print str(value) + " Must be boolean"
+            elif isinstance(comparable.getValue(), bool):
+                if isinstance(value, bool):
+                    ifStatementBoolean(node, comparable, value, operator, symbolTable, scope)
                 else:
-                    print "Value type not supported"
-
+                    print str(value) + " Must be boolean"
+            elif isinstance(comparable.getValue(), int):
+                if isinstance(value, int):
+                    ifStatementInteger(node, comparable, value, operator, symbolTable, scope)
+                else:
+                    print str(value) + " Must be integer"
             else:
                 print "Comparator type not supported"
         else:
-            print "Symbol not found"
+            print "Symbol not found" + str(comparable)
+
+
+
+def ifStatementIterative(node, comparable, value, operator, symbolTable, scope):
+        for boolVariable in comparable:
+            if operator == "==":
+                if boolVariable == value:
+                    statementList(node.getSon(5), symbolTable, scope)
+                else:
+                    print "Condition not accepted"
+            elif operator == "!=":
+                if boolVariable != value:
+                    statementList(node.getSon(5), symbolTable, scope)
+                else:
+                    print "Condition not accepted"
+            else:
+                print operator + ": Operator not supported in variable " + str(type(value))
+
+
+
+def ifStatementBoolean(node, comparable, value, operator, symbolTable, scope):
+    if operator == "==":
+        if comparable.getValue() == value:
+            statementList(node.getSon(5), symbolTable, scope)
+        else:
+            print "Condition not accepted"
+    elif operator == "!=":
+        if comparable.getValue() != value:
+            statementList(node.getSon(5), symbolTable, scope)
+        else:
+            print "Condition not accepted"
+    else:
+        print operator + ": Operator not supported in variable " + str(type(value))
+
+
+
+def ifStatementInteger(node, comparable, value, operator, symbolTable, scope):
+    if operator == "==":
+        if comparable.getValue() == value:
+            statementList(node.getSon(5), symbolTable, scope)
+        else:
+            print "Condition not accepted"
+    elif operator == '<':
+        if comparable.getValue() < value:
+            statementList(node.getSon(5), symbolTable, scope)
+        else:
+            print "Condition not accepted"
+    elif operator == ">":
+        if comparable.getValue() > value:
+            statementList(node.getSon(5), symbolTable, scope)
+        else:
+            print "Condition not accepted"
+    elif operator == "<=":
+        if comparable.getValue() <= value:
+            statementList(node.getSon(5), symbolTable, scope)
+        else:
+            print "Condition not accepted"
+    elif operator == ">=":
+        if comparable.getValue() >= value:
+            statementList(node.getSon(5), symbolTable, scope)
+        else:
+            print "Condition not accepted"
+    elif operator == "!=":
+        if comparable.getValue() != value:
+            statementList(node.getSon(5), symbolTable, scope)
+        else:
+            print "Condition not accepted"
+    else:
+        print "Value type not supported"
+
 
 
 def forLoop(node, symbolTable, scope):
