@@ -213,3 +213,18 @@ def getTypeByValue(value):
     if isinstance(value, int):
         return Types.Integer
     logError("getTypeByValue encounter an unrecognized value" + str(value))
+
+def verifyListsDimensions(list1, list2):
+    if not isinstance(list1[0], list) and not isinstance(list2[0], list):
+        if len(list1) != len(list2):
+            return False
+    if not isinstance(list1[0], list):
+        return False
+    if not isinstance(list2[0], list):
+        return False
+    elif len(list1) == len(list2):
+        for index in range(len(list1)):
+            verifyListsDimensions(list1[index], list2[index])
+    else:
+        return False
+

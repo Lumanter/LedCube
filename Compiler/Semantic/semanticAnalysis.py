@@ -137,6 +137,9 @@ def list_process(valueNode, symbolTable, scope, varID):
     if varID in symbolTable.getReservedId():
         cubeSymbol = symbolTable.getSymbolByScope(varID, "global")
         previousCube = copy.deepcopy(cubeSymbol.getValue())
+        if not verifyListsDimensions(newValue, previousCube):
+            logError("Semantic Error: New cube doesn't have the correct dimensions")
+            return False
         tempSymbol = Symbol(varID, newValue, Types.List, scope)
         symbolTable.modifySymbol(tempSymbol)
         newCube = symbolTable.getSymbolByScope(varID, "global")
