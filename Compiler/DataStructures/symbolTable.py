@@ -27,7 +27,7 @@ class SymbolTable:
     def addReservedId(self, reservedID):
         self.reservedID.append(reservedID)
 
-    def getReservedId(self, reservedID):
+    def getReservedId(self):
         return self.reservedID
 
     def simpleAdd(self, id, value, type, scope):
