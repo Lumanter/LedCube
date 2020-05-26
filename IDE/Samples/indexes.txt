@@ -1,0 +1,17 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	listA = [ [True, True, True],
+	             [False, False, False] ];
+
+	print(listA[0]);    -- matrix[row] (row)
+	print(listA[1,0]); -- matrix[row, column] (element)
+	print(listA[:,0]);  -- matrix[:, column] (column)
+
+};

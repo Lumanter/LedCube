@@ -61,6 +61,18 @@ def printStatement(node, symbolTable, scope):
                 type = (str(type)[6:]).lower()
                 logPrint(str(type) + "\n")
 
+        elif id == "indexedId":
+            id = node.getSon(2).getSon(0).getSon(0).name
+            if verifyHasId(id, symbolTable):
+                list = symbolTable.getSymbolByScope(id, scope).getValue()
+                if verifyIsAList(id, list):
+                    indexNode = node.getSon(2).getSon(0).getSon(1)
+                    indexes = getIndexes(indexNode, [], symbolTable, scope)
+                    if verifyIndexesInBounds(id, list, indexes):
+                        element = getElementAtIndexes(list, indexes)
+                        logPrint(str(element) + "\n")
+
+
         else:
             if verifyHasId(id, symbolTable):
                 value = symbolTable.getSymbolByScope(id, scope).getValue()

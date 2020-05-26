@@ -90,7 +90,8 @@ def p_printStatement(p):
 
 def p_printArgument(p):
     '''printArgument : ID
-                    | type'''
+                    | type
+                    | indexedId'''
     p[0] = ASTNode("printArgument", [p[1]])
 
 def p_type(p):

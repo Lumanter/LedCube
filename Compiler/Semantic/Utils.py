@@ -62,7 +62,8 @@ def resolveIndexes(indexes, symbolTable, scope):
                 if tempSymbol != None:
                     indexes[index] = tempSymbol.getValue()
                 else:
-                    print "Can't resolve index " + str(indexes[index]) + " to a value in symbol table"
+                    if not "," in indexes[index] and not ":" in indexes[index]:
+                        logError("Index id \"" + str(indexes[index]) + "\" not found")
     return indexes
 
 
@@ -192,13 +193,6 @@ def getPrints():
     file.close()
     return prints
 
-def getElementAtIndexes(list, indexes):
-    # shallow copy
-    element = list
-    for index in indexes:
-        element = element[0]
-    return element
-
 def getIndexesAppendedToId(id, indexes):
     for index in indexes:
         id += "[" +str(index) + "]"
@@ -227,4 +221,155 @@ def verifyListsDimensions(list1, list2):
             verifyListsDimensions(list1[index], list2[index])
     else:
         return False
+
+
+# Index Processing Utilities
+
+# Used for splitting index with form [a:b] or [a,b]
+def splitIndexBySymbol(index, character):
+    indexNumbers = index.split(character)
+    # remove empty strings from list from split
+    i = 0
+    size = len(indexNumbers)
+    for iteration in range(size):
+        if indexNumbers[i] == "":
+            del indexNumbers[i]
+        else:
+            if indexNumbers[i] != ":":
+                indexNumbers[i] = int(indexNumbers[i])
+            i += 1
+    return indexNumbers
+
+
+# Returns element given an index with form [a:b]
+def processIndexRange(list, indexRange):
+    if indexRange == ":":
+        return list
+    else:
+        indexNumbers = splitIndexBySymbol(indexRange, ":")
+
+        if len(indexNumbers) == 1:
+            if indexRange[0] == ":":
+                return list[:indexNumbers[0]]
+            else:
+                return list[indexNumbers[0]:]
+
+        else:
+            return list[indexNumbers[0]:indexNumbers[1]]
+
+
+def getColumnAt(matrix, index):
+    column = []
+    for row in matrix:
+        # it's a 3D matrix
+        if (isAList(row[index])):
+            column.append(row[index][0])
+        else:
+            column.append(row[index])
+    return column
+
+
+def verifyColumnIsInBounds(id, matrix, index):
+    if index < 0:
+        return False
+
+    inBounds = True
+    for row in matrix:
+        if len(row) < index + 1:
+            inBounds = False
+
+    if inBounds:
+        return True
+    else:
+        logError("Semantic error: column at \"" + id + "\" out of range")
+        return False
+
+
+# Returns a list's element given a list of indexes
+def getElementAtIndexes(list, indexes):
+    # shallow copy
+    element = list
+    for index in indexes:
+        # remove white spaces
+        index = ''.join(str(index).split())
+
+        # form [a,b]
+        if "," in index:
+            indexes = splitIndexBySymbol(index, ",")
+            # form [:,int] asking for column
+            if indexes[0] == ":":
+                element = getColumnAt(element, indexes[1])
+            # form [int, int]
+            else:
+                element = element[indexes[0]][indexes[1]]
+
+        # form [a:b]
+        elif ":" in index:
+            element = processIndexRange(element, index)
+
+        # form [a]
+        else:
+            element = element[int(index)]
+    return element
+
+
+def verifyIndexInBounds(id, list, index):
+    index = ''.join(str(index).split())
+
+    # form [a,b]
+    if "," in index:
+        indexes = splitIndexBySymbol(index, ",")
+        # form [:,int] asking for column
+        if indexes[0] == ":":
+            id += "[" + str(index) + "]"
+            return verifyColumnIsInBounds(id, list, indexes[1])
+
+        # form [int, int]
+        else:
+            if verifyIndexInBounds(id, list, indexes[0]):
+                id += "[" + str(indexes[0]) + "]"
+                if verifyIsAList(id, list[int(index[0])]):
+                    return verifyIndexInBounds(id, list[int(indexes[0])], int(indexes[1]))
+                else:
+                    return False
+            else:
+                return False
+
+    # form [a:b]
+    elif ":" in index:
+        if processIndexRange(list, index) != []:
+            return True
+        else:
+            id += "[" + index + "]"
+            logError("Semantic error: index out of range at \"" + id + "\"")
+
+    # form [a]
+    else:
+        index = int(index)
+        indexBound = len(list) - 1
+        indexOutOfRange = index > indexBound or index < 0
+        if not indexOutOfRange:
+            return True
+        else:
+            id += "[" + str(index) + "]"
+            logError("Semantic error: index out of range at \"" + id + "\"")
+            return False
+
+
+def verifyIndexesInBounds(id, originalList, indexes):
+    indexesInRange = True
+    list = copy.deepcopy(originalList)
+    for index in indexes:
+        if isAList(list):
+            if not verifyIndexInBounds(id, list, index):
+                indexesInRange = False
+                break
+            else:
+                id += "[" + str(index) + "]"
+                list = getElementAtIndexes(list, [index])
+        else:
+            indexesInRange = False
+            logError("Semantic error: index out of range, element \"" + id + "\" is not a list")
+            break
+    return indexesInRange
 

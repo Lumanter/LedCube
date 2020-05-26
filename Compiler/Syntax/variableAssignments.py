@@ -36,8 +36,30 @@ def p_indexMany(p):
 
 def p_indexValue(p):
     '''indexValue : INTEGER 
-                  | ID'''
+                  | ID
+                  | indexPair
+                  | indexRange'''
     p[0] = ASTNode("indexValue", ([p[1]]))
+
+def p_indexPair(p):
+    'indexPair : INTEGER COMMA INTEGER'
+    p[0] = str(p[1]) + p[2] + str(p[3])
+
+def p_indexPair_column(p):
+    'indexPair : COLON COMMA INTEGER'
+    p[0] = p[1] + p[2] + str(p[3])
+
+def p_indexRange(p):
+    'indexRange : INTEGER COLON INTEGER'
+    p[0] = str(p[1]) + p[2] + str(p[3])
+
+def p_indexRange_fromStart(p):
+    'indexRange : COLON INTEGER'
+    p[0] = p[1] + str(p[2])
+
+def p_indexRange_toEnd(p):
+    'indexRange : INTEGER COLON'
+    p[0] = str(p[1]) + p[2]
 
 
 def p_varValue(p):
