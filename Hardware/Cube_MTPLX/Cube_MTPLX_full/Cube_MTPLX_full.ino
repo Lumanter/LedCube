@@ -34,32 +34,12 @@ void loop()
 {
   if (Serial.available()>0){//if there's data in the serial
     String input = Serial.readString();
-    //convert string to char array
-    unsigned int input_length = input.length()+1; 
-    char char_input[input_length];
-    input.toCharArray(char_input, input_length);
-
-    get_input(char_input);
+    get_input(input);
   }
 
-  while((millis() - previous_milis) < delay_time){ //while for delay time
-    for(int k = 0;k < 8; k++){
-      registers[k + 64] = HIGH;
-      for(int j = 0;j < 8;j++){
-        for(int i = 0;i < 8;i++){
-          if(cube[i][j][k]){ //the cube has booleans values
-            registers[i * 8 + j] = HIGH;
-          }
-        }
-        
-      }
-      write_reg();
-      clear_registers();
-      write_reg();      
-    }
-  }
   delay(delay_time); // the loop is going to run for delay_time, after, a delay of (delay_time)
   previous_milis = millis();
+  
 }
 
 void write_reg(){
@@ -87,10 +67,11 @@ void write_in_cube(int x,int y,int z,boolean value){
 }
 
 void parse_input(String input){
-  if (input.substring(0,5)== "delay"){
+  if (input.charAt(0)== "d"){//delay
     delay_time=input.substring(7,8).toInt()*1000;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
+    load_to_cube();
   }
-  else if(input.substring(0,4)== "turn"){
+  else if(input.charAt(0)== "t"){//turn
     Serial.println("...");
     int x=input.substring(6,7).toInt();
     int y=input.substring(9,10).toInt();
@@ -106,10 +87,10 @@ void parse_input(String input){
       Serial.println("error1"); 
     } 
   }
-  else if(input.substring(0,5)== "blink"){
+  else if(input.charAt(0)== "b"){//blink
     
   }
-  else if(input.substring(0,5)== "clear"){
+  else if(input.charAt(0)== "c"){//clear
     clear_cube();
   }
   else{
@@ -118,26 +99,74 @@ void parse_input(String input){
   
 }
 
-void get_input(char char_input[]){
-  char *instructions_array[sizeof char_input/5];
-  
-  const char delimiter[3] = "\n";
-  char *token;
-  int cont_position=0;
+void get_input(String input){
 
-  /* get the first token */
-  token = strtok(char_input, delimiter);
+  int cont=0;//the counter of the instructions_array elements to be inserted
+  String instructions_array[input.length()/5];
+
+  //identify the tipe of the instruction
+  
+  boolean there_is_delay=false;
+  while (input != ""){
+    if (input.charAt(0)== "d"){//delay, 14 characters
+      instructions_array[cont]=input.substring(0,14);
+      cont++;
+      input.remove(0,16);
+      there_is_delay=true;
+      break;
+    }
+    else if(input.charAt(0)== "t"){//turn , 16 characters
+      instructions_array[cont]=input.substring(0,16);
+      cont++;
+      input.remove(0,18);
    
-  /* walk through other tokens */
-  while( token != NULL ) {
-     instructions_array[cont_position]=token;
-     cont_position++;
-     token = strtok(NULL, delimiter);
+    }
+    else if(input.charAt(0)== "b"){//blink
+      instructions_array[cont]=input.substring(0,23);
+      cont++;
+      input.remove(0,25);
+      
+    }
+    else if(input.charAt(0)== "c"){//clear
+      instructions_array[cont]=input.substring(0,5);
+      cont++;
+      input.remove(0,7);
+    }
+    else{
+      Serial.println("error: input not recognized");
+      break;
+    }
   }
 
+  if(!there_is_delay){
+    instructions_array[cont] = "delay, "+String(delay_time)+", sec \n";
+  }
   
-  for (int i=0; i<sizeof instructions_array; i++) {//for (int i=0; i<sizeof instructions_array/sizeof instructions_array[0]; i++)
-    String instruction(instructions_array[i]);
+  for (int i=0; i<sizeof(instructions_array)/sizeof(instructions_array[0]); i++) {// sizeof returns the number of bytes
+    String instruction = instructions_array[i] ;
     parse_input(instruction); 
+  }
+
+  if(input != ""){
+    get_input(input);
+  }
+}
+
+void load_to_cube(){
+  while((millis() - previous_milis) < delay_time){ //while for delay time
+    for(int k = 0;k < 8; k++){
+      registers[k + 64] = HIGH;
+      for(int j = 0;j < 8;j++){
+        for(int i = 0;i < 8;i++){
+          if(cube[i][j][k]){ //the cube has booleans values
+            registers[i * 8 + j] = HIGH;
+          }
+        }
+        
+      }
+      write_reg();
+      clear_registers();
+      write_reg();      
+    }
   }
 }
