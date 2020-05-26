@@ -223,6 +223,9 @@ def indexAssignment(tempNode, symbolTable, scope):
         if tempID.lower() == "cubo" or tempID.lower() == "cube":
             turn(tempIndex[0], tempIndex[1], tempIndex[2], tempValue)
 
+def multipleDeclaration(tempNode, symbolTable, scope):
+    if isReadyForRun():
+        logPrint("Hi from multipleDeclaration feature, I'm in Semantic/semanticAnalysis.py at line 226")
 
 def varAssignment(node, symbolTable, scope):
     tempNode = node.getSons()[0]
@@ -230,3 +233,5 @@ def varAssignment(node, symbolTable, scope):
         simpleAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "indexAssignment":
         indexAssignment(tempNode, symbolTable, scope)
+    if tempNode.getName() == "multipleDeclaration":
+        multipleDeclaration(tempNode, symbolTable, scope)

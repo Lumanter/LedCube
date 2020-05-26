@@ -6,7 +6,8 @@ from Compiler.DataStructures.ASTNodes import ASTNode
 
 def p_varAssignment(p):
     '''varAssignment : simpleAssignment
-                     | indexAssignment'''
+                     | indexAssignment
+                     | multipleDeclaration'''
     p[0] = ASTNode("varAssignment", [p[1]])
 
 
@@ -47,3 +48,24 @@ def p_varValue(p):
                 | listDimension
                 | listRange'''
     p[0] = ASTNode("varValue", ([p[1]]))
+
+
+def p_multipleDeclaration(p):
+    'multipleDeclaration : ID COMMA idList ASSIGN varValue COMMA varValueList SEMICOLON'
+    p[0] = ASTNode("multipleDeclaration", (p[1], p[2], p[3], p[4], p[5], p[6], p[7]))
+
+def p_idList_one(p):
+    'idList : ID'
+    p[0] = ASTNode("idListOne", [p[1]])
+
+def p_idList_many(p):
+    'idList : ID COMMA idList'
+    p[0] = ASTNode("idListMany", (p[1], p[2], p[3]));
+
+def p_varValueList_one(p):
+    'varValueList : varValue'
+    p[0] = ASTNode("varValueListOne", [p[1]])
+
+def p_varValueList_many(p):
+    'varValueList : varValue COMMA varValueList'
+    p[0] = ASTNode("varValueListMany", (p[1], p[2], p[3]))
