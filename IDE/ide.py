@@ -80,7 +80,7 @@ class MainWindow(QMainWindow):
         self.log.setText(response)
     
     def openFile(self):
-        name, _ = QFileDialog.getOpenFileName(self, "Open File")
+        name, _ = QFileDialog.getOpenFileName(self, "Open File", os.path.abspath('.//Samples//'))
         if not name == u'':
             file = open(name,'r')
             with file:
@@ -88,7 +88,7 @@ class MainWindow(QMainWindow):
                 self.editor.setText(text)
     
     def saveFile(self):
-        name, _ = QFileDialog.getSaveFileName(self, "Save File", options=QFileDialog.DontUseNativeDialog)
+        name, _ = QFileDialog.getSaveFileName(self, "Save File", os.path.abspath('.//Samples//'), options=QFileDialog.DontUseNativeDialog)
         if not name == u'':
             file = open(name, 'w')
             text = self.editor.toPlainText()
