@@ -55,7 +55,7 @@ def listOperation(node, symbolTable, scope):
         id = node.getSon(0).getSon(0).getName()
 
         if symbolTable.hasSymbol(id):
-            oldList = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+            oldList = symbolTable.getSymbolByScope(id, scope).getValue()
 
             if isAList(oldList):
                 newList = copy.deepcopy(oldList)
@@ -76,7 +76,7 @@ def listOperation(node, symbolTable, scope):
                 if (id == "Cubo"):
                     reportCubeChanges(oldList, newList)
 
-                symbolTable.getSymbol(id).getByIndex(0).getValue().setValue(newList)
+                symbolTable.getSymbolByScope(id, scope).setValue(newList)
             else:
                 logError("Semantic error: id \"" + id + "\" is not a list")
         else:
@@ -108,7 +108,7 @@ def listDimension(varID, node, symbolTable, scope):
     listId = node.getSon(0).name
     if symbolTable.hasSymbol(listId):
 
-        list = symbolTable.getSymbol(listId).getByIndex(0).getValue().getValue()
+        list = symbolTable.getSymbolByScope(listId, scope).getValue()
         if isAList(list):
 
             isAMatrix = all(isinstance(subList, type([])) for subList in list)
@@ -160,7 +160,7 @@ def listInsert(node, symbolTable, scope):
         id = node.getSon(0).getSon(0).name
         if verifyHasId(id, symbolTable):
 
-            list = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+            list = symbolTable.getSymbolByScope(id, scope).getValue()
             value = processInsertValue(node.getSon(0).getSon(6).getSon(0))
 
             index = node.getSon(0).getSon(4).name
@@ -180,10 +180,10 @@ def matrixInsert(node, symbolTable, scope):
         id = node.getSon(0).getSon(0).name
         if not id == "Cubo":
             if verifyHasId(id, symbolTable):
-                matrix = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+                matrix = symbolTable.getSymbolByScope(id, scope).getValue()
                 value = processInsertValue(node.getSon(0).getSon(4).getSon(0))
-                index = node.getSon(0).getSon(6).name
-                insertAsColumn = node.getSon(0).getSon(8).name
+                index = node.getSon(0).getSon(8).name
+                insertAsColumn = node.getSon(0).getSon(6).name
                 matrixVerifyAndInsert(id, matrix, value, index, insertAsColumn)
         else:
             logError("Semantic Error: Cube variable doesn't support matrix insert function")
@@ -221,7 +221,7 @@ def listDelete(node, symbolTable, scope):
 def listVerifyAndDelete(id, symbolTable, idIndexNode, deleteIndex, scope):
     if verifyHasId(id, symbolTable):
 
-        list = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+        list = symbolTable.getSymbolByScope(id, scope).getValue()
         if verifyIsAList(id, list):
 
             idHasIndexes = idIndexNode.name != ""
@@ -251,7 +251,7 @@ def matrixDelete(node, symbolTable, scope):
 
                 if verifyHasId(id, symbolTable):
 
-                    matrix = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+                    matrix = symbolTable.getSymbolByScope(id, scope).getValue()
                     if verifyIsAMatrix(id, matrix):
 
                         idHasIndexes = idIndexNode.name != ""
@@ -287,11 +287,11 @@ def printStatement(node, symbolTable, scope):
         if id == "type":
             id = node.getSon(2).getSon(0).getSon(2).name
             if verifyHasId(id, symbolTable):
-                type = symbolTable.getSymbol(id).getByIndex(0).getValue().type
+                type = symbolTable.getSymbolByScope(id, scope).type
                 type = (str(type)[6:]).lower()
                 logPrint(str(type) + "\n")
 
         else:
             if verifyHasId(id, symbolTable):
-                value = symbolTable.getSymbol(id).getByIndex(0).getValue().getValue()
+                value = symbolTable.getSymbolByScope(id, scope).getValue()
                 logPrint(str(value) + "\n")
