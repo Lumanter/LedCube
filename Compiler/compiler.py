@@ -17,6 +17,7 @@ def compile(code):
     if not areCompileErrors():
 
         ast = syntacticAnalyzer.parse(code)
+
         if not areCompileErrors():
 
             ast.translation()
@@ -36,7 +37,6 @@ def compile(code):
                     # Convert to raw string
                     #producedCode = producedCode.encode('unicode_escape')
                     # send produceCode via serial
-
 
                 return log
             else:

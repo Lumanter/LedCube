@@ -107,4 +107,5 @@ def lexicAnalysis(code):
     tokenLeft = True
     while tokenLeft:
         tokenLeft = lexicalAnalyzer.token()
-        #print str(tokenLeft.type) + ": " + str(tokenLeft.value)
+        # if tokenLeft:
+        #     print str(tokenLeft.type) + ": " + str(tokenLeft.value)

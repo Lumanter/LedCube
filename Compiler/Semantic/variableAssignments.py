@@ -24,10 +24,10 @@ def ID(value, symbolTable, scope, varID):
         logError("Semantic Error: Can't find reference to variable: " + str(value))
         return False
 
-def numExpression(value, symbolTable, scope, varID):
+def integer(value, symbolTable, scope, varID):
     if not isReadyForRun():
         if value.hasSons():
-            numExpression(value.getSon(0), symbolTable, scope, varID)
+            integer(value.getSon(0), symbolTable, scope, varID)
         else:
             tempValue = int(value.getName())
             if not symbolTable.hasSymbolByScope(varID, scope):
@@ -44,7 +44,7 @@ def numExpression(value, symbolTable, scope, varID):
 def boolean(value, symbolTable, scope, varID):
     if not isReadyForRun():
         if value.hasSons():
-            numExpression(value.getSon(0), symbolTable, scope, varID)
+            integer(value.getSon(0), symbolTable, scope, varID)
         else:
             tempValue = bool(value.getName())
             if not symbolTable.hasSymbolByScope(varID, scope):
@@ -57,3 +57,6 @@ def boolean(value, symbolTable, scope, varID):
                     return False
                 tempSymbol.setValue(tempValue)
                 symbolTable.modifySymbol(tempSymbol)
+
+def numExpression(node, symbolTable, scope, varID):
+    print "NumExpression at Semantic/variableAssignments.py, line 62"

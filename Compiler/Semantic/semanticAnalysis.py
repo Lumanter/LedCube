@@ -161,6 +161,8 @@ def varValue(valueNode, symbolTable, scope, varID):
     elif type(True) == type(value.getName()):
         boolean(value, symbolTable, scope, varID)
     elif isinstance(varValueType, int):
+        integer(value, symbolTable, scope, varID)
+    elif varValueType == "numExpression":
         numExpression(value, symbolTable, scope, varID)
     else:
         ID(varValueType, symbolTable, scope, varID)
