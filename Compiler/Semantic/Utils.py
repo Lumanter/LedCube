@@ -261,11 +261,7 @@ def processIndexRange(list, indexRange):
 def getColumnAt(matrix, index):
     column = []
     for row in matrix:
-        # it's a 3D matrix
-        if (isAList(row[index])):
-            column.append(row[index][0])
-        else:
-            column.append(row[index])
+        column.append(row[index])
     return column
 
 
