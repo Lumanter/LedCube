@@ -6,11 +6,8 @@ Dim_columnas = 8;
 Cubo = defaultCube(False);
 
 Procedure Main() {
-        x = [False, True, False];
         aList =[[[False,True], [False,True], [[True, True]]], [True, False, False]];
-        if  aList[0][2][0]== True {
-            if x == False{
-                print(x);
-            };
+        if  aList[0][2][0]== False {
+            print(aList); --Doesn't print aList
         };
     };

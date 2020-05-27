@@ -8,6 +8,6 @@ Cubo = defaultCube(False);
 Procedure Main() {
         x = [False, False, False];
         if x == False {
-            print(x);
+            print(x); --print "x" 3 times
         };
 };
