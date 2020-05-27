@@ -1,0 +1,18 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+Procedure printer(id) {
+	print(id);
+};
+
+Procedure Main() {
+	
+	ten = 10;
+	CALL printer(ten);
+
+    };

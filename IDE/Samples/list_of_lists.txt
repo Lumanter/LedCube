@@ -1,0 +1,24 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	-- simple list
+	x = [True, True];
+	print(x);	
+
+	-- 2D matrix
+	y = [[False, False],
+	       [False, False]];
+	print(y);
+
+	-- 3D matrix
+	z = [[[False, False], [False, False]],
+	       [[False, False], [False, False]]];
+	print(z);
+
+    };
