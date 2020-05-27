@@ -1,0 +1,25 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	listA = [True, False, False, True];
+	-- iterate simple list
+	for i in listA {
+		print( listA[i] );
+	};
+	
+	-- iterate 3D matrix
+	for x in Cubo {
+		for y in Cubo[x] {
+			for z in Cubo[y] {
+				Cubo[x][y][z] = True;
+			};
+		};
+	};
+
+};

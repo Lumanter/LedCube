@@ -6,6 +6,7 @@ Dim_columnas = 8;
 Cubo = defaultCube(False);
 
 Procedure Main() {
+
 	number = 5;
 	print(type(number)); --prints integer
 
