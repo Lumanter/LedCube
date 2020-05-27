@@ -310,6 +310,7 @@ def getElementAtIndexes(list, indexes):
         # form [a]
         else:
             element = element[int(index)]
+
     return element
 
 

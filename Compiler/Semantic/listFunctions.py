@@ -9,21 +9,20 @@ def listOperation(node, symbolTable, scope):
     if isReadyForRun():
         id = node.getSon(0).getSon(0).getName()
 
-        if symbolTable.hasSymbol(id):
+        if verifyHasId(id, symbolTable):
             oldList = symbolTable.getSymbolByScope(id, scope).getValue()
 
-            if isAList(oldList):
+            if verifyIsAList(id, oldList):
                 newList = copy.deepcopy(oldList)
 
                 listOperationWithIndex = (node.getSon(0).getSon(2).getName() == '.')
+
                 if (listOperationWithIndex):
                     indexes = getIndexes(node.getSon(0).getSon(1), [], symbolTable, scope)
-                    indexOutOfRange = not verifyIndexBoundries(oldList, indexes)
-                    if not indexOutOfRange:
+                    if verifyIndexesInBounds(id, oldList, indexes):
                         listOperator = node.getSon(0).getSon(3).getName()
-                        replaceAtIndexWithOperator(newList, indexes, listOperator)
-                    else:
-                        logError("Semantic error: index out of range in \"" + id + "\"")
+                        replaceAtIndexesWithOperator(newList, indexes, listOperator)
+
                 else :
                     listOperator = node.getSon(0).getSon(2).getName()
                     replaceWithOperator(newList, listOperator)
@@ -32,16 +31,46 @@ def listOperation(node, symbolTable, scope):
                     reportCubeChanges(oldList, newList)
 
                 symbolTable.getSymbolByScope(id, scope).setValue(newList)
-            else:
-                logError("Semantic error: id \"" + id + "\" is not a list")
-        else:
-            logError("Semantic error: id \"" + id + "\" not found")
 
-def replaceAtIndexWithOperator(list, indexes, operator):
+
+def replaceAtIndexesWithOperator(list, indexes, operator):
     if (len(indexes) == 0):
         return replaceWithOperator(list, operator)
+
     index = indexes.pop(0)
-    list[index] = replaceAtIndexWithOperator(list[index], indexes, operator)
+    index = ''.join(str(index).split())
+
+    # [a,b]
+    if "," in index:
+        subIndexes = splitIndexBySymbol(index, ",")
+
+        # [:,int] column at int
+        if subIndexes[0] == ":":
+            columnIndex = subIndexes[1]
+            for i in range(len(list)):
+                list[i][columnIndex] = replaceAtIndexesWithOperator(list[i][columnIndex], indexes, operator)
+
+        #[int, int]
+        else:
+            list[subIndexes[0]][subIndexes[1]] = replaceAtIndexesWithOperator(list[subIndexes[0]][subIndexes[1]], indexes, operator)
+
+    # [a:b]
+    elif ":" in index:
+        subIndexes = splitIndexBySymbol(index, ":")
+        # [:a] or [a:]
+        if len(subIndexes) == 1:
+            if index[0] == ":":
+                list[:subIndexes[0]] = replaceAtIndexesWithOperator(list[:subIndexes[0]], indexes, operator)
+            else:
+                list[subIndexes[0]:] = replaceAtIndexesWithOperator(list[subIndexes[0]:], indexes, operator)
+        #[a:b]
+        else:
+            list[subIndexes[0]:subIndexes[1]] = replaceAtIndexesWithOperator(list[subIndexes[0]:subIndexes[1]], indexes, operator)
+
+    # [a]
+    else:
+        list[int(index)] = replaceAtIndexesWithOperator(list[int(index)], indexes, operator)
+
     return list
 
 def replaceWithOperator(element, operator):
