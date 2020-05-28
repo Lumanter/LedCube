@@ -100,21 +100,21 @@ void get_input(String input){
   while (input_for_length != ""){
     if (input_for_length.charAt(0) == "d"){ //delay
       instructions_array_length++;
-      input_for_length.remove(0,16);
+      input_for_length.remove(0,14 + 2);
     }
     else if(input_for_length.charAt(0) == "t"){//turn
       instructions_array_length++;
-      input_for_length.remove(0,18);
+      input_for_length.remove(0,12 + 2);
    
     }
     else if(input_for_length.charAt(0) == "b"){//blink
       instructions_array_length++;
-      input_for_length.remove(0,25);
+      input_for_length.remove(0,20 + 2);
       
     }
     else if(input_for_length.charAt(0) == "c"){//clear
       instructions_array_length++;
-      input_for_length.remove(0,7);
+      input_for_length.remove(0,5 + 2);
     }
     else{
       Serial.println("error: input not recognized");
@@ -132,25 +132,25 @@ void get_input(String input){
       Serial.println("Delay: " + input.substring(0,14));
       instructions_array[cont] = input.substring(0,14);
       cont++;
-      input.remove(0,16);
+      input.remove(0,14 + 2);
     }
     else if(input.charAt(0) == "t"){//turn , 16 characters
-      Serial.println("turn: " + input.substring(0,16));
-      instructions_array[cont] = input.substring(0,16);
+      Serial.println("turn: " + input.substring(0,12));
+      instructions_array[cont] = input.substring(0,12);
       cont++;
-      input.remove(0,18);
+      input.remove(0,12 + 2);
    
     }
     else if(input.charAt(0) == "b"){//blink
-      instructions_array[cont] = input.substring(0,23);
+      instructions_array[cont] = input.substring(0,20);
       cont++;
-      input.remove(0,25);
+      input.remove(0,20 + 2);
       
     }
     else if(input.charAt(0) == "c"){//clear
       instructions_array[cont] = input.substring(0,5);
       cont++;
-      input.remove(0,7);
+      input.remove(0,5 + 2);
     }
     else{
       Serial.println("error: input not recognized");
