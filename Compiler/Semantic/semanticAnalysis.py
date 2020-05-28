@@ -247,6 +247,6 @@ def multipleDeclaration(node, symbolTable, scope):
         if len(idList) == len(valueList):
             for i in range(len(idList)):
                 varValue(valueList[i], symbolTable, scope, idList[i])
-                print "A"
+
         else:
             logError("Semantic Error: one line multiple assignment impossible with id's " + str(idList) + ", amount of id's and values don't match")
