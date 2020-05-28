@@ -213,7 +213,6 @@ def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
             return True
 
 
-
 def indexAssignment(tempNode, symbolTable, scope):
     if isReadyForRun():
         tempID = tempNode.getSon(0).getName()
@@ -225,9 +224,6 @@ def indexAssignment(tempNode, symbolTable, scope):
         if tempID.lower() == "cubo" or tempID.lower() == "cube":
             turn(tempIndex[0], tempIndex[1], tempIndex[2], tempValue)
 
-def multipleDeclaration(tempNode, symbolTable, scope):
-    if isReadyForRun():
-        logPrint("Hi from multipleDeclaration feature, I'm in Semantic/semanticAnalysis.py at line 226")
 
 def varAssignment(node, symbolTable, scope):
     tempNode = node.getSons()[0]
@@ -237,3 +233,20 @@ def varAssignment(node, symbolTable, scope):
         indexAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "multipleDeclaration":
         multipleDeclaration(tempNode, symbolTable, scope)
+
+# Processes, verifies and sets, to the symbol table,
+# the id's and values in a single line multiple assignation
+def multipleDeclaration(node, symbolTable, scope):
+    if not isReadyForRun():
+        idNodeList = node.getSon(2)
+        valueNodeList = node.getSon(6)
+
+        idList = [node.getSon(0).name] + getNestedIdNodesAsList(idNodeList)
+        valueList = [node.getSon(4)] + getNestedValueNodesAsList(valueNodeList)
+
+        if len(idList) == len(valueList):
+            for i in range(len(idList)):
+                varValue(valueList[i], symbolTable, scope, idList[i])
+                print "A"
+        else:
+            logError("Semantic Error: one line multiple assignment impossible with id's " + str(idList) + ", amount of id's and values don't match")

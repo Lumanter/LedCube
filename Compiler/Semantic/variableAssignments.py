@@ -57,6 +57,9 @@ def boolean(value, symbolTable, scope, varID):
                 tempSymbol.setValue(tempValue)
                 symbolTable.modifySymbol(tempSymbol)
 
+
+# Processes and sets an arithmetic operation value to a
+# variable id in the symbols table
 def numExpression(node, symbolTable, scope, varId):
     if not isReadyForRun():
         expressionAsString = getNumExpressionAsString(node, symbolTable, scope)
@@ -75,7 +78,8 @@ def numExpression(node, symbolTable, scope, varId):
                     oldSymbol.setValue(value)
                     symbolTable.modifySymbol(oldSymbol)
 
-
+# Processes the arithmetic expression node and returns
+# it in plain string format
 def getNumExpressionAsString(node, symbolTable, scope):
     left = node.getSon(0)
     center = node.getSon(1)
@@ -106,6 +110,10 @@ def getNumExpressionAsString(node, symbolTable, scope):
     else:
         return ""
 
+# Processes and returns, as a string, the possible
+# values of and arithmetic operation: integer or id.
+# In case of the id being linked to a boolean or not
+# being in the symbol table returns the string "!"
 def processNumValue(value, symbolTable, scope):
     if isinstance(value, int):
         return str(value)
@@ -123,3 +131,21 @@ def processNumValue(value, symbolTable, scope):
                 return "!"
         else:
             return "!"
+
+# Processes the nested id list node and returns
+# it as a plain string list
+def getNestedIdNodesAsList(idNode):
+    if idNode.name == "idListOne":
+        return [idNode.getSon(0).name]
+    else:
+        return [idNode.getSon(0).name] + getNestedIdNodesAsList(idNode.getSon(2))
+
+# Processes the nested variable value list node
+# and returns it as a plain list of values
+def getNestedValueNodesAsList(valueListNode):
+    # works just for integers and booleans for now
+    value = valueListNode.getSon(0)
+    if valueListNode.name == "varValueListOne":
+        return [value]
+    else:
+        return [value] + getNestedValueNodesAsList(valueListNode.getSon(2))
