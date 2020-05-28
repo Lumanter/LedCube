@@ -90,82 +90,35 @@ void parse_input(String input){
 void get_input(String input){
   Serial.println("Input: " + input);
   
-  int cont = 0;//the counter of the instructions_array elements to be inserted
-
-  String input_for_length = input; //input for get the lenght of the instructions_array
-
-  int instructions_array_length = 0;
-
-  //get the input lenght !!!!!!IF THE REMOVES ARE CHANGED CHANGE THEM ALSO HERE
-  while (input_for_length != ""){
-    if (input_for_length.charAt(0) == "d"){ //delay
-      instructions_array_length++;
-      input_for_length.remove(0,14 + 2);
-    }
-    else if(input_for_length.charAt(0) == "t"){//turn
-      instructions_array_length++;
-      input_for_length.remove(0,12 + 2);
-   
-    }
-    else if(input_for_length.charAt(0) == "b"){//blink
-      instructions_array_length++;
-      input_for_length.remove(0,20 + 2);
-      
-    }
-    else if(input_for_length.charAt(0) == "c"){//clear
-      instructions_array_length++;
-      input_for_length.remove(0,5 + 2);
-    }
-    else{
-      Serial.println("error: input not recognized");
-      break;
-    }
-  }
-
-  //array with the instructions
-  String instructions_array[instructions_array_length + 1];
-
-  //identify the tipe of the instruction
-  
   while (input != ""){
     if (input.charAt(0) == "d"){ //delay, 14 characters
       Serial.println("Delay: " + input.substring(0,14));
-      instructions_array[cont] = input.substring(0,14);
-      cont++;
+      String instruction = input.substring(0,14);
       input.remove(0,14 + 2);
+      parse_input(instruction); 
     }
     else if(input.charAt(0) == "t"){//turn , 16 characters
       Serial.println("turn: " + input.substring(0,12));
-      instructions_array[cont] = input.substring(0,12);
-      cont++;
+      String instruction = input.substring(0,12);
       input.remove(0,12 + 2);
-   
+      parse_input(instruction); 
     }
     else if(input.charAt(0) == "b"){//blink
-      instructions_array[cont] = input.substring(0,20);
-      cont++;
+      String instruction = input.substring(0,20);
       input.remove(0,20 + 2);
-      
+      parse_input(instruction); 
     }
     else if(input.charAt(0) == "c"){//clear
-      instructions_array[cont] = input.substring(0,5);
-      cont++;
+      String instruction = input.substring(0,5);
       input.remove(0,5 + 2);
+      parse_input(instruction); 
     }
     else{
       Serial.println("error: input not recognized");
       break;
     }
   }
-
-  if(instructions_array[cont-1].charAt(0) != "d"){
-     instructions_array[cont]= "delay, "+String(delay_time)+", sec \n";
-  }
-  
-  for (int i = 0;i < sizeof(instructions_array) / sizeof(instructions_array[0]);i++) {// sizeof returns the number of bytes
-    String instruction = instructions_array[i] ;
-    parse_input(instruction); 
-  }
+  parse_input("delay, "+String(delay_time)+", sec \n"); 
 }
 
 void load_to_cube(){
