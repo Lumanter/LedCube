@@ -18,28 +18,14 @@ void setup(){
   clear_cube();
   clear_registers();
   write_reg();
-  
-  //this lines are only for debug, they wont be in the final code!
-  write_in_cube(0,0,0,HIGH);//random led in [0,0,0]
-  write_in_cube(0,0,1,HIGH);//random led in [0,0,1]
-  write_in_cube(0,0,2,HIGH);//random led in [0,0,2]
-  write_in_cube(0,0,3,HIGH);//random led in [0,0,3]
-  write_in_cube(0,0,4,HIGH);//random led in [0,0,4]
-  write_in_cube(0,0,5,HIGH);//random led in [0,0,5]
-  write_in_cube(0,0,6,HIGH);//random led in [0,0,6]
-  write_in_cube(0,0,7,HIGH);//random led in [0,0,7]
 }
 
 void loop()
 {
-  if (Serial.available()>0){//if there's data in the serial
+  if (Serial.available() > 0){//if there's data in the serial
     String input = Serial.readString();
     get_input(input);
-  }
-
-  delay(delay_time); // the loop is going to run for delay_time, after, a delay of (delay_time)
-  previous_milis = millis();
-  
+  } 
 }
 
 void write_reg(){
@@ -67,15 +53,16 @@ void write_in_cube(int x,int y,int z,boolean value){
 }
 
 void parse_input(String input){
+  Serial.println("INSTRUCTION received: " + input);
   if (input.charAt(0)== "d"){//delay
-    delay_time=input.substring(7,8).toInt()*1000;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
+    delay_time = input.substring(7,8).toInt()*1000;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
     load_to_cube();
   }
-  else if(input.charAt(0)== "t"){//turn
+  else if(input.charAt(0) == "t"){//turn
     Serial.println("...");
-    int x=input.substring(6,7).toInt();
-    int y=input.substring(9,10).toInt();
-    int z=input.substring(12,13).toInt();
+    int x = input.substring(6,7).toInt();
+    int y = input.substring(9,10).toInt();
+    int z = input.substring(12,13).toInt();
     String state=input.substring(15);
     if(state=="T"){//verify datatypes
       write_in_cube(x,y,z,true);
@@ -100,35 +87,40 @@ void parse_input(String input){
 }
 
 void get_input(String input){
+  Serial.println("Input: " + input);
 
-  int cont=0;//the counter of the instructions_array elements to be inserted
-  String instructions_array[input.length()/5];
+  int cont = 0;//the counter of the instructions_array elements to be inserted
+  
+  String instructions_array[input.length() / 5]; // CAMBIAR
 
   //identify the tipe of the instruction
   
-  boolean there_is_delay=false;
+  boolean there_is_delay = false;
+  
   while (input != ""){
-    if (input.charAt(0)== "d"){//delay, 14 characters
-      instructions_array[cont]=input.substring(0,14);
+    if (input.charAt(0) == "d"){ //delay, 14 characters
+      Serial.println("Delay: " + input.substring(0,14));
+      instructions_array[cont] = input.substring(0,14);
       cont++;
       input.remove(0,16);
-      there_is_delay=true;
+      there_is_delay = true;
       break;
     }
-    else if(input.charAt(0)== "t"){//turn , 16 characters
-      instructions_array[cont]=input.substring(0,16);
+    else if(input.charAt(0) == "t"){//turn , 16 characters
+      Serial.println("turn: " + input.substring(0,16));
+      instructions_array[cont] = input.substring(0,16);
       cont++;
       input.remove(0,18);
    
     }
-    else if(input.charAt(0)== "b"){//blink
-      instructions_array[cont]=input.substring(0,23);
+    else if(input.charAt(0) == "b"){//blink
+      instructions_array[cont] = input.substring(0,23);
       cont++;
       input.remove(0,25);
       
     }
-    else if(input.charAt(0)== "c"){//clear
-      instructions_array[cont]=input.substring(0,5);
+    else if(input.charAt(0) == "c"){//clear
+      instructions_array[cont] = input.substring(0,5);
       cont++;
       input.remove(0,7);
     }
@@ -142,7 +134,7 @@ void get_input(String input){
     instructions_array[cont] = "delay, "+String(delay_time)+", sec \n";
   }
   
-  for (int i=0; i<sizeof(instructions_array)/sizeof(instructions_array[0]); i++) {// sizeof returns the number of bytes
+  for (int i = 0;i < sizeof(instructions_array) / sizeof(instructions_array[0]);i++) {// sizeof returns the number of bytes
     String instruction = instructions_array[i] ;
     parse_input(instruction); 
   }
@@ -169,4 +161,5 @@ void load_to_cube(){
       write_reg();      
     }
   }
+  previous_milis = millis();
 }
