@@ -25,7 +25,7 @@ def delay(time, timeUnit):
 
 def turn(x, y, z, state):
     if x < 8 and y < 8 and z < 8:
-        instruction = "turn," + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(state).lower() + "\n"
+        instruction = "turn," + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(state)[0] + "\n"
         writeCode(instruction)
 
 
