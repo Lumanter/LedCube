@@ -100,6 +100,14 @@ def verifyHasId(id, symbolTable):
         return True
     else:
         logError("Semantic error: id \"" + id + "\" not found")
+        return False
+
+def verifyHasIdByScope(id, symbolTable, scope):
+    if symbolTable.hasSymbolByScope(id, scope):
+        return True
+    else:
+        logError("Semantic error: id \"" + id + "\" not found in scope " + scope)
+        return False
 
 def verifyIsAList(id, list):
     if isAList(list):

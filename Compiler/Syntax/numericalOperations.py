@@ -42,4 +42,4 @@ def p_numOperator(p):
 def p_numValue(p):
     '''numValue : ID
                 | INTEGER'''
-    p[0] = p[1]
+    p[0] = ASTNode("numValue", [p[1]])

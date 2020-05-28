@@ -3,8 +3,7 @@ import sys
 sys.path.append("..")
 
 from Compiler.DataStructures.symbolTable import *
-from Utils import isReadyForRun
-from Utils import getTypeByValue
+from Utils import *
 
 # Variable Types
 def ID(value, symbolTable, scope, varID):
@@ -58,5 +57,69 @@ def boolean(value, symbolTable, scope, varID):
                 tempSymbol.setValue(tempValue)
                 symbolTable.modifySymbol(tempSymbol)
 
-def numExpression(node, symbolTable, scope, varID):
-    print "NumExpression at Semantic/variableAssignments.py, line 62"
+def numExpression(node, symbolTable, scope, varId):
+    if not isReadyForRun():
+        expressionAsString = getNumExpressionAsString(node, symbolTable, scope)
+        if "!" in expressionAsString:
+            logError("Semantic Error: numerical operation assignation failed")
+        else:
+            value = int(eval(expressionAsString))
+            if not symbolTable.hasSymbolByScope(varId, scope):
+                newSymbol = Symbol(varId, value, Types.Integer, scope)
+                symbolTable.add(newSymbol)
+            else:
+                oldSymbol = symbolTable.getSymbolByScope(varId, scope)
+                if oldSymbol.type != Types.Integer and oldSymbol.type != Types.List:
+                    logError("Semantic Error: cannot assign integer to boolean variable \"" + varId + "\"")
+                else:
+                    oldSymbol.setValue(value)
+                    symbolTable.modifySymbol(oldSymbol)
+
+
+def getNumExpressionAsString(node, symbolTable, scope):
+    left = node.getSon(0)
+    center = node.getSon(1)
+    right = node.getSon(2)
+
+    if left.name == "(":
+        return "(" + getNumExpressionAsString(center, symbolTable, scope) + ")"
+
+    if left.name == "numExpression" and right.name == "numExpression":
+        leftValue = getNumExpressionAsString(left, symbolTable, scope)
+        rightValue = getNumExpressionAsString(right, symbolTable, scope)
+        return leftValue + center.name + rightValue
+
+    if left.name == "numExpression" and right.name == "numValue":
+        leftValue = getNumExpressionAsString(left, symbolTable, scope)
+        rightValue = processNumValue(right.getSon(0).name, symbolTable, scope)
+        return leftValue + center.name + rightValue
+
+    if left.name == "numValue" and right.name == "numExpression":
+        leftValue = processNumValue(left.getSon(0).name, symbolTable, scope)
+        rightValue = getNumExpressionAsString(right, symbolTable, scope)
+        return leftValue + center.name + rightValue
+
+    if left.name == "numValue" and right.name == "numValue":
+        leftValue = processNumValue(left.getSon(0).name, symbolTable, scope)
+        rightValue = processNumValue(right.getSon(0).name, symbolTable, scope)
+        return leftValue + center.name + rightValue
+    else:
+        return ""
+
+def processNumValue(value, symbolTable, scope):
+    if isinstance(value, int):
+        return str(value)
+    else:
+        id = value
+        if verifyHasIdByScope(id, symbolTable, scope):
+            value = str(symbolTable.getSymbolByScope(id, scope).getValue())
+            if value != "True" and value != "False" and value[0] != "[":
+                return value
+            else:
+                if value == "True" or value == "False":
+                    logError("Semantic error: illegal arithmetic operation with boolean " + id)
+                elif value[0] == "[":
+                    logError("Semantic error: illegal arithmetic operation with list " + id)
+                return "!"
+        else:
+            return "!"

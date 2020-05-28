@@ -7,12 +7,12 @@ Cubo = defaultCube(False);
 
 Procedure Main() {
 
-	two = 2;
+	bool = True;
+	operation1 = bool + 1;
 
-	five = two + 3;
-	print(five);	
+	listA = [True, True];
+	operation2 = listA - 2;
 
-	ten = (((((two + 1) ** 3) - 2) / 5) % 3) * 5; -- resolves to 10 
-	print(ten);
+	operation3 = noExists / 3;
 
 };
