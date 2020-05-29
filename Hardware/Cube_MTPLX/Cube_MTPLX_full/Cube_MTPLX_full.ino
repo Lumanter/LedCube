@@ -52,73 +52,67 @@ void write_in_cube(int x,int y,int z,boolean value){
   cube[x][y][z] = value;
 }
 
-void parse_input(String input){
-  Serial.println("INSTRUCTION received: " + input);
-  if (input.charAt(0)== "d"){//delay
-    delay_time = input.substring(7,8).toInt()*1000;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
-    delay(delay_time);
-    load_to_cube();
-  }
-  else if(input.charAt(0) == "t"){//turn
-    Serial.println("...");
-    int x = input.substring(6,7).toInt();
-    int y = input.substring(9,10).toInt();
-    int z = input.substring(12,13).toInt();
-    String state=input.substring(15);
-    if(state=="T"){//verify datatypes
-      write_in_cube(x,y,z,true);
-    }
-    else if (state=="F"){
-      write_in_cube(x,y,z,false);
-    }
-    else{
-      Serial.println("error1"); 
-    } 
-  }
-  else if(input.charAt(0)== "b"){//blink
-    
-  }
-  else if(input.charAt(0)== "c"){//clear
-    clear_cube();
-  }
-  else{
-    Serial.println("error2");
-  }
-  
-}
-
 void get_input(String input){
   Serial.println("Input: " + input);
   
   while (input != ""){
-    if (input.charAt(0) == "d"){ //delay, 14 characters
-      Serial.println("Delay: " + input.substring(0,14));
-      String instruction = input.substring(0,14);
-      input.remove(0,14 + 2);
-      parse_input(instruction); 
+    if (input.charAt(0) == "d"){ //delay, 14 characters 
+      String instruction = input.substring(0,input.indexOf("\\"));//https://www.arduino.cc/en/Tutorial/StringIndexOf , https://en.wikipedia.org/wiki/Escape_sequences_in_C
+      input.remove(0,input.indexOf("\\") + 2);
+
+      String time_unit=instruction.substring(instruction.lastIndexOf(",")+1,instruction.lastIndexOf(",")+4);
+      int multiplier;
+      if (time_unit=="Seg"){
+        multiplier=1000;
+      }
+      else if (time_unit=="Mil"){
+        multiplier=1;
+      }
+      else if (time_unit=="Mic"){
+        multiplier=0,01;
+      }
+      else if (time_unit=="Nan"){
+        multiplier=0,000001;
+      }
+      else{
+          Serial.println("error in time unit");
+      }
+      
+      delay_time = instruction.substring(6,instruction.lastIndexOf(",")).toInt()*multiplier;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
+      delay(delay_time);
+      load_to_cube();
     }
+    
     else if(input.charAt(0) == "t"){//turn , 16 characters
-      Serial.println("turn: " + input.substring(0,12));
       String instruction = input.substring(0,12);
       input.remove(0,12 + 2);
-      parse_input(instruction); 
+      int x = instruction.substring(6,7).toInt();
+      int y = instruction.substring(9,10).toInt();
+      int z = instruction.substring(12,13).toInt();
+      String state=instruction.substring(15);
+      if(state=="T"){//verify datatypes
+        write_in_cube(x,y,z,true);
+      }
+      else if(state=="F"){
+        write_in_cube(x,y,z,false);
+      }
+      else{
+          Serial.println("error in boolean instruction type");
+      }
     }
-    else if(input.charAt(0) == "b"){//blink
-      String instruction = input.substring(0,20);
-      input.remove(0,20 + 2);
-      parse_input(instruction); 
-    }
+    
     else if(input.charAt(0) == "c"){//clear
       String instruction = input.substring(0,5);
       input.remove(0,5 + 2);
-      parse_input(instruction); 
+      clear_cube();
     }
+    
     else{
       Serial.println("error: input not recognized");
       break;
     }
   }
-  parse_input("delay, "+String(delay_time)+", sec \n"); 
+  load_to_cube();
 }
 
 void load_to_cube(){
