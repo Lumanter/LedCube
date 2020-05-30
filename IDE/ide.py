@@ -1,6 +1,7 @@
 import sys
 sys.path.append("..")
 import os
+import serial
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *

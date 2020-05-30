@@ -1,23 +1,29 @@
 from ErrorHandling.ErrorHandler import *
 from CodeProduction.codeGenerator import getFinalCode
-
 from Semantic.Utils import *
-
 from Lexic.lexicAnalysis import lexicAnalysis
 from Syntax.syntacticAnalysis import syntacticAnalyzer
 
 import os
+import serial
+
+def sendToSerial(string):
+    ser = serial.Serial()
+    ser.baudrate = 19200
+    ser.port = 'COM4'
+    if not ser.isOpen():
+        ser.open()
+    if ser.isOpen():
+        ser.write(string.encode())
+    ser.close()
 
 def compile(code):
 
     resetErrorLog()
-
     lexicAnalysis(code)
-
     if not areCompileErrors():
 
         ast = syntacticAnalyzer.parse(code)
-
         if not areCompileErrors():
 
             ast.translation()
@@ -25,18 +31,19 @@ def compile(code):
 
                 log = getPrints()
                 producedCode = getFinalCode()
-
                 if producedCode != "":
 
                     log += "\n" + "Generated cube code:" + "\n" + producedCode
-
                     file = open('producedCode.txt', "w")
                     file.write(producedCode)
                     file.close()
 
-                    # Convert to raw string
-                    #producedCode = producedCode.encode('unicode_escape')
-                    # send produceCode via serial
+                    producedCodeOneLine = producedCode.encode('unicode_escape')
+                    file = open('produceCode_oneline.txt', "w")
+                    file.write(producedCodeOneLine)
+                    file.close()
+
+                    #sendToSerial(producedCodeOneLine)
 
                 return log
             else:
