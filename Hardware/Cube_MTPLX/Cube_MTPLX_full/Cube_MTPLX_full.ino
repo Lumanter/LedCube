@@ -22,6 +22,7 @@ void setup(){
 
 void loop()
 {
+  clear_cube();
   if (Serial.available() > 0){//if there's data in the serial
     String input = Serial.readString();
     get_input(input);
