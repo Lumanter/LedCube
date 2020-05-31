@@ -162,6 +162,8 @@ def listElement(element, tempLinkedList):
 
 
 def listElements(elements, tempLinkedList):
+    if not elements.hasSons():
+        return tempLinkedList
     tempNodeList = elements.getSons()
     tempLinkedList.append(listElement(tempNodeList[0], tempLinkedList))
     if len(tempNodeList) == 3:
