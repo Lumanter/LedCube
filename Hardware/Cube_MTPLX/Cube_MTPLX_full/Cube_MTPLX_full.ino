@@ -26,6 +26,7 @@ void loop()
     String input = Serial.readString();
     get_input(input);
   } 
+  load_to_cube();
 }
 
 void write_reg(){
@@ -83,28 +84,38 @@ void get_input(String input){
       load_to_cube();
     }
     
-    else if(input.charAt(0) == "t"){//turn , 16 characters
+    if(input.substring(0,1) == "t"){ //turn , 12 + 2 [\n] characters
+      Serial.println("LOADING TURN");
+      
+      // Takes the instruction substring
       String instruction = input.substring(0,12);
-      input.remove(0,12 + 2);
-      int x = instruction.substring(6,7).toInt();
-      int y = instruction.substring(9,10).toInt();
-      int z = instruction.substring(12,13).toInt();
-      String state=instruction.substring(15);
-      if(state=="T"){//verify datatypes
+
+      //Gets the values from the instruction      
+      int x = instruction.substring(5,6).toInt();
+      int y = instruction.substring(7,8).toInt();
+      int z = instruction.substring(9,10).toInt();
+      String state = instruction.substring(11,12);
+
+      // Loads the instruction on the virtual cube
+      if(state == "T"){
         write_in_cube(x,y,z,true);
       }
-      else if(state=="F"){
+      else if(state == "F"){
         write_in_cube(x,y,z,false);
       }
       else{
           Serial.println("error in boolean instruction type");
       }
+      // Removes the parsed instruction from the input
+      input.remove(0,12 + 2);
     }
     
     else if(input.charAt(0) == "c"){//clear
-      String instruction = input.substring(0,5);
-      input.remove(0,5 + 2);
+      // Clears the virtual cube
       clear_cube();
+
+      // Removes the parsed instruction from the input
+      input.remove(0,5 + 2);
     }
     
     else{
