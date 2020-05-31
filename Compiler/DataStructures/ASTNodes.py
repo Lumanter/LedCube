@@ -46,15 +46,17 @@ class ASTNode():
 
         tree += id + "[label= " + self.name + "]" + "\n\t"
 
-        for son in self.sonList:
-            if (type(son) != str) and (type(son) != int) and (type(son) != bool):
-                if son.hasSons():
-                    tempNode.addChild(son.translation())
-                else:
-                    tempNode.addChild(ASTNode(son.getName(), []))
-            else:
-                tempNode.addChild(ASTNode(son, []))
 
+        if self.hasSons():
+            for son in self.sonList:
+                if son != None:
+                    if (type(son) != str) and (type(son) != int) and (type(son) != bool):
+                        if son.hasSons():
+                            tempNode.addChild(son.translation())
+                        else:
+                            tempNode.addChild(ASTNode(son.getName(), []))
+                    else:
+                        tempNode.addChild(ASTNode(son, []))
         return tempNode
 
 
