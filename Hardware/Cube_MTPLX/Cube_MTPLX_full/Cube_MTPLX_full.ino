@@ -26,7 +26,7 @@ void loop()
     String input = Serial.readString();
     get_input(input);
   } 
-  load_to_cube();
+  //load_to_cube();
 }
 
 void write_reg(){
@@ -57,34 +57,39 @@ void get_input(String input){
   Serial.println("Input: " + input);
   
   while (input != ""){
-    if (input.charAt(0) == 'd'){ //delay, 14 characters 
-      String instruction = input.substring(0,input.indexOf("\\"));//https://www.arduino.cc/en/Tutorial/StringIndexOf , https://en.wikipedia.org/wiki/Escape_sequences_in_C
-      input.remove(0,input.indexOf("\\") + 2);
+    if (input.charAt(0) == 'd'){ // DELAY, variable characters
 
-      String time_unit=instruction.substring(instruction.lastIndexOf(",")+1,instruction.lastIndexOf(",")+4);
+      // Takes the instruction substring
+      String instruction = input.substring(0,input.indexOf("\\"));//https://www.arduino.cc/en/Tutorial/StringIndexOf , https://en.wikipedia.org/wiki/Escape_sequences_in_C
+      
+      // Takes the time unit from the instruction
+      String time_unit = instruction.substring(instruction.lastIndexOf(",")+1,instruction.lastIndexOf(",")+4);
+      
       int multiplier;
-      if (time_unit=="Seg"){
-        multiplier=1000;
+      if (time_unit == "Seg"){
+        multiplier = 1000;
       }
-      else if (time_unit=="Mil"){
-        multiplier=1;
+      else if (time_unit == "Mil"){
+        multiplier = 1;
       }
-      else if (time_unit=="Mic"){
-        multiplier=0,01;
+      else if (time_unit == "Mic"){
+        multiplier = 0,01;
       }
       else if (time_unit=="Nan"){
-        multiplier=0,000001;
+        multiplier = 0,000001;
       }
       else{
           Serial.println("error in time unit");
       }
       
       delay_time = instruction.substring(6,instruction.lastIndexOf(",")).toInt()*multiplier;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
-      delay(delay_time);
       load_to_cube();
+
+      // Removes the parsed instruction from the input
+      input.remove(0,input.indexOf("\\") + 2);
     }
     
-    else if(input.charAt(0) == 't'){ // turn , 12 + 2 [\n] characters
+    else if(input.charAt(0) == 't'){ // TURN, 12 + 2 [\n] characters
       
       // Takes the instruction substring
       String instruction = input.substring(0,12);
@@ -110,7 +115,7 @@ void get_input(String input){
       input.remove(0,12 + 2);
     }
     
-    else if(input.charAt(0) == 'c'){//clear
+    else if(input.charAt(0) == 'c'){// CLEAR, 5 + 2 [\n] characters
       // Clears the virtual cube
       clear_cube();
 
