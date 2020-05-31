@@ -177,10 +177,13 @@ def matrixVerifyAndInsert(id, matrix, value, index, insertAsColumn):
     if insertAsColumn == 0 or insertAsColumn == 1:
         if insertAsColumn:
             if verifyIsAMatrix(id, matrix):
-                for i in range(len(value)):
-                    indexInListRange = i < len(matrix)
-                    if indexInListRange:
-                        listVerifyAndInsert(id, matrix[i], value[i], index)
+                if isAList(value):
+                    for i in range(len(value)):
+                        indexInListRange = i < len(matrix)
+                        if indexInListRange:
+                            listVerifyAndInsert(id, matrix[i], value[i], index)
+                else:
+                    logError("Semantic Error: Cannot insert single value \"" + str(value) + "\" as a column, list required")
 
         else:
             listVerifyAndInsert(id, matrix, value, index)
