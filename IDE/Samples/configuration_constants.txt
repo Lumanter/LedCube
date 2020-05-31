@@ -1,0 +1,13 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	print(Cubo); -- shows cubo 8x8x8 dimension
+	Delay(); -- shows the default values are used (1 second)
+
+    };

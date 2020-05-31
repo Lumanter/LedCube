@@ -1,41 +1,56 @@
-from Syntax.syntacticAnalysis import syntacticAnalyzer
 from ErrorHandling.ErrorHandler import *
+from CodeProduction.codeGenerator import getFinalCode
+from Semantic.Utils import *
+from Lexic.lexicAnalysis import lexicAnalysis
+from Syntax.syntacticAnalysis import syntacticAnalyzer
+
+import os
+import serial
+
+def sendToSerial(string):
+    ser = serial.Serial()
+    ser.baudrate = 19200
+    ser.port = 'COM4'
+    if not ser.isOpen():
+        ser.open()
+    if ser.isOpen():
+        ser.write(string.encode())
+    ser.close()
 
 def compile(code):
-    areNotLexicErrors = (syntacticAnalyzer != None)
-    if areNotLexicErrors:
+
+    resetErrorLog()
+    lexicAnalysis(code)
+    if not areCompileErrors():
+
         ast = syntacticAnalyzer.parse(code)
-        areNotSyntaxErrors = (ast != None)
-        if areNotSyntaxErrors:
+        if not areCompileErrors():
+
             ast.translation()
+            if not areCompileErrors():
+
+                log = getPrints()
+                producedCode = getFinalCode()
+                if producedCode != "":
+
+                    log += "\n" + "Generated cube code:" + "\n" + producedCode
+                    file = open('producedCode.txt', "w")
+                    file.write(producedCode)
+                    file.close()
+
+                    producedCodeOneLine = producedCode.encode('unicode_escape')
+                    file = open('produceCode_oneline.txt', "w")
+                    file.write(producedCodeOneLine)
+                    file.close()
+
+                    #sendToSerial(producedCodeOneLine)
+
+                return log
+            else:
+                return getErrors()
         else:
-            print "ast could not be build due to syntax error"
+            return getErrors()
     else:
-        print "ast could not be build due to lexic error"
-    # targetCode = generateTargetCode(ast)
-    # return targetCode 
+        return getErrors()
 
-code = '''
-    Timer = 500;
-    Rango_timer = "Mil";
-    Dim_filas = 8;
-    Dim_columnas = 8;
-    Cubo = defaultCube(false);
 
-    Procedure turnOn(x, y, z) {
-        Cubo[x][y][z] = true;
-    };
-
-    Procedure Main() {
-        x = 0;
-        y = 0;
-        z = 0;
-        lista1D = [true,true,true,true];
-        lista2D = [[true,true],[true,true]];
-        lista3D = [[[true,true],[true,true]],[[true,true],[true,true]],[[true,true],[true,true]]];
-        CALL turnOn(0,0,1);
-        CALL turnOn(0,1,1);
-    };
-'''
-
-compile(code)

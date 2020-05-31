@@ -1,12 +1,13 @@
 
 import sys
 sys.path.append("..")
-from DataStructures.ASTNodes import ASTNode
+from Compiler.DataStructures.ASTNodes import ASTNode
 
 
 def p_varAssignment(p):
     '''varAssignment : simpleAssignment
-                     | indexAssignment'''
+                     | indexAssignment
+                     | multipleDeclaration'''
     p[0] = ASTNode("varAssignment", [p[1]])
 
 
@@ -19,26 +20,75 @@ def p_indexAssignment(p):
     'indexAssignment : ID index ASSIGN varValue SEMICOLON'
     p[0] = ASTNode("indexAssignment", (p[1], p[2], p[3], p[4], p[5]))
 
+def p_indexedId(p):
+    'indexedId : ID index'
+    p[0] = ASTNode("indexedId", (p[1], p[2]))
 
-def p_index_one(p):
+def p_indexOne(p):
     'index : LSQUAREBRACKET indexValue RSQUAREBRACKET'
     p[0] = ASTNode("index", (p[1], p[2], p[3]))
 
 
-def p_index_many(p):
+def p_indexMany(p):
     'index : index index'
     p[0] = ASTNode("index", (p[1], p[2]))
 
 
 def p_indexValue(p):
     '''indexValue : INTEGER 
-                  | ID'''
+                  | ID
+                  | indexPair
+                  | indexRange'''
     p[0] = ASTNode("indexValue", ([p[1]]))
+
+def p_indexPair(p):
+    'indexPair : INTEGER COMMA INTEGER'
+    p[0] = str(p[1]) + p[2] + str(p[3])
+
+def p_indexPair_column(p):
+    'indexPair : COLON COMMA INTEGER'
+    p[0] = p[1] + p[2] + str(p[3])
+
+def p_indexRange(p):
+    'indexRange : INTEGER COLON INTEGER'
+    p[0] = str(p[1]) + p[2] + str(p[3])
+
+def p_indexRange_fromStart(p):
+    'indexRange : COLON INTEGER'
+    p[0] = p[1] + str(p[2])
+
+def p_indexRange_toEnd(p):
+    'indexRange : INTEGER COLON'
+    p[0] = str(p[1]) + p[2]
 
 
 def p_varValue(p):
     '''varValue : ID
+                | INTEGER
                 | numExpression 
                 | BOOLEAN
-                | list'''
+                | list
+                | listDimension
+                | listRange'''
     p[0] = ASTNode("varValue", ([p[1]]))
+
+
+def p_multipleDeclaration(p):
+    'multipleDeclaration : ID COMMA idList ASSIGN varValue COMMA varValueList SEMICOLON'
+    p[0] = ASTNode("multipleDeclaration", (p[1], p[2], p[3], p[4], p[5], p[6], p[7]))
+
+def p_idList_one(p):
+    'idList : ID'
+    p[0] = ASTNode("idListOne", [p[1]])
+
+def p_idList_many(p):
+    'idList : ID COMMA idList'
+    p[0] = ASTNode("idListMany", (p[1], p[2], p[3]));
+
+def p_varValueList_one(p):
+    'varValueList : varValue'
+    p[0] = ASTNode("varValueListOne", [p[1]])
+
+def p_varValueList_many(p):
+    'varValueList : varValue COMMA varValueList'
+    p[0] = ASTNode("varValueListMany", (p[1], p[2], p[3]))

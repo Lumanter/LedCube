@@ -1,0 +1,24 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	-- 2x3 matrix
+	matrix = [[True, True, True],
+		  [True, True, True]];
+
+	rows = matrix.shapeF; --2
+	columns = matrix.shapeC; --3
+
+	print(rows);
+	print(columns);
+	
+	-- shapeA returns depth of a 3D matrix
+	depth = Cubo.shapeA; -- 8 
+	print(depth);
+
+};

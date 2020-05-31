@@ -1,0 +1,13 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	-- 2 ids and 3 values, prints error
+	x, y = 1, 2, 3; 
+
+};

@@ -1,0 +1,22 @@
+
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	listA = [True, True];
+	listA.del(0);
+	print(listA);
+
+	listB = [[True, False], 
+	            [True, False]];
+
+	-- delete column at index 0 (True, True)
+
+	listB.del(0, 1); -- index = 0, deleteColumn = 1
+	print(listB);	
+
+};

@@ -1,0 +1,18 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	bool = True;
+	operation1 = bool + 1;
+
+	listA = [True, True];
+	operation2 = listA - 2;
+
+	operation3 = noExists / 3;
+
+};

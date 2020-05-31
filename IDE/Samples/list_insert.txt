@@ -1,0 +1,25 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	listA = [[False, False], [False, False]];
+	listA.insert(0, [True, True]);
+	print(listA);
+
+	listB = [[True, True], 
+	           [True, True]];
+
+	-- insert value as column at index 0
+	-- value = [False, False]
+	-- insertAsColumn = 1
+	-- index = 0
+	
+	listB.insert([False, False], 1, 0);
+	print(listB);
+
+};

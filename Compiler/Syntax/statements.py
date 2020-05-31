@@ -1,7 +1,7 @@
 
 import sys
 sys.path.append("..")
-from DataStructures.ASTNodes import ASTNode
+from Compiler.DataStructures.ASTNodes import ASTNode
 
 
 def p_statementList_one(p):
@@ -26,5 +26,8 @@ def p_statement(p):
     '''statement : varAssignment 
                  | procedureDeclaration
                  | procedureCall
-                 | builtInFunction'''
+                 | builtInFunction
+                 | ifStatement
+                 | forLoop
+                 | printStatement'''
     p[0] = ASTNode("statement", [p[1]])

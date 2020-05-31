@@ -1,5 +1,8 @@
 finalCode = ""
 
+def getFinalCode():
+    global finalCode
+    return finalCode
 
 def wipeCode():
     global finalCode
@@ -11,8 +14,9 @@ def writeCode(lineOfCode):
 
 
 def readFinalCode():
-    print finalCode
-    print "\n\n\n"
+    return
+    #print finalCode
+    #print "\n\n\n"
 
 def delay(time, timeUnit):
     instruction = "delay," + str(time) + ',' + str(timeUnit) + "\n"
@@ -20,8 +24,9 @@ def delay(time, timeUnit):
 
 
 def turn(x, y, z, state):
-    instruction = "turn," + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(state).lower() + "\n"
-    writeCode(instruction)
+    if x < 8 and y < 8 and z < 8:
+        instruction = "turn," + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(state)[0] + "\n"
+        writeCode(instruction)
 
 
 def blink(x, y, z, time, timeUnit, state):

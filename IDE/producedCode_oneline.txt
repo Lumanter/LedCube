@@ -1,0 +1,1 @@
+turn,0,0,0,T\ndelay,500,Mil\nturn,0,0,1,T\ndelay,500,Mil\nturn,0,0,2,T\ndelay,500,Mil\nturn,0,0,3,T\ndelay,500,Mil\nturn,0,0,4,T\ndelay,500,Mil\nturn,0,0,5,T\ndelay,500,Mil\nturn,0,0,6,T\ndelay,500,Mil\nturn,0,0,7,T\ndelay,500,Mil\n

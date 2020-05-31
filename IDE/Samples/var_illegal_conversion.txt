@@ -1,0 +1,15 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	-- int, initialized as integer, cannot be assigned to a boolean
+
+	int = 10;
+	int = False;
+
+    };

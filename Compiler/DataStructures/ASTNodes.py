@@ -1,4 +1,4 @@
-from Semantic.semanticAnalysis import *
+from Compiler.Semantic.semanticAnalysis import *
 
 tree = "\t"
 count = 0

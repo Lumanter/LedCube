@@ -1,0 +1,19 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	-- booleans and integers
+	-- implicit type declaration
+
+	int = 10;
+	bool = True;
+
+	print(int);
+	print(bool);
+
+    };

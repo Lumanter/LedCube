@@ -1,0 +1,46 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure barRot() {
+	for i in Cubo {
+		Cubo[i][3].T;
+	};
+	Delay();
+	Cubo.F;
+	
+	Cubo[4][3].T;
+	Cubo[5][4].T;
+	Cubo[6][5].T;
+	Cubo[3][2].T;
+	Cubo[2][1].T;
+	Delay();
+	Cubo.F;
+	
+	for i in Cubo {
+		Cubo[4][i].T;
+	};
+	Delay();
+	Cubo.F;
+
+	Cubo[4][3].T;
+	Cubo[6][1].T;
+	Cubo[5][2].T;
+	Cubo[3][4].T;
+	Cubo[2][5].T;
+	Delay();
+	Cubo.F;
+
+};
+
+Procedure Main() {
+	
+	CALL barRot();
+	CALL barRot();
+	CALL barRot();
+	CALL barRot();
+
+};

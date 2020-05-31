@@ -1,0 +1,24 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	listA = [False, False, False, False];
+	
+	-- all elements to True
+	listA.T;
+	print(listA);
+
+	-- first element to False
+	listA[0].F;
+	print(listA);
+
+	-- toggle all elements' value
+	listA.Neg;
+	print(listA);
+
+};

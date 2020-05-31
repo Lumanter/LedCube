@@ -1,69 +1,119 @@
+import sys
+sys.path.append("..")
+import os
+import serial
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sys
+import unicodedata
 
+from Compiler.compiler import compile
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
 
-        self.setGeometry(70, 70, 800, 400)
+        screenSize = QApplication.desktop().screenGeometry(QApplication.desktop().screenNumber(QApplication.desktop().cursor().pos()))
+        self.setGeometry(70, 70, screenSize.width()*.6, screenSize.height()*.7)
         self.setWindowTitle("LedCube IDE")
         self.setWindowIcon(QIcon('cubeIcon.png'))
 
-        exitAction = QAction("Exit", self)
-        exitAction.setShortcut("Ctrl+Q")
-        exitAction.setStatusTip('Leave The App')
-        exitAction.triggered.connect(self.close)
+        runCode = QAction('Run', self)
+        runCode.setShortcut("Ctrl+R")
+        runCode.triggered.connect(self.runCode)
 
-        runCodeAction = QAction('Run', self)
-        runCodeAction.setShortcut("Ctrl+R")
-        runCodeAction.triggered.connect(self.runCode)
+        openFile = QAction('Open', self)
+        openFile.setShortcut("Ctrl+F")
+        openFile.triggered.connect(self.openFile)
 
-        openFileAction = QAction('Open File', self)
-        openFileAction.setShortcut("Ctrl+F")
-        openFileAction.triggered.connect(self.openFile)
+        save = QAction('Save As', self)
+        save.setShortcut("Ctrl+S")
+        save.triggered.connect(self.saveFile)
 
-        saveFileAction = QAction('Save File', self)
-        saveFileAction.setShortcut("Ctrl+S")
-        saveFileAction.triggered.connect(self.saveFile)
+        exit = QAction('Exit', self)
+        exit.setShortcut("Ctrl+Q")
+        exit.triggered.connect(self.exit)
 
         mainMenu = self.menuBar()
         fileMenu = mainMenu.addMenu('File')
-        fileMenu.addAction(runCodeAction)
-        fileMenu.addAction(openFileAction)
-        fileMenu.addAction(saveFileAction)
-        fileMenu.addAction(exitAction)
+        fileMenu.addAction(runCode)
+        fileMenu.addAction(openFile)
+        fileMenu.addAction(save)
+        fileMenu.addAction(exit)
 
         self.editor = QTextEdit()
         self.editor.setFontPointSize(12)
-        self.setCentralWidget(self.editor)
 
+        self.log = QTextEdit()
+        self.log.setReadOnly(True)
+        self.log.setLineWrapMode(QTextEdit.NoWrap)
+        self.log.setMaximumHeight(100)
+        self.log.setFontPointSize(11)
+
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.editor)
+        layout.addWidget(self.log)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
+
+        self.restoreAutoSave()
+
+        self.center()
         self.show()
 
+    def restoreAutoSave(self):
+        file = open('autosave.txt', "r")
+        code = ""
+        with file:
+            code = file.read()
+        file.close()
+        self.editor.setText(code)
 
     def runCode(self):
-        code = self.editor.toPlainText()
-        print code
+        self.log.clear()
+        unicodeCode = self.editor.toPlainText()
+        code = unicodedata.normalize('NFKD', unicodeCode).encode('ascii','ignore')
+        response = compile(code)
+        self.log.setText(response)
     
     def openFile(self):
-        name, _ = QFileDialog.getOpenFileName(self, "Open File")
-        file = open(name,'r')
-        with file:
-            text = file.read()
-            print "ok"
-            self.editor.setText(text)
+        name, _ = QFileDialog.getOpenFileName(self, "Open File", os.path.abspath('.//Samples//'))
+        if not name == u'':
+            file = open(name,'r')
+            with file:
+                text = file.read()
+                self.editor.setText(text)
     
     def saveFile(self):
-        name, _ = QFileDialog.getSaveFileName(self, "Save File", options=QFileDialog.DontUseNativeDialog)
-        file = open(name, 'w')
-        text = self.editor.toPlainText()
-        file.write(text)
-        file.close()
+        name, _ = QFileDialog.getSaveFileName(self, "Save File", os.path.abspath('.//Samples//'), options=QFileDialog.DontUseNativeDialog)
+        if not name == u'':
+            file = open(name, 'w')
+            text = self.editor.toPlainText()
+            file.write(text)
+            file.close()
 
-    def close(self):
+    def exit(self):
+        file = open('autosave.txt', "w")
+        file.write(self.editor.toPlainText())
+        file.close()
         sys.exit()
+
+    def closeEvent(self, event):
+        file = open('autosave.txt', "w")
+        file.write(self.editor.toPlainText())
+        file.close()
+        event.accept()
+
+    def center(self):
+        frameGm = self.frameGeometry()
+        screen = QApplication.desktop().screenNumber(QApplication.desktop().cursor().pos())
+        centerPoint = QApplication.desktop().screenGeometry(screen).center()
+        frameGm.moveCenter(centerPoint)
+        self.move(frameGm.topLeft())
 
 def runIDE():
     app = QApplication(sys.argv)

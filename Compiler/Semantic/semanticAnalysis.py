@@ -1,20 +1,24 @@
 import sys
 sys.path.append("..")
-from DataStructures.symbolTable import *
+from Compiler.DataStructures.symbolTable import *
 from codeRunner import searchNodeByName
-from CodeProduction.codeGenerator import *
-from Utils import createCube
+from Compiler.CodeProduction.codeGenerator import *
+from Utils import *
+from Compiler.ErrorHandling.ErrorHandler import *
+from Compiler.ErrorHandling.ErrorHandler import logError
 
-readyForRun = False
+from configurationConstants import *
+from builtinFunctions import *
+from variableAssignments import *
+
 code = None
-
 
 def findVariables(tree):
     global code
-    global readyForRun
     code = tree
     wipeCode()
-    readyForRun = False
+    resetIsReadyForRun()
+    resetPrintLog()
     symbolTable = SymbolTable()
     children = tree.getSons()
     if not processConfigConstants(children[0], symbolTable):
@@ -22,35 +26,12 @@ def findVariables(tree):
     if not processVariables(children[1], symbolTable):
         return False
     processSimulationOfCode(children[1], symbolTable)
-    readFinalCode()
-
 
 def processSimulationOfCode(tree, symbolTable):
-    global readyForRun
-    readyForRun = True
+    activateIsReadyForRun()
 
     tempNode = searchNodeByName(tree, "Main")
     procedureDeclaration(tempNode, symbolTable)
-
-
-def processConfigConstants(configBranch, symbolTable):
-    lookupList = ['timer', 'timeUnit', 'rows', 'columns', 'cube']
-    for son in configBranch.getSons():
-        for keyword in lookupList:
-            name = son.getName()
-            if name == "cube":
-                tempValue = createCube(3, 6, False)
-                tempSymbol = Symbol(son.getSon(0).getName(), tempValue, "Reserved", "global")
-                symbolTable.add(tempSymbol)
-                break
-            elif name == keyword:
-                tempValue = son.getSons()[2].getName()
-                tempSymbol = Symbol(son.getName(), tempValue, "Reserved", "global")
-                symbolTable.add(tempSymbol)
-                break
-            elif keyword == lookupList[-1]:
-                return False
-    return True
 
 
 def processVariables(statementBranch, symbolTable):
@@ -68,7 +49,7 @@ def processVariables(statementBranch, symbolTable):
 
 
 def procedureCall(node, symbolTable):
-    if readyForRun:
+    if isReadyForRun():
         global code
         tempCode = code.getSons()[1]
         functionName = node.getSon(1).getName()
@@ -112,58 +93,25 @@ def getArguments(argumentNode, arguments):
             getArgumentsAux(node, arguments)
     return arguments
 
-
-def getAttributes(functionNode):
-    attributes = []
-    tempList = functionNode.getSons()[2:-2]
-    for attribute in tempList:
-        tempName = attribute.getName()
-        if tempName != ',':
-            attributes.append(tempName)
-    return attributes
-
-
-def delayFunction(tempNode, symbolTable):
-    if readyForRun:
-        attributes = getAttributes(tempNode)
-        if len(attributes) != 0:
-            delay(attributes[0], attributes[1])
-        else:
-            tempSymbolTime = symbolTable.getSymbol("timer").getByIndex(0).getValue()
-            tempSymbolTimeUnit = symbolTable.getSymbol("timeUnit").getByIndex(0).getValue()
-            delay(str(tempSymbolTime.getValue()), str(tempSymbolTimeUnit.getValue()))
-
-
-def defaultCode(tempNode, symbolTable):
-    if readyForRun:
-        attributes = getAttributes(tempNode)
-        cubeValue = createCube(3, 6, attributes)
-        tempCubeSymbol = symbolTable.getSymbolByScope("cube", "global")
-        tempCubeSymbol.setValue(cubeValue)
-        symbolTable.modifySymbol(tempCubeSymbol)
-
-
-def builtInFunction(node, symbolTable):
-    tempNode = node.getSon(0)
-    tempName = tempNode.getName()
-
-    if tempName == "delay":
-        delayFunction(tempNode, symbolTable)
-    if tempName == "defaultCube":
-        defaultCode(tempNode, symbolTable)
-
-
 def statement(node, symbolTable, scope):
     tempNode = node.getSon(0)
 
+    if tempNode.getName() == "printStatement":
+        printStatement(tempNode, symbolTable, scope)
     if tempNode.getName() == "procedureDeclaration":
         procedureDeclaration(tempNode, symbolTable)
     if tempNode.getName() == "varAssignment":
         varAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "procedureCall":
         procedureCall(tempNode, symbolTable)
+    if tempNode.getName() == "ifStatement":
+        from flowControl import ifStatement
+        ifStatement(tempNode, symbolTable, scope)
+    if tempNode.getName() == "forLoop":
+        from flowControl import forLoop
+        forLoop(tempNode, symbolTable, scope)
     if tempNode.getName() == "builtInFunction":
-        builtInFunction(tempNode, symbolTable)
+        builtInFunction(tempNode, symbolTable, scope)
         pass
 
 
@@ -183,69 +131,22 @@ def procedureDeclaration(node, symbolTable):
             statementList(tempNode, symbolTable, scope)
 
 
-def numExpression(value, symbolTable, scope, varID):
-    if value.hasSons():
-        numExpression(value.getSon(0), symbolTable, scope, varID)
-    else:
-        tempValue = int(value.getName())
-        if not symbolTable.hasSymbolByScope(varID, scope):
-            tempSymbol = Symbol(varID, tempValue, Types.Integer, scope)
-            symbolTable.add(tempSymbol)
-        else:
-            return False
-
-
-def boolean(value, symbolTable, scope, varID):
-    if value.hasSons():
-        numExpression(value.getSon(0), symbolTable, scope, varID)
-    else:
-        tempValue = bool(value.getName())
-        if not symbolTable.hasSymbolByScope(varID, scope):
-            tempSymbol = Symbol(varID, tempValue, Types.Integer, scope)
-            symbolTable.add(tempSymbol)
-        else:
-            return False
-
-
-def listElement(element, tempLinkedList):
-    tempValue = element.getSon(0)
-    if isinstance(tempValue.getName(), bool):
-        return tempValue.getName()
-    else:
-        tempElements = tempValue.getSon(1)
-        return listElements(tempElements, [])
-
-
-
-def listElements(elements, tempLinkedList):
-    tempNodeList = elements.getSons()
-    tempLinkedList.append(listElement(tempNodeList[0], tempLinkedList))
-    if len(tempNodeList) == 3:
-        listElements(tempNodeList[2], tempLinkedList)
-    return tempLinkedList
-
-
 def list_process(valueNode, symbolTable, scope, varID):
     elements = valueNode.getSon(1)
     newValue = listElements(elements, [])
-    tempSymbol = Symbol(varID, newValue, Types.List, scope)
-    symbolTable.modifySymbol(tempSymbol)
-
-
-def ID(value, symbolTable, scope, varID):
-    tempSymbol = symbolTable.getSymbolByScope(value, scope)
-    if tempSymbol != None:
-        tempValue = tempSymbol.getValue()
-        tempNewSymbol = Symbol(varID, tempValue, tempSymbol.getType(), scope)
-        symbolTable.modifySymbol(tempNewSymbol)
-        return True
-    tempSymbol = symbolTable.getSymbolByScope(value, "global")
-    if tempSymbol != None:
-        tempValue = tempSymbol.getValue()
-        tempNewSymbol = Symbol(varID, tempValue, tempSymbol.getType(), scope)
-        symbolTable.modifySymbol(tempNewSymbol)
-        return True
-    return False
+    if varID in symbolTable.getReservedId():
+        cubeSymbol = symbolTable.getSymbolByScope(varID, "global")
+        previousCube = copy.deepcopy(cubeSymbol.getValue())
+        if not verifyListsDimensions(newValue, previousCube):
+            logError("Semantic Error: New cube doesn't have the correct dimensions")
+            return False
+        tempSymbol = Symbol(varID, newValue, Types.List, scope)
+        symbolTable.modifySymbol(tempSymbol)
+        newCube = symbolTable.getSymbolByScope(varID, "global")
+        reportCubeChanges(previousCube, newCube)
+    else:
+        tempSymbol = Symbol(varID, newValue, Types.List, scope)
+        symbolTable.modifySymbol(tempSymbol)
 
 
 def varValue(valueNode, symbolTable, scope, varID):
@@ -253,9 +154,15 @@ def varValue(valueNode, symbolTable, scope, varID):
     varValueType = value.getName()
     if varValueType == "list":
         list_process(value, symbolTable, scope, varID)
+    elif varValueType == "listRange":
+        listRange(value, symbolTable, scope, varID)
+    elif varValueType == "listDimension":
+        listDimension(varID, value, symbolTable, scope)
     elif type(True) == type(value.getName()):
         boolean(value, symbolTable, scope, varID)
     elif isinstance(varValueType, int):
+        integer(value, symbolTable, scope, varID)
+    elif varValueType == "numExpression":
         numExpression(value, symbolTable, scope, varID)
     else:
         ID(varValueType, symbolTable, scope, varID)
@@ -265,31 +172,6 @@ def simpleAssignment(tempNode, symbolTable, scope):
     varID = tempNode.getSon(0).getName()
     valueNode = tempNode.getSon(2)
     varValue(valueNode, symbolTable, scope, varID)
-
-
-def getIndexes(indexNode, indexes, symbolTable, scope):
-    tempList = indexNode.getSons()
-    for node in tempList:
-        if node.getSonsLength() == 3:
-            tempValue = node.getSon(1).getSon(0).getName()
-            if isinstance(tempValue, int):
-                indexes.append(tempValue)
-            else:
-                tempSymbol = symbolTable.getSymbolByScope(tempValue, scope)
-                if tempSymbol != None:
-                    tempValue = tempSymbol.getValue()
-                    indexes.append(tempValue)
-                else:
-                    tempSymbol = symbolTable.getSymbolByScope(tempValue, "global")
-                    if tempSymbol != None:
-                        tempValue = tempSymbol.getValue()
-                        indexes.append(tempValue)
-                    else:
-                        print str(tempValue) + "doesn't fit any symbol stored in the symbolTable"
-                        return None
-        else:
-            getIndexes(node, indexes, symbolTable, scope)
-    return indexes
 
 
 def indexVarValue(valueNode, symbolTable, scope):
@@ -309,19 +191,8 @@ def changeValueInList(lista, indexes, value):
         if indexes[0] < len(lista):
             changeValueInList(lista[indexes[0]], indexes[1:], value)
         else:
-            print "Error in function changeValueInList: " + str(
-                indexes[0]) + " is bigger than the size of the dimensions of the list or matrix"
-
-
-def verifyIndexBoundries(tempList, indexes):
-    if indexes == []:
-        return True
-    if len(tempList) <= indexes[0]:
-        return False
-    elif len(indexes) < 2:
-        return verifyIndexBoundries(tempList, [])
-    else:
-        return verifyIndexBoundries(tempList[0], indexes[1:])
+             logError("Semantic Error: Error in function changeValueInList: " + str(
+                indexes[0]) + " is bigger than the size of the dimensions of the list or matrix")
 
 
 def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
@@ -332,7 +203,7 @@ def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
             changeValueInList(tempList, tempIndex, tempValue)
             return True
         else:
-            print "Error in modifySymbolList: indexes out of range"
+            logError("Semantic Error: Error in modifySymbolList: indexes out of range")
             return False
     tempSymbol = symbolTable.getSymbolByScope(tempID, "global")
     if tempSymbol != None:
@@ -342,9 +213,8 @@ def modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
             return True
 
 
-
 def indexAssignment(tempNode, symbolTable, scope):
-    if readyForRun:
+    if isReadyForRun():
         tempID = tempNode.getSon(0).getName()
         tempIndex = getIndexes(tempNode.getSon(1), [], symbolTable, scope)
         tempValue = indexVarValue(tempNode.getSon(3), symbolTable, scope)
@@ -361,3 +231,22 @@ def varAssignment(node, symbolTable, scope):
         simpleAssignment(tempNode, symbolTable, scope)
     if tempNode.getName() == "indexAssignment":
         indexAssignment(tempNode, symbolTable, scope)
+    if tempNode.getName() == "multipleDeclaration":
+        multipleDeclaration(tempNode, symbolTable, scope)
+
+# Processes, verifies and sets, to the symbol table,
+# the id's and values in a single line multiple assignation
+def multipleDeclaration(node, symbolTable, scope):
+    if not isReadyForRun():
+        idNodeList = node.getSon(2)
+        valueNodeList = node.getSon(6)
+
+        idList = [node.getSon(0).name] + getNestedIdNodesAsList(idNodeList)
+        valueList = [node.getSon(4)] + getNestedValueNodesAsList(valueNodeList)
+
+        if len(idList) == len(valueList):
+            for i in range(len(idList)):
+                varValue(valueList[i], symbolTable, scope, idList[i])
+
+        else:
+            logError("Semantic Error: one line multiple assignment impossible with id's " + str(idList) + ", amount of id's and values don't match")
