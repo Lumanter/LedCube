@@ -5,7 +5,8 @@
 
 // Variables
 unsigned long previous_milis = 0L; // L from long, important!
-unsigned long delay_time = 3000L;//delay time in ms. Should be long for math with other long numbers
+unsigned long default_time = 3000L;
+unsigned long delay_time = default_time; //delay time in ms. Should be long for math with other long numbers
 boolean registers[72]; //pins
 boolean cube[8][8][8];//cube matrix. Initial values != true?
 
@@ -27,7 +28,6 @@ void loop()
     String input = Serial.readString();
     get_input(input);
   } 
-  //load_to_cube();
 }
 
 void write_reg(){
@@ -61,7 +61,7 @@ void get_input(String input){
     if (input.charAt(0) == 'd'){ // DELAY, variable characters
 
       // Takes the instruction substring
-      String instruction = input.substring(0,input.indexOf("\\"));//https://www.arduino.cc/en/Tutorial/StringIndexOf , https://en.wikipedia.org/wiki/Escape_sequences_in_C
+      String instruction = input.substring(0,input.indexOf("/"));//https://www.arduino.cc/en/Tutorial/StringIndexOf , https://en.wikipedia.org/wiki/Escape_sequences_in_C
       
       // Takes the time unit from the instruction
       String time_unit = instruction.substring(instruction.lastIndexOf(",")+1,instruction.lastIndexOf(",")+4);
@@ -83,23 +83,23 @@ void get_input(String input){
           Serial.println("error in time unit");
       }
       
-      delay_time = instruction.substring(6,instruction.lastIndexOf(",")).toInt()*multiplier;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
+      delay_time = instruction.substring(2,instruction.lastIndexOf(",")).toInt()*multiplier;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
       load_to_cube();
 
       // Removes the parsed instruction from the input
-      input.remove(0,input.indexOf("\\") + 2);
+      input.remove(0,input.indexOf("/") + 1);
     }
     
-    else if(input.charAt(0) == 't'){ // TURN, 12 + 2 [\n] characters
+    else if(input.charAt(0) == 't'){ // TURN, 5 + 1 [\] characters
       
       // Takes the instruction substring
-      String instruction = input.substring(0,12);
+      String instruction = input.substring(0,5);
 
       //Gets the values from the instruction      
-      int x = instruction.substring(5,6).toInt();
-      int y = instruction.substring(7,8).toInt();
-      int z = instruction.substring(9,10).toInt();
-      String state = instruction.substring(11,12);
+      int x = instruction.substring(1,2).toInt();
+      int y = instruction.substring(2,3).toInt();
+      int z = instruction.substring(3,4).toInt();
+      String state = instruction.substring(4,5);
 
       // Loads the instruction on the virtual cube
       if(state == "T"){
@@ -113,26 +113,33 @@ void get_input(String input){
       }
       
       // Removes the parsed instruction from the input
-      input.remove(0,12 + 2);
+      input.remove(0,5 + 1);
     }
     
-    else if(input.charAt(0) == 'c'){// CLEAR, 5 + 2 [\n] characters
+    else if(input.charAt(0) == 'c'){// CLEAR, 5 + 1 [\] characters
       // Clears the virtual cube
       clear_cube();
 
       // Removes the parsed instruction from the input
-      input.remove(0,5 + 2);
+      input.remove(0,5 + 1);
+    }
+    else if(input.charAt(0) == '.'){
+      input.remove(0,1);
+      Serial.println("Parse finished");
+      delay_time = default_time;
+      load_to_cube();
+      break;
     }
     
     else{
       Serial.println("No input avalible");
       break;
     }
-  }
-  load_to_cube();
+  }  
 }
 
 void load_to_cube(){
+  previous_milis = millis();
   while((millis() - previous_milis) < delay_time){ //while for delay time
     for(int k = 0;k < 8; k++){
       registers[k + 64] = HIGH;
@@ -149,5 +156,5 @@ void load_to_cube(){
       write_reg();      
     }
   }
-  previous_milis = millis();
+  //previous_milis = millis();
 }
