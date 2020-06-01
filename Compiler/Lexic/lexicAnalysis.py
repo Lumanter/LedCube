@@ -63,7 +63,7 @@ def t_COMPARATOR(t):
 
 # Necessary due to ID's first letter lowercase restriction
 def t_keywords(t):
-    r'Rango_timer|Dim_columnas|defaultCube|Timer|Dim_filas|Procedure|CALL|Step'
+    r'Rango_timer|Dim_columnas|defaultCube|Timer|Dim_filas|Procedure|CALL|Step|Delay'
     t.value = t.value.upper()
     t.type = t.value
     return t
