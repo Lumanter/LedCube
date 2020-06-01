@@ -60,6 +60,10 @@ def p_matrixInsert(p):
     'matrixInsert : ID INSERT LPARENTHESES insertValue COMMA INTEGER COMMA INTEGER RPARENTHESES SEMICOLON'
     p[0] = ASTNode("matrixInsert", (p[1], '.', p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9]))
 
+def p_matrixInsert_noIndex(p):
+    'matrixInsert : ID INSERT LPARENTHESES insertValue COMMA INTEGER RPARENTHESES SEMICOLON'
+    p[0] = ASTNode("matrixInsert", (p[1], '.', p[2], p[3], p[4], p[5], p[6], ",", -1, ")"))
+
 def p_insertValue(p):
     '''insertValue : BOOLEAN
                   | list'''
@@ -91,9 +95,21 @@ def p_printStatement(p):
 def p_printArgument(p):
     '''printArgument : ID
                     | type
-                    | indexedId'''
+                    | indexedId
+                    | len'''
     p[0] = ASTNode("printArgument", [p[1]])
+
 
 def p_type(p):
     'type : TYPE LPARENTHESES ID RPARENTHESES'
     p[0] = ASTNode("type", (p[1], p[2], p[3], p[4]))
+
+
+# List Len
+def p_len(p):
+    'len : LEN LPARENTHESES ID RPARENTHESES'
+    p[0] = ASTNode("len", [p[3]])
+
+def p_len_index(p):
+    'len : LEN LPARENTHESES ID index RPARENTHESES'
+    p[0] = ASTNode("len", [p[3], p[4]])

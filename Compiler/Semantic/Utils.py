@@ -162,6 +162,8 @@ def listElement(element, tempLinkedList):
 
 
 def listElements(elements, tempLinkedList):
+    if not elements.hasSons():
+        return tempLinkedList
     tempNodeList = elements.getSons()
     tempLinkedList.append(listElement(tempNodeList[0], tempLinkedList))
     if len(tempNodeList) == 3:
@@ -378,3 +380,29 @@ def verifyIndexesInBounds(id, originalList, indexes):
             break
     return indexesInRange
 
+# Returns the length of the list referenced in the node.
+# In case of any error returns -1
+def getLenValue(node, symbolTable, scope):
+    listId = node.getSon(0).name
+    if verifyHasIdByScope(listId, symbolTable, scope):
+        list = symbolTable.getSymbolByScope(listId, scope).getValue()
+        if verifyIsAList(listId, list):
+            indexedId = len(node.sonList) == 2
+            if indexedId:
+                indexNode = node.getSon(1)
+                indexes = getIndexes(indexNode, [], symbolTable, scope)
+                if verifyIndexesInBounds(listId, list, indexes):
+                    list = getElementAtIndexes(list, indexes)
+                    listId = getIndexesAppendedToId(listId, indexes)
+                    if verifyIsAList(listId, list):
+                        return len(list)
+                    else:
+                        return -1
+                else:
+                    return -1
+            else:
+                return len(list)
+        else:
+            return -1
+    else:
+        return -1

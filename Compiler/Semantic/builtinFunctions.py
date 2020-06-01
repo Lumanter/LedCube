@@ -72,6 +72,11 @@ def printStatement(node, symbolTable, scope):
                         element = getElementAtIndexes(list, indexes)
                         logPrint(str(element) + "\n")
 
+        elif id == "len":
+            lenNode = node.getSon(2).getSon(0)
+            lenValue = getLenValue(lenNode, symbolTable, scope)
+            if lenValue != -1:
+                logPrint(str(lenValue) + "\n")
 
         else:
             if verifyHasId(id, symbolTable):

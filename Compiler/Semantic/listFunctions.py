@@ -153,8 +153,12 @@ def listInsert(node, symbolTable, scope):
 def listVerifyAndInsert(id, list, value, index):
     if not id == "Cubo":
         if verifyIsAList(id, list):
-            if verifyIndexInBounds(id, list, index):
-                list.insert(index, value)
+            appendAtEnd = (index == -1)
+            if appendAtEnd:
+                list.append(value)
+            else:
+                if verifyIndexInBounds(id, list, index):
+                    list.insert(index, value)
     else:
         logError("Semantic Error: Cube variable doesn't support list insert function")
 
@@ -177,10 +181,13 @@ def matrixVerifyAndInsert(id, matrix, value, index, insertAsColumn):
     if insertAsColumn == 0 or insertAsColumn == 1:
         if insertAsColumn:
             if verifyIsAMatrix(id, matrix):
-                for i in range(len(value)):
-                    indexInListRange = i < len(matrix)
-                    if indexInListRange:
-                        listVerifyAndInsert(id, matrix[i], value[i], index)
+                if isAList(value):
+                    for i in range(len(value)):
+                        indexInListRange = i < len(matrix)
+                        if indexInListRange:
+                            listVerifyAndInsert(id, matrix[i], value[i], index)
+                else:
+                    logError("Semantic Error: Cannot insert single value \"" + str(value) + "\" as a column, list required")
 
         else:
             listVerifyAndInsert(id, matrix, value, index)
@@ -265,3 +272,12 @@ def matrixDelete(node, symbolTable, scope):
 def deleteColumnAt(matrix, index):
     for subMatrix in matrix:
         del subMatrix[index]
+
+
+# List Len
+def lenValue(node, symbolTable, scope, varId):
+    if not isReadyForRun():
+        lenValue = getLenValue(node, symbolTable, scope)
+        if lenValue != -1:
+            newSymbol = Symbol(varId, lenValue, Types.Integer, scope)
+            symbolTable.add(newSymbol)
