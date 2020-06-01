@@ -11,15 +11,4 @@ Procedure Main() {
 	listA.insert(0, [True, True]);
 	print(listA);
 
-	listB = [[True, True], 
-	           [True, True]];
-
-	-- insert value as column at index 0
-	-- value = [False, False]
-	-- insertAsColumn = 1
-	-- index = 0
-	
-	listB.insert([False, False], 1, 0);
-	print(listB);
-
 };

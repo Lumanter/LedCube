@@ -153,8 +153,12 @@ def listInsert(node, symbolTable, scope):
 def listVerifyAndInsert(id, list, value, index):
     if not id == "Cubo":
         if verifyIsAList(id, list):
-            if verifyIndexInBounds(id, list, index):
-                list.insert(index, value)
+            appendAtEnd = (index == -1)
+            if appendAtEnd:
+                list.append(value)
+            else:
+                if verifyIndexInBounds(id, list, index):
+                    list.insert(index, value)
     else:
         logError("Semantic Error: Cube variable doesn't support list insert function")
 
