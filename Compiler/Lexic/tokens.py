@@ -35,6 +35,7 @@ tokens = [
     'DIM_COLUMNAS',
     'DEFAULTCUBE',
 
+
     'ASSIGN',
 
     # Variable Types
