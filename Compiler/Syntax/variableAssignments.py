@@ -69,7 +69,8 @@ def p_varValue(p):
                 | BOOLEAN
                 | list
                 | listDimension
-                | listRange'''
+                | listRange
+                | len'''
     p[0] = ASTNode("varValue", ([p[1]]))
 
 

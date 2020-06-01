@@ -9,7 +9,7 @@ import serial
 
 def sendToSerial(string):
     ser = serial.Serial()
-    ser.baudrate = 19200
+    ser.baudrate = 9600
     ser.port = 'COM4'
     if not ser.isOpen():
         ser.open()
@@ -32,14 +32,14 @@ def compile(code):
                 log = getPrints()
                 producedCode = getFinalCode()
                 if producedCode != "":
-
                     log += "\n" + "Generated cube code:" + "\n" + producedCode
                     file = open('producedCode.txt', "w")
                     file.write(producedCode)
                     file.close()
 
+                    producedCode += "."
                     producedCodeOneLine = producedCode.encode('unicode_escape')
-                    file = open('produceCode_oneline.txt', "w")
+                    file = open('producedCode_oneline.txt', "w")
                     file.write(producedCodeOneLine)
                     file.close()
 

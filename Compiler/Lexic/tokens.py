@@ -16,6 +16,7 @@ keywords = {
 	'range': 'RANGE',
     'print': 'PRINT',
     'type': 'TYPE',
+    'len': 'LEN',
 
     # Control Flow
     'if': 'IF',

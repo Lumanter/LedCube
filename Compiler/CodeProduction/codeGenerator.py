@@ -19,13 +19,13 @@ def readFinalCode():
     #print "\n\n\n"
 
 def delay(time, timeUnit):
-    instruction = "delay," + str(time) + ',' + str(timeUnit) + "\n"
+    instruction = "d," + str(time) + ',' + str(timeUnit) + "\n"
     writeCode(instruction)
 
 
 def turn(x, y, z, state):
     if x < 8 and y < 8 and z < 8:
-        instruction = "turn," + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(state)[0] + "\n"
+        instruction = "t" + str(x) + str(y) + str(z) + str(state)[0] + "\n"
         writeCode(instruction)
 
 
