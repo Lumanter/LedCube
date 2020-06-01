@@ -268,3 +268,12 @@ def matrixDelete(node, symbolTable, scope):
 def deleteColumnAt(matrix, index):
     for subMatrix in matrix:
         del subMatrix[index]
+
+
+# List Len
+def lenValue(node, symbolTable, scope, varId):
+    if not isReadyForRun():
+        lenValue = getLenValue(node, symbolTable, scope)
+        if lenValue != -1:
+            newSymbol = Symbol(varId, lenValue, Types.Integer, scope)
+            symbolTable.add(newSymbol)

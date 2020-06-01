@@ -91,9 +91,21 @@ def p_printStatement(p):
 def p_printArgument(p):
     '''printArgument : ID
                     | type
-                    | indexedId'''
+                    | indexedId
+                    | len'''
     p[0] = ASTNode("printArgument", [p[1]])
+
 
 def p_type(p):
     'type : TYPE LPARENTHESES ID RPARENTHESES'
     p[0] = ASTNode("type", (p[1], p[2], p[3], p[4]))
+
+
+# List Len
+def p_len(p):
+    'len : LEN LPARENTHESES ID RPARENTHESES'
+    p[0] = ASTNode("len", [p[3]])
+
+def p_len_index(p):
+    'len : LEN LPARENTHESES ID index RPARENTHESES'
+    p[0] = ASTNode("len", [p[3], p[4]])

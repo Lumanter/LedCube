@@ -164,6 +164,8 @@ def varValue(valueNode, symbolTable, scope, varID):
         integer(value, symbolTable, scope, varID)
     elif varValueType == "numExpression":
         numExpression(value, symbolTable, scope, varID)
+    elif varValueType == "len":
+        lenValue(value, symbolTable, scope, varID)
     else:
         ID(varValueType, symbolTable, scope, varID)
 
