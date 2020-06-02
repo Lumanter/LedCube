@@ -41,6 +41,36 @@ def ifStatement(node, symbolTable, scope):
             logError("Symbol not found" + str(comparable))
 
 
+"""def ifStatementIterativeRangeList(node, comparable, value, operator, symbolTable, scope, indexList):
+    if isinstance(indexList[0], str):
+        try:
+            index = int(indexList[0][2:])
+            indexList[0] = index
+        except ValueError:
+            logError(index + " must be integer type")
+        for item in range(0, len(comparable)):
+            if len(comparable) > indexList[0]:
+                ifStatementBoolean(node, comparable[item][indexList[0]], value, operator, symbolTable, scope)
+            else:
+                return logError("List out of range")
+        return
+    if indexList == []:
+        if isinstance(comparable, list):
+            ifStatementIterative(node, comparable, value, operator, symbolTable, scope)
+        elif isinstance(comparable, bool):
+            ifStatementBoolean(node, comparable, value, operator, symbolTable, scope)
+    else:
+        if isinstance(comparable, list):
+            if indexList[0]< len(comparable):
+                if isinstance(value, bool):
+                    ifStatementIterativeAux(node, comparable[indexList[0]], value, operator, symbolTable, scope, indexList[1:])
+                else:
+                    logError(str(value) + " Must be boolean")
+            else:
+                logError("List out of range")
+        else:
+            logError("List out of range")"""
+
 
 def getListIndex(indexes, listIndex):
     if indexes.hasSons():
@@ -61,7 +91,6 @@ def getListIndex(indexes, listIndex):
     return listIndex
 
 
-
 def ifStatementIterative(node, comparable, value, operator, symbolTable, scope):
         for boolVariable in comparable:
             if operator == "==":
@@ -78,25 +107,46 @@ def ifStatementIterative(node, comparable, value, operator, symbolTable, scope):
                 logError(operator + ": Operator not supported in variable " + str(type(value)))
 
 
-
 def ifStatementIterativeAux(node, comparable, value, operator, symbolTable, scope, indexList):
     if indexList == []:
         if isinstance(comparable, list):
             ifStatementIterative(node, comparable, value, operator, symbolTable, scope)
         elif isinstance(comparable, bool):
             ifStatementBoolean(node, comparable, value, operator, symbolTable, scope)
+    elif isinstance(indexList[0], str):
+        try:
+            index = int(indexList[0][2:])
+            indexList[0] = index
+        except ValueError:
+            logError(index + " must be integer type")
+        try:
+            for item in range(0, len(comparable)):
+                if len(comparable) > indexList[0]:
+                    if isinstance(comparable[item], list):
+                        ifStatementBoolean(node, comparable[item][indexList[0]], value, operator, symbolTable, scope)
+                    elif isinstance(comparable[item], bool):
+                        if item == indexList[0]:
+                            ifStatementBoolean(node, comparable[indexList[0]], value, operator, symbolTable, scope)
+                    else:
+                        return logError(str(comparable[item]) + " Must be list or boolean")
+
+                else:
+                    return logError("List out of range")
+            return
+        except:
+            return logError(str(comparable)+" is not iterable")
     else:
         if isinstance(comparable, list):
-            if indexList[0]< len(comparable):
+            if indexList[0] < len(comparable):
                 if isinstance(value, bool):
-                    ifStatementIterativeAux(node, comparable[indexList[0]], value, operator, symbolTable, scope, indexList[1:])
+                    ifStatementIterativeAux(node, comparable[indexList[0]], value, operator, symbolTable, scope,
+                                            indexList[1:])
                 else:
                     logError(str(value) + " Must be boolean")
             else:
                 logError("List out of range")
         else:
             logError("List out of range")
-
 
 
 def ifStatementBoolean(node, comparable, value, operator, symbolTable, scope):
@@ -112,7 +162,6 @@ def ifStatementBoolean(node, comparable, value, operator, symbolTable, scope):
             pass
     else:
         logError(operator + ": Operator not supported in variable " + str(type(value)))
-
 
 
 def ifStatementInteger(node, comparable, value, operator, symbolTable, scope):
