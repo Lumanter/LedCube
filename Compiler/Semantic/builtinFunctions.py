@@ -27,6 +27,8 @@ def builtInFunction(node, symbolTable, scope):
         listDelete(node, symbolTable, scope)
     if tempName == "matrixDelete":
         matrixDelete(node, symbolTable, scope)
+    if tempName == "blink":
+        blinkNode(node, symbolTable, scope)
 
 # Delay
 def delayFunction(tempNode, symbolTable):
@@ -82,3 +84,48 @@ def printStatement(node, symbolTable, scope):
             if verifyHasId(id, symbolTable):
                 value = symbolTable.getSymbolByScope(id, scope).getValue()
                 logPrint(str(value) + "\n")
+
+
+# Blink
+def blinkNode(node, symbolTable, scope):
+    node = node.getSon(0)
+    if isReadyForRun():
+        id = node.getSon(2).getSon(0).name
+        if verifyHasIdByScope(id, symbolTable, scope):
+
+            if id == "Cubo":
+                cubo = symbolTable.getSymbolByScope(id, scope).getValue()
+                indexNode = node.getSon(2).getSon(1)
+                indexes = getIndexes(node.getSon(2).getSon(1), [], symbolTable, scope)
+                time = ""
+                timeUnit = ""
+                state = "True"
+                if verifyIndexesInBounds(id, cubo, indexes):
+
+                    customBlink = len(node.sonList) > 6
+                    if customBlink:
+                        time = node.getSon(4).name
+                        timeUnit = node.getSon(6).name
+                        state = node.getSon(8).name
+                    else:
+                        time = symbolTable.getSymbol("timer").getByIndex(0).getValue().getValue()
+                        timeUnit = symbolTable.getSymbol("timeUnit").getByIndex(0).getValue().getValue()
+                        state = node.getSon(4).name
+
+                    blinkIndexes(indexes, time, timeUnit, state)
+
+            else:
+                logPrint("Blink function only has effect on variable \"Cubo\"")
+
+def blinkIndexes(indexes, time, timeUnit, state):
+    if len(indexes) == 3:
+        blink(indexes[0], indexes[1], indexes[2], time, timeUnit, state)
+
+    if len(indexes) == 2:
+        for z in range(8):
+            blink(indexes[0], indexes[1], z, time, timeUnit, state)
+
+    if len(indexes) == 1:
+        for y in range(8):
+            for z in range(8):
+                blink(indexes[0], y, z, time, timeUnit, state)

@@ -63,7 +63,7 @@ def t_COMPARATOR(t):
 
 # Necessary due to ID's first letter lowercase restriction
 def t_keywords(t):
-    r'Rango_timer|Dim_columnas|defaultCube|Timer|Dim_filas|Procedure|CALL|Step|Delay'
+    r'Rango_timer|Dim_columnas|defaultCube|Timer|Dim_filas|Procedure|CALL|Step|Delay|Blink'
     t.value = t.value.upper()
     t.type = t.value
     return t
@@ -111,5 +111,5 @@ def lexicAnalysis(code):
     tokenLeft = True
     while tokenLeft:
         tokenLeft = lexicalAnalyzer.token()
-        if tokenLeft:
-            print str(tokenLeft.type) + ": " + str(tokenLeft.value)
+        # if tokenLeft:
+        #     print str(tokenLeft.type) + ": " + str(tokenLeft.value)

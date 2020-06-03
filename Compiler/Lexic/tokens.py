@@ -17,6 +17,7 @@ keywords = {
     'print': 'PRINT',
     'type': 'TYPE',
     'len': 'LEN',
+    'Blink': 'BLINK',
 
     # Control Flow
     'if': 'IF',
