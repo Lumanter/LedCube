@@ -1,13 +1,18 @@
-
-Timer = 1;
-Rango_timer = "Seg";
+    
+Timer = 200;
+Rango_timer = "Mil";
 Dim_filas = 8;
 Dim_columnas = 8;
 Cubo = defaultCube(False);
 
-Procedure Main() {
-	
-	x = 5;
-	y = ((x + 1) / 2 * x % 8 - 1) ** 2;	
+Procedure turnCol(x,y,z,h) {
+	for i in h {
+		print(z);
+	};
+};
 
-    };
+Procedure Main() {
+
+	CALL turnCol(3,4,3,2);
+
+};
