@@ -187,7 +187,9 @@ def indexVarValue(valueNode, symbolTable, scope):
 
 
 def changeValueInList(lista, indexes, value):
-    if not isinstance(lista[0], list):
+    if len(indexes) == 1:
+        lista[indexes[0]] = value
+    elif not isinstance(lista[0], list):
         lista[indexes[0]] = value
     else:
         if indexes[0] < len(lista):
