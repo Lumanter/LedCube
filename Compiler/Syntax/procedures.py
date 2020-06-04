@@ -20,7 +20,7 @@ def p_parameters_one(p):
 
 
 def p_parameters_many(p):
-    'parameters : parameter COMMA parameters '
+    'parameters : parameter COMMA parameters'
     p[0] = ASTNode("parameters", (p[1], p[2], p[3]))
 
 
