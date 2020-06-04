@@ -180,6 +180,8 @@ def indexVarValue(valueNode, symbolTable, scope):
     value = valueNode.getSon(0)
     if type(True) == type(value.getName()):
         return value.getName()
+    elif value.getName() == "list":
+        return listElements(value.getSon(1), [])
     else:
         tempSymbol = symbolTable.getSymbolByScope(value.getName(), scope)
         tempValue = tempSymbol.getValue()
