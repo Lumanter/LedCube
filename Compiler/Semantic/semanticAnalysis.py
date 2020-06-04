@@ -180,6 +180,8 @@ def indexVarValue(valueNode, symbolTable, scope):
     value = valueNode.getSon(0)
     if type(True) == type(value.getName()):
         return value.getName()
+    elif value.getName() == "list":
+        return listElements(value.getSon(1), [])
     else:
         tempSymbol = symbolTable.getSymbolByScope(value.getName(), scope)
         tempValue = tempSymbol.getValue()
@@ -187,7 +189,9 @@ def indexVarValue(valueNode, symbolTable, scope):
 
 
 def changeValueInList(lista, indexes, value):
-    if not isinstance(lista[0], list):
+    if len(indexes) == 1:
+        lista[indexes[0]] = value
+    elif not isinstance(lista[0], list):
         lista[indexes[0]] = value
     else:
         if indexes[0] < len(lista):
