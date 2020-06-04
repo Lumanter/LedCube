@@ -229,7 +229,10 @@ def forLoop(node, symbolTable, scope):
                 iterableValue = symbolTable.getSymbolByScope(iterable, scope)
                 if iterableValue == None:
                     iterableValue = symbolTable.getSymbolByScope(node.getSon(3).getSon(0).getName(), "global")
-                iterableValueLength = len(iterableValue.getValue())
+                if isinstance(iterableValue.getValue(), int):
+                    iterableValueLength = iterableValue.getValue()
+                else:
+                    iterableValueLength = len(iterableValue.getValue())
             if not isRange:
                 Step = 1
                 if node.getSon(4).getName() == "STEP":
