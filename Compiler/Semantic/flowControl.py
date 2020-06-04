@@ -205,6 +205,7 @@ def forLoop(node, symbolTable, scope):
         varID = node.getSon(1).getName()
         iterable = node.getSon(3).getSon(0).getName()
         symbolTable.simpleAdd(varID, 0, Types.Integer, scope)
+        isRange = False
         if not isinstance(iterable, int):
             iterableValueLength = 0
             if iterable == "indexedId":
@@ -214,34 +215,44 @@ def forLoop(node, symbolTable, scope):
                     tempListSymbol = symbolTable.getSymbolByScope(tempNode.getSon(0).getName(), "global")
                 tempList = tempListSymbol.getValue()
                 indexes = getIndexes(tempNode.getSon(1), [], symbolTable, scope)
-                iterableValueLength = len(getListElementByIndex(tempList, indexes))
+                for value in indexes:
+                    if not isinstance(value, int):
+                        if value[1] == ':':
+                            isRange = True
+                            forLoopWithRange(node, varID, indexes, symbolTable, scope)
+                            break
+                    else:
+                        break
+                if not isRange:
+                    iterableValueLength = len(getListElementByIndex(tempList, indexes))
             else:
                 iterableValue = symbolTable.getSymbolByScope(iterable, scope)
                 if iterableValue == None:
                     iterableValue = symbolTable.getSymbolByScope(node.getSon(3).getSon(0).getName(), "global")
                 iterableValueLength = len(iterableValue.getValue())
-            Step = 1
-            if node.getSon(4).getName() == "STEP":
-                Step = node.getSon(5).getName()
-            totalCycles = iterableValueLength
-            if Step == 1:
-                for cycle in range(totalCycles):
-                    tempSymbol = symbolTable.getSymbolByScope(varID, scope)
-                    tempSymbol.setValue(cycle)
-                    symbolTable.modifySymbol(tempSymbol)
-                    tempStatementList = node.getSon(5)
-                    statementList(tempStatementList, symbolTable, scope)
-                symbolTable.eliminateSymbolByScope(varID, scope)
-            else:
-                cycle = 0
-                while cycle < totalCycles:
-                    tempSymbol = symbolTable.getSymbolByScope(varID, scope)
-                    tempSymbol.setValue(cycle)
-                    symbolTable.modifySymbol(tempSymbol)
-                    tempStatementList = node.getSon(7)
-                    statementList(tempStatementList, symbolTable, scope)
-                    cycle += Step
-                symbolTable.eliminateSymbolByScope(varID, scope)
+            if not isRange:
+                Step = 1
+                if node.getSon(4).getName() == "STEP":
+                    Step = node.getSon(5).getName()
+                totalCycles = iterableValueLength
+                if Step == 1:
+                    for cycle in range(totalCycles):
+                        tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                        tempSymbol.setValue(cycle)
+                        symbolTable.modifySymbol(tempSymbol)
+                        tempStatementList = node.getSon(5)
+                        statementList(tempStatementList, symbolTable, scope)
+                    symbolTable.eliminateSymbolByScope(varID, scope)
+                else:
+                    cycle = 0
+                    while cycle < totalCycles:
+                        tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                        tempSymbol.setValue(cycle)
+                        symbolTable.modifySymbol(tempSymbol)
+                        tempStatementList = node.getSon(7)
+                        statementList(tempStatementList, symbolTable, scope)
+                        cycle += Step
+                    symbolTable.eliminateSymbolByScope(varID, scope)
         else:
             for cycle in range(iterable):
                 tempSymbol = symbolTable.getSymbolByScope(varID, scope)
@@ -250,3 +261,36 @@ def forLoop(node, symbolTable, scope):
                 tempStatementList = node.getSon(5)
                 statementList(tempStatementList, symbolTable, scope)
             symbolTable.eliminateSymbolByScope(varID, scope)
+
+
+def forLoopWithRange(node, varID, indexes, symbolTable, scope):
+    Step = 1
+    if node.getSon(4).getName() == "STEP":
+        Step = node.getSon(5).getName()
+    lowerLimit = int(indexes[0][0])
+    upperLimit = int(indexes[0][2])
+    if lowerLimit < upperLimit:
+        if node.getSon(4).getName() == "STEP":
+            Step = node.getSon(5).getName()
+        totalCycles = upperLimit-lowerLimit
+        if Step == 1:
+            for cycle in range(lowerLimit, upperLimit):
+                tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                tempSymbol.setValue(cycle)
+                symbolTable.modifySymbol(tempSymbol)
+                tempStatementList = node.getSon(5)
+                statementList(tempStatementList, symbolTable, scope)
+            symbolTable.eliminateSymbolByScope(varID, scope)
+        else:
+            cycle = lowerLimit
+            while cycle < upperLimit:
+                tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                tempSymbol.setValue(cycle)
+                symbolTable.modifySymbol(tempSymbol)
+                tempStatementList = node.getSon(7)
+                statementList(tempStatementList, symbolTable, scope)
+                cycle += Step
+            symbolTable.eliminateSymbolByScope(varID, scope)
+    else:
+        logError("Semantic: UpperLimit " + str(upperLimit) + " doesn't match LowerLimit " + str(lowerLimit))
+
