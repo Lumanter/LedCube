@@ -48,7 +48,7 @@ class MainWindow(QMainWindow):
         self.log = QTextEdit()
         self.log.setReadOnly(True)
         self.log.setLineWrapMode(QTextEdit.NoWrap)
-        self.log.setMaximumHeight(200)
+        self.log.setMaximumHeight(250)
         self.log.setFontPointSize(11)
 
 

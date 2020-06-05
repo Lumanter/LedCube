@@ -1,6 +1,6 @@
     
-Timer = 200;
-Rango_timer = "Mil";
+Timer = 1;
+Rango_timer = "Seg";
 Dim_filas = 8;
 Dim_columnas = 8;
 Cubo = defaultCube(False);
@@ -18,36 +18,33 @@ Procedure cube1() {
 
 Procedure cube2() {
 	j = 2;
-	for i in 5 {
+	for i in 4 {
 		Cubo[2][j][0].Neg;
 		Cubo[5][j][0].Neg;
-		Cubo[j][5][0].Neg;
-		Cubo[j][2][0].Neg;
 		j = j + 1;
 	};
-	Cubo[2][5][0].Neg;
-	Cubo[5][5][0].Neg;
-	Cubo[2][2][0].Neg;
-	Cubo[5][2][0].Neg;
+	Cubo[3][5][0].Neg;
+	Cubo[4][5][0].Neg;
+	Cubo[3][2][0].Neg;
+	Cubo[4][2][0].Neg;
 	
 	j = 2;
-	for i in 5 {
-		Cubo[2][i][7].Neg;
-		Cubo[5][i][7].Neg;
-		Cubo[i][5][7].Neg;
-		Cubo[i][2][7].Neg;
+	for i in 4 {
+		Cubo[2][j][7].Neg;
+		Cubo[5][j][7].Neg;
 		j = j + 1;
 	};
-	Cubo[2][5][7].Neg;
-	Cubo[5][5][7].Neg;
-	Cubo[2][2][7].Neg;
-	Cubo[5][2][7].Neg;
+	Cubo[3][5][7].Neg;
+	Cubo[4][5][7].Neg;
+	Cubo[3][2][7].Neg;
+	Cubo[4][2][7].Neg;	
+
 
 	n = 1;
 	for i in 6 {
 		Cubo[2][5][n].Neg;
 		Cubo[5][5][n].Neg;
-		Cubo[2][5][n].Neg;
+		Cubo[2][2][n].Neg;
 		Cubo[5][2][n].Neg;
 		n = n + 1;
 	};
@@ -58,27 +55,27 @@ Procedure cube3() {
 	for i in 6 {
 		Cubo[1][j][0].Neg;
 		Cubo[6][j][0].Neg;
+		j = j + 1;
+	};
+	j = 2;
+	for i in 4 {
 		Cubo[j][6][0].Neg;
 		Cubo[j][1][0].Neg;
 		j = j + 1;
-	};
-	Cubo[1][6][0].Neg;
-	Cubo[6][6][0].Neg;
-	Cubo[1][1][0].Neg;
-	Cubo[6][1][0].Neg;
-	
+	};	
+
 	j = 1;
 	for i in 6 {
-		Cubo[1][i][7].Neg;
-		Cubo[6][i][7].Neg;
-		Cubo[i][6][7].Neg;
-		Cubo[i][1][7].Neg;
+		Cubo[1][j][7].Neg;
+		Cubo[6][j][7].Neg;
 		j = j + 1;
 	};
-	Cubo[1][6][7].Neg;
-	Cubo[6][6][7].Neg;
-	Cubo[1][1][7].Neg;
-	Cubo[6][1][7].Neg;
+	j = 2;
+	for i in 4 {
+		Cubo[j][6][7].Neg;
+		Cubo[j][1][7].Neg;
+		j = j + 1;
+	};
 
 	n = 1;
 	for i in 6 {
@@ -127,18 +124,15 @@ Procedure Main() {
 		
 	CALL cube1();
 	Delay();	
-	CALL cube1();
-	Delay();	
+	CALL cube1();	
 
 	CALL cube2();
 	Delay();	
 	CALL cube2();
-	Delay();	
 
 	CALL cube3();
 	Delay();	
 	CALL cube3();
-	Delay();	
 
 	CALL cube4();
 	Delay();	
@@ -148,14 +142,13 @@ Procedure Main() {
 	CALL cube3();
 	Delay();	
 	CALL cube3();
-	Delay();	
-
+	
 	CALL cube2();
 	Delay();	
 	CALL cube2();
-	Delay();	
-
+	
 	CALL cube1();
 	Delay();	
+	CALL cube1();
 
 };

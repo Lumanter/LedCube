@@ -52,5 +52,6 @@ Procedure Main() {
 	CALL goDown(4, 3, 7);
 	CALL goUp(5, 5);
 	CALL goDown(3, 4, 7);
+	Delay();
 
 };
