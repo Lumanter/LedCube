@@ -41,5 +41,6 @@ Procedure barRot() {
 Procedure Main() {
 	
 	CALL barRot();
+	print(len(Cubo));
 
 };
