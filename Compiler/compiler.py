@@ -7,16 +7,6 @@ from Syntax.syntacticAnalysis import syntacticAnalyzer
 import os
 import serial
 
-def sendToSerial(string):
-    ser = serial.Serial()
-    ser.baudrate = 9600
-    ser.port = 'COM4'
-    if not ser.isOpen():
-        ser.open()
-    if ser.isOpen():
-        ser.write(string.encode())
-    ser.close()
-
 def compile(code):
 
     resetErrorLog()
@@ -43,8 +33,6 @@ def compile(code):
                     file = open('producedCode_oneline.txt', "w")
                     file.write(producedCodeOneLine)
                     file.close()
-
-                    #sendToSerial(producedCodeOneLine)
 
                 return log
             else:
