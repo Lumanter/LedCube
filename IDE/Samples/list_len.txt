@@ -7,8 +7,10 @@ Cubo = defaultCube(False);
 
 Procedure Main() {
 
-	listA = [[False, False], [False, False]];
-	listA.insert(0, [True, True]);
-	print(listA);
+	listA = [[False, False], True, True];
+	size = len(listA); 
+	
+	print( size ); -- 3
+	print( len(listA[0]) ); -- 2
 
 };

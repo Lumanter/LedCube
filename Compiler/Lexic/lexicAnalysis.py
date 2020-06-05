@@ -61,17 +61,21 @@ def t_COMPARATOR(t):
 	r'>=|<=|>|<|==|!='
 	return t
 
-# Exceptions to ID max lenght 10
-def t_IDExceptions(t):
-    r'Rango_timer|Dim_columnas|defaultCube'
+# Necessary due to ID's first letter lowercase restriction
+def t_keywords(t):
+    r'Rango_timer|Dim_columnas|defaultCube|Timer|Dim_filas|Procedure|CALL|Step|Delay|Blink'
     t.value = t.value.upper()
     t.type = t.value
     return t
 
+# Only ones treated as ID's with first lowercase
+def t_IDExceptions(t):
+    r'Cubo|Main'
+    t.type = "ID"
+    return t
 
 def t_ID(t):
-    # {0, n} n + 1 = max
-    r'[a-zA-Z_][a-zA-Z0-9@_&]{0,9}'
+    r'([a-z]{1})([a-zA-Z0-9@_&]{0,9})'
     if t.value in keywords:
         if t.value != "Cubo":
             t.value = t.value.upper()

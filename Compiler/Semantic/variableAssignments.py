@@ -24,7 +24,7 @@ def ID(value, symbolTable, scope, varID):
         return False
 
 def integer(value, symbolTable, scope, varID):
-    if not isReadyForRun():
+    if True:
         if value.hasSons():
             integer(value.getSon(0), symbolTable, scope, varID)
         else:
@@ -61,7 +61,7 @@ def boolean(value, symbolTable, scope, varID):
 # Processes and sets an arithmetic operation value to a
 # variable id in the symbols table
 def numExpression(node, symbolTable, scope, varId):
-    if not isReadyForRun():
+    if True:
         expressionAsString = getNumExpressionAsString(node, symbolTable, scope)
         if "!" in expressionAsString:
             logError("Semantic Error: numerical operation assignation failed")

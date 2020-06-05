@@ -1,0 +1,24 @@
+    
+Timer = 200;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure rain(x, y, z) {
+	for i in 8 {
+		Cubo[x][y][z].Neg;
+		Delay();
+		Cubo[x][y][z].Neg;
+		z = z - 1; 
+	};
+};
+
+Procedure Main() {
+
+	CALL rain(1, 1, 7);
+	CALL rain(5, 2, 7);
+	CALL rain(3, 6, 7);
+	CALL rain(4, 4, 7);
+
+};

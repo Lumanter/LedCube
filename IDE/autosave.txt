@@ -1,5 +1,5 @@
     
-Timer = 500;
+Timer = 300;
 Rango_timer = "Mil";
 Dim_filas = 8;
 Dim_columnas = 8;
@@ -34,13 +34,13 @@ Procedure barRot() {
 	Delay();
 	Cubo.F;
 
+	
+
 };
 
 Procedure Main() {
 	
 	CALL barRot();
-	CALL barRot();
-	CALL barRot();
-	CALL barRot();
+	print(len(Cubo));
 
 };

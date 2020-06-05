@@ -1,0 +1,14 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+        x = [False, True, False];
+        aList =[[False, True, True], [False, True, True], [False, True, True], [False, True, True]];
+        if  aList[:,0] == False {
+                print(x); --print x 4 times
+        };
+    };

@@ -36,7 +36,8 @@ def compile(code):
                     file = open('producedCode.txt', "w")
                     file.write(producedCode)
                     file.close()
-                    producedCode = producedCode.replace("\n", "/");
+
+                    producedCode = producedCode.replace("\n", "/")
                     producedCode += "."
                     producedCodeOneLine = producedCode.encode('unicode_escape')
                     file = open('producedCode_oneline.txt', "w")
