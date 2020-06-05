@@ -41,37 +41,6 @@ def ifStatement(node, symbolTable, scope):
             logError("Symbol not found" + str(comparable))
 
 
-"""def ifStatementIterativeRangeList(node, comparable, value, operator, symbolTable, scope, indexList):
-    if isinstance(indexList[0], str):
-        try:
-            index = int(indexList[0][2:])
-            indexList[0] = index
-        except ValueError:
-            logError(index + " must be integer type")
-        for item in range(0, len(comparable)):
-            if len(comparable) > indexList[0]:
-                ifStatementBoolean(node, comparable[item][indexList[0]], value, operator, symbolTable, scope)
-            else:
-                return logError("List out of range")
-        return
-    if indexList == []:
-        if isinstance(comparable, list):
-            ifStatementIterative(node, comparable, value, operator, symbolTable, scope)
-        elif isinstance(comparable, bool):
-            ifStatementBoolean(node, comparable, value, operator, symbolTable, scope)
-    else:
-        if isinstance(comparable, list):
-            if indexList[0]< len(comparable):
-                if isinstance(value, bool):
-                    ifStatementIterativeAux(node, comparable[indexList[0]], value, operator, symbolTable, scope, indexList[1:])
-                else:
-                    logError(str(value) + " Must be boolean")
-            else:
-                logError("List out of range")
-        else:
-            logError("List out of range")"""
-
-
 def getListIndex(indexes, listIndex):
     if indexes.hasSons():
         if indexes.getSon(1).getName() == "indexValue":
@@ -118,15 +87,21 @@ def ifStatementIterativeAux(node, comparable, value, operator, symbolTable, scop
             index = int(indexList[0][2:])
             indexList[0] = index
         except ValueError:
-            logError(index + " must be integer type")
+            return logError(index + " must be integer type")
         try:
             for item in range(0, len(comparable)):
                 if len(comparable) > indexList[0]:
                     if isinstance(comparable[item], list):
-                        ifStatementBoolean(node, comparable[item][indexList[0]], value, operator, symbolTable, scope)
+                        if len(indexList) == 1:
+                            ifStatementIterative(node, comparable[indexList[0]], value, operator, symbolTable, scope)
+                        else:
+                            ifStatementIterativeAux(node, comparable[item][indexList[0]], value, operator, symbolTable, scope, indexList[1:])
                     elif isinstance(comparable[item], bool):
-                        if item == indexList[0]:
-                            ifStatementBoolean(node, comparable[indexList[0]], value, operator, symbolTable, scope)
+                        if len(indexList) == 1:
+                            if item == indexList[0]:
+                                ifStatementBoolean(node, comparable[indexList[0]], value, operator, symbolTable, scope)
+                        else:
+                            return logError("List out of range")
                     else:
                         return logError(str(comparable[item]) + " Must be list or boolean")
 
@@ -142,11 +117,11 @@ def ifStatementIterativeAux(node, comparable, value, operator, symbolTable, scop
                     ifStatementIterativeAux(node, comparable[indexList[0]], value, operator, symbolTable, scope,
                                             indexList[1:])
                 else:
-                    logError(str(value) + " Must be boolean")
+                    return logError(str(value) + " Must be boolean")
             else:
-                logError("List out of range")
+                return logError("List out of range")
         else:
-            logError("List out of range")
+            return logError("List out of range")
 
 
 def ifStatementBoolean(node, comparable, value, operator, symbolTable, scope):
@@ -229,7 +204,10 @@ def forLoop(node, symbolTable, scope):
                 iterableValue = symbolTable.getSymbolByScope(iterable, scope)
                 if iterableValue == None:
                     iterableValue = symbolTable.getSymbolByScope(node.getSon(3).getSon(0).getName(), "global")
-                iterableValueLength = len(iterableValue.getValue())
+                if isinstance(iterableValue.getValue(), int):
+                    iterableValueLength = iterableValue.getValue()
+                else:
+                    iterableValueLength = len(iterableValue.getValue())
             if not isRange:
                 Step = 1
                 if node.getSon(4).getName() == "STEP":
