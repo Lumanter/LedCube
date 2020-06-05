@@ -4,11 +4,11 @@
 #define SHCP_pin 13
 
 // Variables
-unsigned long previous_milis = 0L; // L from long, important!
+unsigned long previous_milis = 0L;
 unsigned long default_time = 3000L;
-unsigned long delay_time = default_time; //delay time in ms. Should be long for math with other long numbers
-boolean registers[72]; //pins
-boolean cube[8][8][8];//cube matrix. Initial values != true?
+unsigned long delay_time = default_time; 
+boolean registers[72];
+boolean cube[8][8][8];
 boolean last = false;
 
 void setup(){
@@ -24,12 +24,15 @@ void setup(){
 
 void loop()
 {
-  if (Serial.available() > 0){//if there's data in the serial
-    String input = Serial.readString();
-    get_input(input);
+  if (Serial.available() > 0){ // If the is data in the serial
+    String input = Serial.readString(); // Take that data
+    get_input(input); // Analyze it
   } 
 }
 
+/*
+ * Writes the registers list on the bit array od the shift registers
+ */
 void write_reg(){
   digitalWrite(STCP_pin, LOW);
   
@@ -42,31 +45,46 @@ void write_reg(){
   digitalWrite(STCP_pin, HIGH);
 }
 
+
+/*
+ * Clears the memory of the virtual cube
+ */
 void clear_cube(){
   memset(cube,LOW,sizeof(cube));
 }
 
+/*
+ * Clears the registers list used for interacting withe the bit array in the shift registers
+ */
 void clear_registers(){  
   memset(registers,LOW,sizeof(registers));
 }
 
+/*
+ * This function lets us modify the virtual cube
+ */
 void write_in_cube(int x,int y,int z,boolean value){
   cube[x][y][z] = value;
 }
 
+
+/*
+ * Takes the input and processes all the commands to either modify the virtual cube, load the virtual cube or clear the cube
+ */
 void get_input(String input){
   Serial.println("Input: " + input);
   
   while (input != ""){
-    if (input.charAt(0) == 'd'){ // DELAY, variable characters
+    if (input.charAt(0) == 'd'){ // DELAY
 
       // Takes the instruction substring
-      String instruction = input.substring(0,input.indexOf("/"));//https://www.arduino.cc/en/Tutorial/StringIndexOf , https://en.wikipedia.org/wiki/Escape_sequences_in_C
+      String instruction = input.substring(0,input.indexOf("/"));
       
       // Takes the time unit from the instruction
       String time_unit = instruction.substring(instruction.lastIndexOf(",")+1,instruction.lastIndexOf(",")+4);
-      
-      int multiplier;
+
+      // Sets the time multiplier necesary for the delay
+      float multiplier;
       if (time_unit == "Seg"){
         multiplier = 1000;
       }
@@ -74,27 +92,26 @@ void get_input(String input){
         multiplier = 1;
       }
       else if (time_unit == "Mic"){
-        multiplier = 0,01;
+        multiplier = 1/1000;
       }
       else if (time_unit=="Nan"){
-        multiplier = 0,000001;
+        multiplier = 1/1000000;
       }
-      else{
-          Serial.println("error in time unit");
-      }
-      
+
+      // Sets the delay time and loads the cube
       delay_time = instruction.substring(2,instruction.lastIndexOf(",")).toInt()*multiplier;//toInt is long ,https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/toint
       load_to_cube();
 
       // Removes the parsed instruction from the input
       input.remove(0,input.indexOf("/") + 1);
 
+      // Tells the system that the latest message is not a turn
       if(last == true){
         last = false;
       }
     }
     
-    else if(input.charAt(0) == 't'){ // TURN, 5 + 1 [\] characters
+    else if(input.charAt(0) == 't'){ // TURN
       
       // Takes the instruction substring
       String instruction = input.substring(0,5);
@@ -119,36 +136,57 @@ void get_input(String input){
       // Removes the parsed instruction from the input
       input.remove(0,5 + 1);
 
+      // Tells the system that the latest message is a turn
       if(last == false){
         last = true;
       }
     }
+
+    else if(input.charAt(0) == 'b') { // BLINK
+      // Removes the parsed instruction from the input
+      input.remove(0,input.indexOf("/") + 1);
+    }
     
-    else if(input.charAt(0) == 'c'){// CLEAR, 5 + 1 [\] characters
+    else if(input.charAt(0) == 'c'){ // CLEAR
       // Clears the virtual cube
       clear_cube();
 
       // Removes the parsed instruction from the input
       input.remove(0,5 + 1);
     }
-    else if(input.charAt(0) == '.'){
+    
+    else if(input.charAt(0) == '.'){ // FINISH
+      
+      // Removes the last char from the string
       input.remove(0,1);
       Serial.println("Parse finished");
+
+      // Sets the time to default
       delay_time = default_time;
+
+      // If the last instruction was a delay load the virtual cube empty
       if(last == false){
         clear_cube();
       }
+
+      // Loads the cube with the default time
       load_to_cube();
+
+      // Empties the cube before finishing
+      clear_cube();
       break;
     }
     
     else{
-      Serial.println("No input avalible");
+      Serial.println("Error: No input avalible");
       break;
     }
   }  
 }
 
+/*
+ * Loads the virtual cube into the real cube using a multiplexing loop
+ */
 void load_to_cube(){
   previous_milis = millis();
   while((millis() - previous_milis) < delay_time){ //while for delay time
@@ -167,5 +205,4 @@ void load_to_cube(){
       write_reg();      
     }
   }
-  //previous_milis = millis();
 }
