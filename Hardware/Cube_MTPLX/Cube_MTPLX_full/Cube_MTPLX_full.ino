@@ -9,6 +9,7 @@ unsigned long default_time = 3000L;
 unsigned long delay_time = default_time; //delay time in ms. Should be long for math with other long numbers
 boolean registers[72]; //pins
 boolean cube[8][8][8];//cube matrix. Initial values != true?
+boolean last = false;
 
 void setup(){
   Serial.begin(9600);
@@ -23,7 +24,6 @@ void setup(){
 
 void loop()
 {
-  clear_cube();
   if (Serial.available() > 0){//if there's data in the serial
     String input = Serial.readString();
     get_input(input);
@@ -88,6 +88,10 @@ void get_input(String input){
 
       // Removes the parsed instruction from the input
       input.remove(0,input.indexOf("/") + 1);
+
+      if(last == true){
+        last = false;
+      }
     }
     
     else if(input.charAt(0) == 't'){ // TURN, 5 + 1 [\] characters
@@ -114,6 +118,10 @@ void get_input(String input){
       
       // Removes the parsed instruction from the input
       input.remove(0,5 + 1);
+
+      if(last == false){
+        last = true;
+      }
     }
     
     else if(input.charAt(0) == 'c'){// CLEAR, 5 + 1 [\] characters
@@ -127,6 +135,9 @@ void get_input(String input){
       input.remove(0,1);
       Serial.println("Parse finished");
       delay_time = default_time;
+      if(last == false){
+        clear_cube();
+      }
       load_to_cube();
       break;
     }
