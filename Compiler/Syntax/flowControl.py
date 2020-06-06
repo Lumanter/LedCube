@@ -15,7 +15,8 @@ def p_forLoop_step(p):
 def p_iterable(p):
     '''iterable : ID
                 | indexedId
-                | INTEGER'''
+                | INTEGER
+                | len'''
     p[0] = ASTNode("iterable", [p[1]])
 
 
