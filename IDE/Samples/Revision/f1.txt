@@ -1,0 +1,26 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	-- F1
+	lista = [[True, False, True],
+	           [True, True, True],
+	           [False, False, True]];
+	-- F2
+	print(lista[1][1]);		
+
+	-- F3
+	print(lista[1]);
+
+	-- F4
+	print(lista[1, 1]);
+
+	-- F5
+	print(lista[:, 1]);
+
+};
