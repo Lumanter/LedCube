@@ -73,10 +73,16 @@ def boolean(value, symbolTable, scope, varID):
 def numExpression(node, symbolTable, scope, varId):
     if True:
         expressionAsString = getNumExpressionAsString(node, symbolTable, scope)
+
+        if "/" in expressionAsString:
+            expressionAsString += ".0"
+
         if "!" in expressionAsString:
             logError("Semantic Error: numerical operation assignation failed")
         else:
             value = eval(expressionAsString)
+            if "//" in expressionAsString:
+                value = int(value)
             if not symbolTable.hasSymbolByScope(varId, scope):
                 newSymbol = Symbol(varId, value, Types.Integer, scope)
                 symbolTable.add(newSymbol)
