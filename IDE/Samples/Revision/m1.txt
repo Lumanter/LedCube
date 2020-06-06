@@ -45,7 +45,9 @@ Procedure Main() {
 	m = 2;
 	l = n + m * 10 / 4;
 	print(l);
-	o = n + (m * (10 / 4));
+	
+	--D 17 alteracion de orden aritmetico
+	o = n + (m * (10 // 4));
 	print(o);	
 
 };

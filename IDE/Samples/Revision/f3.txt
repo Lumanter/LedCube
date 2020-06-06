@@ -1,0 +1,31 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	lista3D = [ [[False, False, False], [False, False, False]],
+	                [[False, False, False], [False, False, False]],
+	                [[False, False, False], [False, False, False]]];
+	lista2D = [[True, True, True],  [True, True, True]];
+	
+	-- F11
+	--lista3D[0][0] = lista2D[0];
+	print(lista3D);
+
+	-- F12
+	print(lista3D[0][0][0]);
+
+	-- F13
+	lista3D[0][0][0] = False;
+
+	-- F14
+	otra3D = [ [[False, False, False], [False, False, False]],
+	                [[False, False, False], [False, False, False]],
+	                [[False, False, False], [False, False, False]]];
+	--lista3D[0][0][0] = otra3D[0][0][0];
+	print(lista3D);
+
+};

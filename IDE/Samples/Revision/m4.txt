@@ -1,0 +1,16 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	-- D15	
+	Delay(5, "Mil"); -- custom
+
+	-- D16
+	Delay(); -- default;
+
+    };

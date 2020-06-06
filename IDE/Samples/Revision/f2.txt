@@ -1,0 +1,32 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	lista = [[False, False, False],
+	           [False, False, False],
+	           [False, False, False]];
+	-- F6
+	columns = lista.shapeC;
+	print(columns);	
+
+	-- F7
+	rows = lista.shapeF;
+	print(rows);	
+
+	-- F8	
+	lista.insert([[True, True, True]], 0);
+	print(lista);
+
+	-- F9	
+	lista.del(0,0);
+	print(lista);
+
+	-- F10	
+	lista[0][0] = True;
+	print(lista);
+
+};
