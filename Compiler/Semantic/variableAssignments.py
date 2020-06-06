@@ -27,8 +27,9 @@ def idNegation(node, symbolTable, scope, varID):
     id = node.getSon(1).name
     if verifyHasIdByScope(id, symbolTable, scope):
         symbol = symbolTable.getSymbolByScope(id, scope)
+        value = - symbol.getValue()
         if (symbol.type == Types.Integer):
-            newSymbol = Symbol(varID, -symbol.getValue(), Types.Integer, scope)
+            newSymbol = Symbol(varID, value, Types.Integer, scope)
             symbolTable.modifySymbol(newSymbol)
         else:
             logError("Semantic error: \"id\" not an integer")
@@ -74,7 +75,7 @@ def numExpression(node, symbolTable, scope, varId):
     if True:
         expressionAsString = getNumExpressionAsString(node, symbolTable, scope)
 
-        if "/" in expressionAsString:
+        if "/" in expressionAsString and expressionAsString[-1] != ")":
             expressionAsString += ".0"
 
         if "!" in expressionAsString:
