@@ -1,0 +1,51 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	--D1
+	x=5+6;
+	print(x);
+	
+	--D2
+	x=5-6;
+	print(x);
+
+	--D3
+	a = 5;
+	b= -a;
+	print(b);
+
+	--D4
+	x=5*5;
+	print(x);
+
+	--D5
+	x=2**3;
+	print(x);
+
+	--D6
+	f=77/8;
+	print(f);
+
+	--D7
+	e=77//8;
+	print(e);
+
+	--D8
+	x=5 % 2;
+	print(x);
+
+	--D9
+	n = 5;
+	m = 2;
+	l = n + m * 10 / 4;
+	print(l);
+	o = n + (m * (10 / 4));
+	print(o);	
+
+};
