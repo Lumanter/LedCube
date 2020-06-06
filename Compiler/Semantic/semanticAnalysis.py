@@ -162,6 +162,8 @@ def varValue(valueNode, symbolTable, scope, varID):
         boolean(value, symbolTable, scope, varID)
     elif isinstance(varValueType, int):
         integer(value, symbolTable, scope, varID)
+    elif varValueType == "idNegation":
+        idNegation(value, symbolTable, scope, varID)
     elif varValueType == "numExpression":
         numExpression(value, symbolTable, scope, varID)
     elif varValueType == "len":

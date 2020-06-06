@@ -34,6 +34,7 @@ def p_numOperator(p):
     '''numOperator : PLUS
                    | MINUS
                    | MULTIPLY
+                   | DIVIDEENTIRE
                    | DIVIDE
                    | POWER
                    | MODULO'''
@@ -43,3 +44,8 @@ def p_numValue(p):
     '''numValue : ID
                 | INTEGER'''
     p[0] = ASTNode("numValue", [p[1]])
+
+
+def p_idNegation(p):
+    'idNegation : MINUS ID'
+    p[0] = ASTNode("idNegation", (p[1], p[2]))

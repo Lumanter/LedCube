@@ -39,7 +39,10 @@ def delayFunction(tempNode, symbolTable):
         else:
             tempSymbolTime = symbolTable.getSymbol("timer").getByIndex(0).getValue()
             tempSymbolTimeUnit = symbolTable.getSymbol("timeUnit").getByIndex(0).getValue()
-            delay(str(tempSymbolTime.getValue()), str(tempSymbolTimeUnit.getValue()))
+            if (str(tempSymbolTimeUnit.getValue()) == "Nada"):
+                logError("Semantic error: can't do default delay with rango_timer value \"Nada\"")
+            else:
+                delay(str(tempSymbolTime.getValue()), str(tempSymbolTimeUnit.getValue()))
 
 
 # Default Cube

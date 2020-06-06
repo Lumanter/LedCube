@@ -60,6 +60,7 @@ tokens = [
     'DIVIDE',
     'POWER',
     'MODULO',
+    'DIVIDEENTIRE',
 
     # Enclosing Characters
     'LPARENTHESES',

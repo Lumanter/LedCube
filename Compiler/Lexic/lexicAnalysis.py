@@ -12,6 +12,7 @@ t_ASSIGN = r'\='
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_MULTIPLY = r'\*'
+t_DIVIDEENTIRE = r'//'
 t_DIVIDE = r'/'
 t_MODULO = r'\%'
 t_LPARENTHESES = r'\('
@@ -27,7 +28,7 @@ t_COLON = r':'
 
 # Regular expressions for not so simple tokens
 def t_TIMEUNIT(t):
-    r'\"(Mil|Seg|Min)\"'
+    r'\"(Mil|Seg|Min|Nada)\"'
     t.value = t.value[1:-1]
     return t
 

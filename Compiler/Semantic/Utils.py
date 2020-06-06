@@ -214,7 +214,7 @@ def getTypeByValue(value):
         return Types.Boolean
     if isinstance(value, list):
         return Types.List
-    if isinstance(value, int):
+    if isinstance(value, int) or isinstance(value, float):
         return Types.Integer
     logError("getTypeByValue encounter an unrecognized value" + str(value))
 

@@ -23,6 +23,16 @@ def ID(value, symbolTable, scope, varID):
         logError("Semantic Error: Can't find reference to variable: " + str(value))
         return False
 
+def idNegation(node, symbolTable, scope, varID):
+    id = node.getSon(1).name
+    if verifyHasIdByScope(id, symbolTable, scope):
+        symbol = symbolTable.getSymbolByScope(id, scope)
+        if (symbol.type == Types.Integer):
+            newSymbol = Symbol(varID, -symbol.getValue(), Types.Integer, scope)
+            symbolTable.modifySymbol(newSymbol)
+        else:
+            logError("Semantic error: \"id\" not an integer")
+
 def integer(value, symbolTable, scope, varID):
     if True:
         if value.hasSons():
@@ -63,10 +73,16 @@ def boolean(value, symbolTable, scope, varID):
 def numExpression(node, symbolTable, scope, varId):
     if True:
         expressionAsString = getNumExpressionAsString(node, symbolTable, scope)
+
+        if "/" in expressionAsString:
+            expressionAsString += ".0"
+
         if "!" in expressionAsString:
             logError("Semantic Error: numerical operation assignation failed")
         else:
-            value = int(eval(expressionAsString))
+            value = eval(expressionAsString)
+            if "//" in expressionAsString:
+                value = int(value)
             if not symbolTable.hasSymbolByScope(varId, scope):
                 newSymbol = Symbol(varId, value, Types.Integer, scope)
                 symbolTable.add(newSymbol)
