@@ -184,6 +184,13 @@ def indexVarValue(valueNode, symbolTable, scope):
         return value.getName()
     elif value.getName() == "list":
         return listElements(value.getSon(1), [])
+    elif value.getName() == "indexedId":
+        tempIndexes = getIndexes(value.getSon(1), [], symbolTable, scope)
+        tempVarSymbol = symbolTable.getSymbolByScope(value.getSon(0).getName(), scope)
+        if verifyIndexBoundries(tempVarSymbol.getValue(), tempIndexes):
+           return getElementAtIndexes(tempVarSymbol.getValue(), tempIndexes)
+        else:
+            logError("Semantic: Variable " + str(value.getSon(0).getName()) + " doesn't match size of index " + str(tempIndexes))
     else:
         tempSymbol = symbolTable.getSymbolByScope(value.getName(), scope)
         tempValue = tempSymbol.getValue()

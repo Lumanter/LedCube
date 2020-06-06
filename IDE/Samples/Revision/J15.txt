@@ -1,0 +1,14 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+
+Procedure Main() {
+	miLista = list(range(10, True));
+--E9		Inserta un valor a una lista	
+	miLista.insert(2,False);
+	print(miLista);
+};
