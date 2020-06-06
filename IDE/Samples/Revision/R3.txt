@@ -1,0 +1,17 @@
+    
+Timer = 300;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+Procedure Main() {
+	var1 = 1;
+	miVariable = 5;
+	m = [[True, False], [True, False], [False, False], [True, True], [True, True]];
+	--B6
+	if m[:,1] == True {
+		print(var1);
+	};
+};

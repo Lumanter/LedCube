@@ -1,0 +1,18 @@
+    
+Timer = 300;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+Procedure Main() {
+	var1 = 1;
+	miVariable = 5;
+	listaX = [True, False, True, False, False, False, True, True, True, True];
+	--B5
+	if listaX[2]== True {
+		listaX[var1].Neg;
+		print(listaX);
+	};
+};

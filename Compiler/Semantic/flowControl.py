@@ -12,7 +12,7 @@ def ifStatement(node, symbolTable, scope):
         operator = node.getSon(2).getName()
         value = node.getSon(3).getSon(0).getName()
         if comparable == "indexedId":
-            elements = getListIndex(node.getSon(1).getSon(0).getSon(1), [])
+            elements = getIndexes(node.getSon(1).getSon(0).getSon(1), [], symbolTable, scope)
             comparable = node.getSon(1).getSon(0).getSon(0).getName()
             if symbolTable.hasSymbolByScope(comparable, scope):
                 comparable = symbolTable.getSymbolByScope(comparable, scope)
@@ -41,25 +41,6 @@ def ifStatement(node, symbolTable, scope):
             logError("Symbol not found" + str(comparable))
 
 
-def getListIndex(indexes, listIndex):
-    if indexes.hasSons():
-        if indexes.getSon(1).getName() == "indexValue":
-            if listIndex == []:
-                listIndex.append(indexes.getSon(1).getSon(0).getName())
-            return listIndex
-        else:
-            for match in indexes.getSons():
-                if match.getName() == "index":
-                    if match.getSon(1).getName() == "indexValue":
-                        listIndex.append(match.getSon(1).getSon(0).getName())
-                else:
-                    pass
-            getListIndex(match, listIndex)
-    else:
-        pass
-    return listIndex
-
-
 def ifStatementIterative(node, comparable, value, operator, symbolTable, scope):
         for boolVariable in comparable:
             if operator == "==":
@@ -84,16 +65,23 @@ def ifStatementIterativeAux(node, comparable, value, operator, symbolTable, scop
             ifStatementBoolean(node, comparable, value, operator, symbolTable, scope)
     elif isinstance(indexList[0], str):
         try:
-            index = int(indexList[0][2:])
-            indexList[0] = index
+            if indexList[0][0] == ":":
+                index = int(indexList[0][2:])
+                indexList[0] = index
+            else:
+                index = [int(indexList[0][0]), int(indexList[0][2])]
+                indexList = index
+                ifStatementIterativeAux(node, comparable, value, operator, symbolTable, scope, indexList)
+                return
+
         except ValueError:
-            return logError(index + " must be integer type")
+            return logError(str(indexList[0][2:]) + " must be integer type")
         try:
             for item in range(0, len(comparable)):
                 if len(comparable) > indexList[0]:
                     if isinstance(comparable[item], list):
                         if len(indexList) == 1:
-                            ifStatementIterative(node, comparable[indexList[0]], value, operator, symbolTable, scope)
+                            ifStatementBoolean(node, comparable[item][indexList[0]], value, operator, symbolTable, scope)
                         else:
                             ifStatementIterativeAux(node, comparable[item][indexList[0]], value, operator, symbolTable, scope, indexList[1:])
                     elif isinstance(comparable[item], bool):
