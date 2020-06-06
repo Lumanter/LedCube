@@ -10,7 +10,12 @@ def processConfigConstants(configBranch, symbolTable):
         for keyword in lookupList:
             name = son.getName()
             if name == "cube":
-                tempValue = createCube(3, 8, False)
+                cubeValue = son.getSon(2)
+                if cubeValue.getName() == "list":
+                    from semanticAnalysis import listElements
+                    tempValue = listElements(cubeValue.getSon(1), [])
+                else:
+                    tempValue = createCube(3, 8, False)
                 tempSymbol = Symbol(son.getSon(0).getName(), tempValue, "Reserved", "global")
                 symbolTable.addReservedId(son.getSon(0).getName())
                 symbolTable.add(tempSymbol)
