@@ -234,7 +234,15 @@ def indexAssignment(tempNode, symbolTable, scope):
         tempIndex = getIndexes(tempNode.getSon(1), [], symbolTable, scope)
         tempValue = indexVarValue(tempNode.getSon(3), symbolTable, scope)
 
-        if not modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
+        if len(tempIndex[0]) > 1:
+            if tempIndex[0][1] == ':':
+                lower = int(tempIndex[0][0])
+                higher = int(tempIndex[0][2])
+                for index in range(lower, higher):
+                    temporalValue = tempValue[index - lower]
+                    if not modifySymbolList(tempID, [index], temporalValue, scope, symbolTable):
+                        return False
+        elif not modifySymbolList(tempID, tempIndex, tempValue, scope, symbolTable):
             return False
         if tempID.lower() == "cubo" or tempID.lower() == "cube":
             turn(tempIndex[0], tempIndex[1], tempIndex[2], tempValue)
