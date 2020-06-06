@@ -27,7 +27,7 @@ t_COLON = r':'
 
 # Regular expressions for not so simple tokens
 def t_TIMEUNIT(t):
-    r'\"(Mil|Seg|Min)\"'
+    r'\"(Mil|Seg|Min|Nada)\"'
     t.value = t.value[1:-1]
     return t
 
