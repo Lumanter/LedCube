@@ -200,6 +200,12 @@ def forLoop(node, symbolTable, scope):
                         break
                 if not isRange:
                     iterableValueLength = len(getListElementByIndex(tempList, indexes))
+            elif iterable == "len":
+                tempID = node.getSon(3).getSon(0).getSon(0).getName()
+                iterableValue = symbolTable.getSymbolByScope(tempID, scope)
+                if iterableValue == None:
+                    logError("Semantic: Variable " + str(tempID) + " was not found")
+                iterableValueLength = len(iterableValue.getValue())
             else:
                 iterableValue = symbolTable.getSymbolByScope(iterable, scope)
                 if iterableValue == None:
