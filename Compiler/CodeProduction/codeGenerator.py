@@ -30,6 +30,6 @@ def turn(x, y, z, state):
 
 
 def blink(x, y, z, time, timeUnit, state):
-    instruction = "blink," + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(time) + ',' + str(timeUnit) + ',' + str(
-        state).lower() + "\n"
+    instruction = "b" + str(x) + str(y) + str(z) + "," + str(time) + ',' + str(timeUnit) + ',' + str(
+        state)[0] + "\n"
     writeCode(instruction)

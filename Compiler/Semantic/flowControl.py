@@ -41,7 +41,6 @@ def ifStatement(node, symbolTable, scope):
             logError("Symbol not found" + str(comparable))
 
 
-
 def getListIndex(indexes, listIndex):
     if indexes.hasSons():
         if indexes.getSon(1).getName() == "indexValue":
@@ -61,7 +60,6 @@ def getListIndex(indexes, listIndex):
     return listIndex
 
 
-
 def ifStatementIterative(node, comparable, value, operator, symbolTable, scope):
         for boolVariable in comparable:
             if operator == "==":
@@ -78,25 +76,52 @@ def ifStatementIterative(node, comparable, value, operator, symbolTable, scope):
                 logError(operator + ": Operator not supported in variable " + str(type(value)))
 
 
-
 def ifStatementIterativeAux(node, comparable, value, operator, symbolTable, scope, indexList):
     if indexList == []:
         if isinstance(comparable, list):
             ifStatementIterative(node, comparable, value, operator, symbolTable, scope)
         elif isinstance(comparable, bool):
             ifStatementBoolean(node, comparable, value, operator, symbolTable, scope)
+    elif isinstance(indexList[0], str):
+        try:
+            index = int(indexList[0][2:])
+            indexList[0] = index
+        except ValueError:
+            return logError(index + " must be integer type")
+        try:
+            for item in range(0, len(comparable)):
+                if len(comparable) > indexList[0]:
+                    if isinstance(comparable[item], list):
+                        if len(indexList) == 1:
+                            ifStatementIterative(node, comparable[indexList[0]], value, operator, symbolTable, scope)
+                        else:
+                            ifStatementIterativeAux(node, comparable[item][indexList[0]], value, operator, symbolTable, scope, indexList[1:])
+                    elif isinstance(comparable[item], bool):
+                        if len(indexList) == 1:
+                            if item == indexList[0]:
+                                ifStatementBoolean(node, comparable[indexList[0]], value, operator, symbolTable, scope)
+                        else:
+                            return logError("List out of range")
+                    else:
+                        return logError(str(comparable[item]) + " Must be list or boolean")
+
+                else:
+                    return logError("List out of range")
+            return
+        except:
+            return logError(str(comparable)+" is not iterable")
     else:
         if isinstance(comparable, list):
-            if indexList[0]< len(comparable):
+            if indexList[0] < len(comparable):
                 if isinstance(value, bool):
-                    ifStatementIterativeAux(node, comparable[indexList[0]], value, operator, symbolTable, scope, indexList[1:])
+                    ifStatementIterativeAux(node, comparable[indexList[0]], value, operator, symbolTable, scope,
+                                            indexList[1:])
                 else:
-                    logError(str(value) + " Must be boolean")
+                    return logError(str(value) + " Must be boolean")
             else:
-                logError("List out of range")
+                return logError("List out of range")
         else:
-            logError("List out of range")
-
+            return logError("List out of range")
 
 
 def ifStatementBoolean(node, comparable, value, operator, symbolTable, scope):
@@ -112,7 +137,6 @@ def ifStatementBoolean(node, comparable, value, operator, symbolTable, scope):
             pass
     else:
         logError(operator + ": Operator not supported in variable " + str(type(value)))
-
 
 
 def ifStatementInteger(node, comparable, value, operator, symbolTable, scope):
@@ -156,6 +180,7 @@ def forLoop(node, symbolTable, scope):
         varID = node.getSon(1).getName()
         iterable = node.getSon(3).getSon(0).getName()
         symbolTable.simpleAdd(varID, 0, Types.Integer, scope)
+        isRange = False
         if not isinstance(iterable, int):
             iterableValueLength = 0
             if iterable == "indexedId":
@@ -165,34 +190,47 @@ def forLoop(node, symbolTable, scope):
                     tempListSymbol = symbolTable.getSymbolByScope(tempNode.getSon(0).getName(), "global")
                 tempList = tempListSymbol.getValue()
                 indexes = getIndexes(tempNode.getSon(1), [], symbolTable, scope)
-                iterableValueLength = len(getListElementByIndex(tempList, indexes))
+                for value in indexes:
+                    if not isinstance(value, int):
+                        if value[1] == ':':
+                            isRange = True
+                            forLoopWithRange(node, varID, indexes, symbolTable, scope)
+                            break
+                    else:
+                        break
+                if not isRange:
+                    iterableValueLength = len(getListElementByIndex(tempList, indexes))
             else:
                 iterableValue = symbolTable.getSymbolByScope(iterable, scope)
                 if iterableValue == None:
                     iterableValue = symbolTable.getSymbolByScope(node.getSon(3).getSon(0).getName(), "global")
-                iterableValueLength = len(iterableValue.getValue())
-            Step = 1
-            if node.getSon(4).getName() == "STEP":
-                Step = node.getSon(5).getName()
-            totalCycles = iterableValueLength
-            if Step == 1:
-                for cycle in range(totalCycles):
-                    tempSymbol = symbolTable.getSymbolByScope(varID, scope)
-                    tempSymbol.setValue(cycle)
-                    symbolTable.modifySymbol(tempSymbol)
-                    tempStatementList = node.getSon(5)
-                    statementList(tempStatementList, symbolTable, scope)
-                symbolTable.eliminateSymbolByScope(varID, scope)
-            else:
-                cycle = 0
-                while cycle < totalCycles:
-                    tempSymbol = symbolTable.getSymbolByScope(varID, scope)
-                    tempSymbol.setValue(cycle)
-                    symbolTable.modifySymbol(tempSymbol)
-                    tempStatementList = node.getSon(7)
-                    statementList(tempStatementList, symbolTable, scope)
-                    cycle += Step
-                symbolTable.eliminateSymbolByScope(varID, scope)
+                if isinstance(iterableValue.getValue(), int):
+                    iterableValueLength = iterableValue.getValue()
+                else:
+                    iterableValueLength = len(iterableValue.getValue())
+            if not isRange:
+                Step = 1
+                if node.getSon(4).getName() == "STEP":
+                    Step = node.getSon(5).getName()
+                totalCycles = iterableValueLength
+                if Step == 1:
+                    for cycle in range(totalCycles):
+                        tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                        tempSymbol.setValue(cycle)
+                        symbolTable.modifySymbol(tempSymbol)
+                        tempStatementList = node.getSon(5)
+                        statementList(tempStatementList, symbolTable, scope)
+                    symbolTable.eliminateSymbolByScope(varID, scope)
+                else:
+                    cycle = 0
+                    while cycle < totalCycles:
+                        tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                        tempSymbol.setValue(cycle)
+                        symbolTable.modifySymbol(tempSymbol)
+                        tempStatementList = node.getSon(7)
+                        statementList(tempStatementList, symbolTable, scope)
+                        cycle += Step
+                    symbolTable.eliminateSymbolByScope(varID, scope)
         else:
             for cycle in range(iterable):
                 tempSymbol = symbolTable.getSymbolByScope(varID, scope)
@@ -201,3 +239,36 @@ def forLoop(node, symbolTable, scope):
                 tempStatementList = node.getSon(5)
                 statementList(tempStatementList, symbolTable, scope)
             symbolTable.eliminateSymbolByScope(varID, scope)
+
+
+def forLoopWithRange(node, varID, indexes, symbolTable, scope):
+    Step = 1
+    if node.getSon(4).getName() == "STEP":
+        Step = node.getSon(5).getName()
+    lowerLimit = int(indexes[0][0])
+    upperLimit = int(indexes[0][2])
+    if lowerLimit < upperLimit:
+        if node.getSon(4).getName() == "STEP":
+            Step = node.getSon(5).getName()
+        totalCycles = upperLimit-lowerLimit
+        if Step == 1:
+            for cycle in range(lowerLimit, upperLimit):
+                tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                tempSymbol.setValue(cycle)
+                symbolTable.modifySymbol(tempSymbol)
+                tempStatementList = node.getSon(5)
+                statementList(tempStatementList, symbolTable, scope)
+            symbolTable.eliminateSymbolByScope(varID, scope)
+        else:
+            cycle = lowerLimit
+            while cycle < upperLimit:
+                tempSymbol = symbolTable.getSymbolByScope(varID, scope)
+                tempSymbol.setValue(cycle)
+                symbolTable.modifySymbol(tempSymbol)
+                tempStatementList = node.getSon(7)
+                statementList(tempStatementList, symbolTable, scope)
+                cycle += Step
+            symbolTable.eliminateSymbolByScope(varID, scope)
+    else:
+        logError("Semantic: UpperLimit " + str(upperLimit) + " doesn't match LowerLimit " + str(lowerLimit))
+

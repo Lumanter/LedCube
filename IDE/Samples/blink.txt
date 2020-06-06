@@ -1,0 +1,16 @@
+    
+Timer = 500;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	Blink(Cubo[1][2][3], 4, "Seg", True);
+	Blink(Cubo[1][2][3], False);
+	
+	Blink(Cubo[7][0], True);
+	Blink(Cubo[7][0], False);
+
+};

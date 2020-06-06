@@ -10,7 +10,8 @@ def p_builtInFunction(p):
                        | listInsert
                        | matrixInsert
                        | listDelete
-                       | matrixDelete'''
+                       | matrixDelete
+                       | blink'''
     p[0] = ASTNode("builtInFunction", ([p[1]]))
 
 
@@ -113,3 +114,13 @@ def p_len(p):
 def p_len_index(p):
     'len : LEN LPARENTHESES ID index RPARENTHESES'
     p[0] = ASTNode("len", [p[3], p[4]])
+
+
+# Blink
+def p_blink_default(p):
+    'blink : BLINK LPARENTHESES indexedId COMMA BOOLEAN RPARENTHESES SEMICOLON'
+    p[0] = ASTNode("blink", [p[1], p[2], p[3], p[4], p[5], p[6]])
+
+def p_blink_custom(p):
+    'blink : BLINK LPARENTHESES indexedId COMMA INTEGER COMMA TIMEUNIT COMMA BOOLEAN RPARENTHESES SEMICOLON'
+    p[0] = ASTNode("blink", [p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10]])

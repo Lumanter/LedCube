@@ -17,6 +17,7 @@ keywords = {
     'print': 'PRINT',
     'type': 'TYPE',
     'len': 'LEN',
+    'Blink': 'BLINK',
 
     # Control Flow
     'if': 'IF',
@@ -34,6 +35,7 @@ tokens = [
     'RANGO_TIMER',
     'DIM_COLUMNAS',
     'DEFAULTCUBE',
+
 
     'ASSIGN',
 

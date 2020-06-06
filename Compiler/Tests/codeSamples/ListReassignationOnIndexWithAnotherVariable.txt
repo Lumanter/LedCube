@@ -1,0 +1,14 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	x = [[True,True,True],[True,True,False]];
+	y = [False, False, False];
+	x[0] = y;
+	print(x);	
+
+    };

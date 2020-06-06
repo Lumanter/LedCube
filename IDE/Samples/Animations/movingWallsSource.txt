@@ -1,0 +1,44 @@
+    
+Timer = 200;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure walls() {
+	for x in 4 {
+		for y in 4 {
+			for z in 4 {
+				Cubo[x][y][z].Neg;
+			};
+		};
+		Delay();
+		for y in 4 {
+			for z in 4 {
+				Cubo[x][y][z].Neg;
+			};
+		};
+		Delay();
+	};
+
+	for x in 4 {
+		for y in 4 {
+			for z in 4 {
+				Cubo[y][x][z].Neg;
+			};
+		};
+		Delay();
+		for y in 4 {
+			for z in 4 {
+				Cubo[y][x][z].Neg;
+			};
+		};
+		Delay();
+	};
+};
+
+Procedure Main() {
+
+	CALL walls();
+
+};

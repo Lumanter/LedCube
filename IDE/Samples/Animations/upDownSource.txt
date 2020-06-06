@@ -1,0 +1,57 @@
+    
+Timer = 200;
+Rango_timer = "Mil";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure goUp(x, y) {
+	Cubo[x][y][0].Neg;
+	for z in 8 {
+		Cubo[x][y][z].Neg;
+		Delay();
+		Cubo[x][y][z].Neg; 
+	};
+};
+
+Procedure goDown(x, y, z) {
+	Cubo[x][y][z].Neg;
+	for i in 8 {
+		Cubo[x][y][z].Neg;
+		Delay();
+		Cubo[x][y][z].Neg;
+		z = z - 1; 
+	};
+};
+
+Procedure Main() {
+
+	Cubo[3][3][7].T;
+	Cubo[3][4][7].T;
+	Cubo[4][3][7].T;
+	Cubo[4][4][7].T;
+	Delay();
+	
+	i = 2;
+	for n in 4 {	
+		Cubo[i][6][0].T;
+		Cubo[i][1][0].T;
+		i = i + 1;
+	};
+	Delay();
+
+	i = 2;
+	for n in 4 {	
+		Cubo[2][i][0].T;
+		Cubo[5][i][0].T;
+		i = i + 1;
+	};
+	Delay();
+	
+	CALL goUp(2, 1);
+	CALL goDown(4, 3, 7);
+	CALL goUp(5, 5);
+	CALL goDown(3, 4, 7);
+	Delay();
+
+};

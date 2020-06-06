@@ -1,0 +1,13 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	for x in Cubo[1:3]{
+		print(x);
+	};
+
+    };
