@@ -1,0 +1,12 @@
+-- A1 - A3
+
+Timer = 1;
+Rango_timer = "Nada";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = [[True, False, True],[True, True, True],[False, False, True]];
+
+Procedure Main() {
+	print(Cubo);
+	--Delay();
+    };

@@ -1,0 +1,18 @@
+-- C3
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+	
+	a@_&b = 1;
+	
+	--a@_&b$ = 1
+	
+	abcdefghij = True; -- id length 10
+	
+	print(abcdefghij);
+
+};
