@@ -1,0 +1,19 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+-- Procedimiento	
+--A4	
+Procedure apaga () {
+--C4
+x = [];			
+x = [True, True, False, False, False, False, True, True, True, True];
+print(x);
+};
+
+Procedure Main() {
+	CALL apaga();
+};
