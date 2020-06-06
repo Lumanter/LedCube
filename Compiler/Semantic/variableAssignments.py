@@ -76,7 +76,7 @@ def numExpression(node, symbolTable, scope, varId):
         if "!" in expressionAsString:
             logError("Semantic Error: numerical operation assignation failed")
         else:
-            value = int(eval(expressionAsString))
+            value = eval(expressionAsString)
             if not symbolTable.hasSymbolByScope(varId, scope):
                 newSymbol = Symbol(varId, value, Types.Integer, scope)
                 symbolTable.add(newSymbol)

@@ -34,6 +34,7 @@ def p_numOperator(p):
     '''numOperator : PLUS
                    | MINUS
                    | MULTIPLY
+                   | DIVIDEENTIRE
                    | DIVIDE
                    | POWER
                    | MODULO'''
