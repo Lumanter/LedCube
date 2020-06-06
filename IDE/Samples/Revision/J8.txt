@@ -1,0 +1,13 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+
+Procedure Main() {
+	-- E2		Inicializa una lista	
+			x = [True, True, False, False, False, False, True, True, True, True];
+	print(x);
+};
