@@ -13,6 +13,12 @@ def ifStatement(node, symbolTable, scope):
         value = node.getSon(3).getSon(0).getName()
         if comparable == "indexedId":
             elements = getIndexes(node.getSon(1).getSon(0).getSon(1), [], symbolTable, scope)
+
+            if elements[0] == "x,y":
+                elements = [0, 0]
+                elements[0] = symbolTable.getSymbolByScope("x", scope).getValue()
+                elements[1] = symbolTable.getSymbolByScope("y", scope).getValue()
+
             comparable = node.getSon(1).getSon(0).getSon(0).getName()
             if symbolTable.hasSymbolByScope(comparable, scope):
                 comparable = symbolTable.getSymbolByScope(comparable, scope)
