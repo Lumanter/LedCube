@@ -1,0 +1,13 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+
+Procedure Main() {
+	x = list(range(10, False));
+--E8		Acceder a un valor de una lista fuera de rango	
+	print(x[10000]);
+};

@@ -1,0 +1,15 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+
+Procedure Main() {
+	--C9
+	x = 5; 
+	x = True; -- debe generar un error
+	y = True;
+	y = 5;   -- debe generar un error
+};

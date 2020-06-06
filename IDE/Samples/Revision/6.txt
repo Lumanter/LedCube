@@ -1,0 +1,14 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+
+Procedure Main() {
+	--C7, C8  Asignación implica de numero
+  	 x = 5;
+  	 print(type(x));
+	-- debe retornar numerico
+};

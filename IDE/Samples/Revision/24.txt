@@ -1,0 +1,14 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+
+Procedure Main() {
+	milista = list(range(10, False));
+--E6		Modificar una lista  	
+			milista[0] = True;
+	print(milista);
+};

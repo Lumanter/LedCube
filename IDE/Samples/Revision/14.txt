@@ -1,0 +1,19 @@
+
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+Procedure Main() {
+
+	-- C2
+	number = 5;
+	print(type(number)); --prints integer
+
+	boolean = True;
+	print(type(boolean)); -- prints boolean
+
+	aList = [True, True];
+	print(type(aList));      -- prints list
+};
