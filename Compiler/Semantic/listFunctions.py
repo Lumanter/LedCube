@@ -19,6 +19,13 @@ def listOperation(node, symbolTable, scope):
 
                 if (listOperationWithIndex):
                     indexes = getIndexes(node.getSon(0).getSon(1), [], symbolTable, scope)
+
+                    if indexes[0] == "x,y":
+                        indexes = [0, 0]
+                        indexes[0] = symbolTable.getSymbolByScope("x", scope).getValue()
+                        indexes[1] = symbolTable.getSymbolByScope("y", scope).getValue()
+
+
                     if verifyIndexesInBounds(id, oldList, indexes):
                         listOperator = node.getSon(0).getSon(3).getName()
                         replaceAtIndexesWithOperator(newList, indexes, listOperator)

@@ -41,6 +41,10 @@ def p_indexValue(p):
                   | indexRange'''
     p[0] = ASTNode("indexValue", ([p[1]]))
 
+def p_indexPairId(p):
+    'indexPair : ID COMMA ID'
+    p[0] = str(p[1]) + p[2] + str(p[3])
+
 def p_indexPair(p):
     'indexPair : INTEGER COMMA INTEGER'
     p[0] = str(p[1]) + p[2] + str(p[3])
