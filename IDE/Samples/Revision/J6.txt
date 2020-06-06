@@ -1,0 +1,17 @@
+Timer = 1;
+Rango_timer = "Seg";
+Dim_filas = 8;
+Dim_columnas = 8;
+Cubo = defaultCube(False);
+
+
+
+Procedure Main() {
+	-- B2
+	x = [True, True, False, False, False, False, True, True, True, True];
+	-- B3
+	for var1 in 10{
+		x[var1].Neg;
+	};
+	print(x);
+};
