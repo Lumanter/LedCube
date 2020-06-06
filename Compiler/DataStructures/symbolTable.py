@@ -73,6 +73,11 @@ class SymbolTable:
                 tempSymbol = tempNode.getValue()
                 if tempSymbol.getScope() == scope:
                     return tempSymbol
+            for index in range(tempList.getLength()):
+                tempNode = tempList.getByIndex(index)
+                tempSymbol = tempNode.getValue()
+                if tempSymbol.getScope() == "global":
+                    return tempSymbol
             return None
         return None
 
