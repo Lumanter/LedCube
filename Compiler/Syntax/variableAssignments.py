@@ -64,6 +64,7 @@ def p_indexRange_toEnd(p):
 
 def p_varValue(p):
     '''varValue : ID
+                | indexedId
                 | INTEGER
                 | numExpression
                 | idNegation
